@@ -1,4 +1,4 @@
-import 'package:aownapp/welcame_screen.dart';
+import 'package:aownapp/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'login_screen.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: WelcameScrean(),
+      home: WelcomeScrean(),
     );
   }
 }
