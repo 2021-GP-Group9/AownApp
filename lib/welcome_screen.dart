@@ -1,7 +1,7 @@
 //heloo
 import 'home_screen.dart';
 import 'package:flutter/material.dart';
-import 'signup_screen.dart';
+import 'sinup/signup_screen.dart';
 import 'login_screen.dart';
 
 class WelcomeScrean extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
-
+import '../login_screen.dart';
+import 'signup_conn.dart';
 class Signup extends StatelessWidget {
   var nameController = TextEditingController();
   var emailController = TextEditingController();
@@ -103,6 +103,7 @@ class Signup extends StatelessWidget {
                     border: OutlineInputBorder(),
                   ),
                 ),
+
                 SizedBox(
                   height: 10.0,
                 ),
@@ -139,6 +140,9 @@ class Signup extends StatelessWidget {
                       print(emailController.text);
                       print(phoneController.text);
                       print(passwordController.text);
+                      Conn(nameController.text,phoneController.text,emailController.text,passwordController.text).save_it_to_db().then((value){
+                        print("result $value");
+                      });
                     },
                     child: Text(
                       'تسجيل',

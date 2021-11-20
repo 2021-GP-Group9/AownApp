@@ -1,4 +1,4 @@
-import 'package:aownapp/signup_screen.dart';
+import 'package:aownapp/sinup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
