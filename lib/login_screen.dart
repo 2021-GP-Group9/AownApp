@@ -1,3 +1,4 @@
+import 'package:aownapp/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -7,16 +8,33 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Color(0xffD6DACB),
+        title: Text(
+            'تسجيل الدخول'
+        ),
+        actions: [
+          Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+              'assets/finalLogo.jpeg',
+              fit: BoxFit.contain,
+              width: 45,
+              height: 45,
+            ),
+          ),
+        ],
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Login',
+                  'تسجيل الدخول',
                   style: TextStyle(
                     fontSize: 40.0,
                     fontWeight: FontWeight.bold,
@@ -35,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                     print(value);
                   },
                   decoration: InputDecoration(
-                    labelText: 'Email Address',
+                    labelText: 'البريد الالكتروني',
                     prefixIcon: Icon(
                       Icons.email,
                     ),
@@ -56,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                     print(value);
                   },
                   decoration: InputDecoration(
-                    labelText: 'Password',
+                    labelText: 'كلمة المرور',
                     prefixIcon: Icon(
                       Icons.lock,
                     ),
@@ -71,14 +89,14 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Container(
                   width: double.infinity,
-                  color: Colors.blue,
+                  color: Colors.black87,
                   child: MaterialButton(
                     onPressed: () {
                       print(emailController.text);
                       print(passwordController.text);
                     },
                     child: Text(
-                      'LOGIN',
+                      'تسجيل الدخول',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -91,14 +109,16 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Don\'t have an account?',
-                    ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>Signup()),);
+                      },
                       child: Text(
-                        'Register Now',
+                        'تسجيل جديد',
                       ),
+                    ), Text(
+                      'ليس لديك حساب؟',
                     ),
                   ],
                 ),

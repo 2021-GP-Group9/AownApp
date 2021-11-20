@@ -10,8 +10,13 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
 
-
-    );
+      body: Text(
+      'home page',
+      style: TextStyle(
+        fontSize: 40.0,
+        fontWeight: FontWeight.bold,
+      ),
+    ));
   }
 
   // when notification icon button clicked
