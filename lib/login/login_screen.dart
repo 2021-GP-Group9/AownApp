@@ -1,4 +1,5 @@
 import 'package:aownapp/sinup/signup_screen.dart';
+import 'login_conn.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -94,6 +95,9 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () {
                       print(emailController.text);
                       print(passwordController.text);
+                      Conn_login(emailController.text,passwordController.text).login_function().then((value){
+                        print("login $value");
+                      });
                     },
                     child: Text(
                       'تسجيل الدخول',

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../login_screen.dart';
+import '../login/login_screen.dart';
 import 'signup_conn.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 class Signup extends StatelessWidget {
   var nameController = TextEditingController();
   var emailController = TextEditingController();
@@ -142,6 +144,15 @@ class Signup extends StatelessWidget {
                       print(passwordController.text);
                       Conn(nameController.text,phoneController.text,emailController.text,passwordController.text).save_it_to_db().then((value){
                         print("result $value");
+                        Fluttertoast.showToast(
+                            msg: value ,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0
+                        );
                       });
                     },
                     child: Text(
