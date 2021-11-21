@@ -12,7 +12,8 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xffD6DACB),
         title: Text(
-            'تسجيل الدخول'
+            'تسجيل الدخول',
+          style: TextStyle(color: Colors.black87),
         ),
         actions: [
           Align(
@@ -58,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                     prefixIcon: Icon(
                       Icons.email,
                     ),
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(12),),
                   ),
                 ),
                 SizedBox(
@@ -82,7 +83,7 @@ class LoginScreen extends StatelessWidget {
                     suffixIcon: Icon(
                       Icons.remove_red_eye,
                     ),
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(12),),
                   ),
                 ),
                 SizedBox(
@@ -90,7 +91,8 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Container(
                   width: double.infinity,
-                  color: Colors.black87,
+                  decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(12)),
+
                   child: MaterialButton(
                     onPressed: () {
                       print(emailController.text);

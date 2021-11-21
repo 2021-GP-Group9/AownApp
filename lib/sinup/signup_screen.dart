@@ -12,12 +12,12 @@ class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffe6e8df),
+
       appBar: AppBar(
         backgroundColor: Color(0xffD6DACB),
         title: Text(
-          'تسجيل جديد'
-        ),
+          'تسجيل جديد',
+            style: TextStyle(color: Colors.black87),),
         actions: [
           Align(
             alignment: Alignment.center,
@@ -64,7 +64,9 @@ class Signup extends StatelessWidget {
                 prefixIcon: Icon(
                   Icons.person,
                 ),
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),SizedBox(
             height: 10.0,
@@ -83,7 +85,7 @@ class Signup extends StatelessWidget {
                 prefixIcon: Icon(
                   Icons.email,
                 ),
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder( borderRadius: BorderRadius.circular(12),),
               ),
             ), SizedBox(
                   height: 10.0,
@@ -102,7 +104,7 @@ class Signup extends StatelessWidget {
                     prefixIcon: Icon(
                       Icons.phone,
                     ),
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(12),),
                   ),
                 ),
 
@@ -127,7 +129,7 @@ class Signup extends StatelessWidget {
                     suffixIcon: Icon(
                       Icons.remove_red_eye,
                     ),
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(12),),
                   ),
                 ),
                 SizedBox(
@@ -135,7 +137,8 @@ class Signup extends StatelessWidget {
                 ),
                 Container(
                   width: double.infinity,
-                  color: Colors.black87,
+                  decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(12)),
+
                   child: MaterialButton(
                     onPressed: () {
                       print(nameController.text);
