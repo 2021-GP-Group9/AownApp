@@ -12,12 +12,12 @@ class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffe6e8df),
+
       appBar: AppBar(
         backgroundColor: Color(0xffD6DACB),
         title: Text(
-          'تسجيل جديد'
-        ),
+          'تسجيل جديد',
+            style: TextStyle(color: Colors.black87),),
         actions: [
           Align(
             alignment: Alignment.center,
@@ -64,12 +64,15 @@ class Signup extends StatelessWidget {
                 prefixIcon: Icon(
                   Icons.person,
                 ),
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
               ),
             ),SizedBox(
             height: 10.0,
           ),
             TextFormField(
+
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
               onFieldSubmitted: (String value) {
@@ -83,7 +86,7 @@ class Signup extends StatelessWidget {
                 prefixIcon: Icon(
                   Icons.email,
                 ),
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
               ),
             ), SizedBox(
                   height: 10.0,
@@ -102,7 +105,7 @@ class Signup extends StatelessWidget {
                     prefixIcon: Icon(
                       Icons.phone,
                     ),
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
                   ),
                 ),
 
@@ -110,6 +113,7 @@ class Signup extends StatelessWidget {
                   height: 10.0,
                 ),
                 TextFormField(
+
                   controller: passwordController,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
@@ -127,7 +131,7 @@ class Signup extends StatelessWidget {
                     suffixIcon: Icon(
                       Icons.remove_red_eye,
                     ),
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(30)),
                   ),
                 ),
                 SizedBox(
@@ -135,7 +139,15 @@ class Signup extends StatelessWidget {
                 ),
                 Container(
                   width: double.infinity,
-                  color: Colors.black87,
+                  decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(30),  boxShadow:[
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.7),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ] ),
+
                   child: MaterialButton(
                     onPressed: () {
                       print(nameController.text);

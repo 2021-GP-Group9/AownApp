@@ -26,28 +26,39 @@ class WelcomeScrean extends StatelessWidget {
             ),
           ),
         SizedBox(height: 83,),
-             Container(
-              width: 290,
-             height: 45,
-              decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.all(Radius.circular(6))),
-               child: MaterialButton(
-                 onPressed: () {
-                   Navigator.push(context,
-                       MaterialPageRoute(builder: (context) =>Signup()),);
-                 },
-                 child: Text(
-                   'تسجيل جديد',
-                   style: TextStyle(
-                     color: Colors.white,
-                   ),
-                 ),
-               ),
-             ),
+          Container(
+            width: 200,
+            height: 45,
+            decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(30), boxShadow:[
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.7),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ] ) //border:Border.all( width: 10,color: Colors.black12)),
+            ,
+            child: MaterialButton(
+              onPressed: () {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>Signup()),);
+              },
+              child: Center(child: Text("تسجيل جديد",style: TextStyle(color: Colors.white),)),
+            ),
+          ),
+
           SizedBox(height:28,),
           Container(
-            width: 290,
+            width: 200,
             height: 45,
-            decoration: BoxDecoration( color: Colors.black54,borderRadius: BorderRadius.all(Radius.circular(6))),
+            decoration: BoxDecoration( color: Colors.black54,borderRadius: BorderRadius.circular(30),boxShadow:[
+            BoxShadow(
+            color: Colors.grey.withOpacity(0.7),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ] ),
             child: MaterialButton(
               onPressed: () {
                 Navigator.push(context,
