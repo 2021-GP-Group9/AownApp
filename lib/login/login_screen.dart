@@ -1,4 +1,5 @@
 import 'package:aownapp/sinup/signup_screen.dart';
+import '../home_screen.dart';
 import 'login_conn.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +13,8 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xffD6DACB),
         title: Text(
-            'تسجيل الدخول',
-          style: TextStyle(color: Colors.black87),
-        ),
+          'تسجيل دخول',
+          style: TextStyle(color: Colors.black87),),
         actions: [
           Align(
             alignment: Alignment.center,
@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                     prefixIcon: Icon(
                       Icons.email,
                     ),
-                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(12),),
+                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
                   ),
                 ),
                 SizedBox(
@@ -83,7 +83,7 @@ class LoginScreen extends StatelessWidget {
                     suffixIcon: Icon(
                       Icons.remove_red_eye,
                     ),
-                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(12),),
+                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
                   ),
                 ),
                 SizedBox(
@@ -91,16 +91,20 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Container(
                   width: double.infinity,
-                  decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(30)),
 
                   child: MaterialButton(
+
                     onPressed: () {
                       print(emailController.text);
                       print(passwordController.text);
                       Conn_login(emailController.text,passwordController.text).login_function().then((value){
                         print("login $value");
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>HomeScreen()),);
                       });
-                    },
+
+                     },
                     child: Text(
                       'تسجيل الدخول',
                       style: TextStyle(

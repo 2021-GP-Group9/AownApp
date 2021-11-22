@@ -28,7 +28,14 @@ class WelcomeScrean extends StatelessWidget {
           Container(
             width: 200,
             height: 45,
-            decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(12)) //border:Border.all( width: 10,color: Colors.black12)),
+            decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(30), boxShadow:[
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.7),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ] ) //border:Border.all( width: 10,color: Colors.black12)),
             ,
             child: MaterialButton(
               onPressed: () {
@@ -43,7 +50,14 @@ class WelcomeScrean extends StatelessWidget {
           Container(
             width: 200,
             height: 45,
-            decoration: BoxDecoration( color: Colors.black54,borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration( color: Colors.black54,borderRadius: BorderRadius.circular(30),boxShadow:[
+            BoxShadow(
+            color: Colors.grey.withOpacity(0.7),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ] ),
             child: MaterialButton(
               onPressed: () {
                 Navigator.push(context,

@@ -65,13 +65,14 @@ class Signup extends StatelessWidget {
                   Icons.person,
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
             ),SizedBox(
             height: 10.0,
           ),
             TextFormField(
+
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
               onFieldSubmitted: (String value) {
@@ -85,7 +86,7 @@ class Signup extends StatelessWidget {
                 prefixIcon: Icon(
                   Icons.email,
                 ),
-                border: OutlineInputBorder( borderRadius: BorderRadius.circular(12),),
+                border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
               ),
             ), SizedBox(
                   height: 10.0,
@@ -104,7 +105,7 @@ class Signup extends StatelessWidget {
                     prefixIcon: Icon(
                       Icons.phone,
                     ),
-                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(12),),
+                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
                   ),
                 ),
 
@@ -112,6 +113,7 @@ class Signup extends StatelessWidget {
                   height: 10.0,
                 ),
                 TextFormField(
+
                   controller: passwordController,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
@@ -129,7 +131,7 @@ class Signup extends StatelessWidget {
                     suffixIcon: Icon(
                       Icons.remove_red_eye,
                     ),
-                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(12),),
+                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(30)),
                   ),
                 ),
                 SizedBox(
@@ -137,7 +139,14 @@ class Signup extends StatelessWidget {
                 ),
                 Container(
                   width: double.infinity,
-                  decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(30),  boxShadow:[
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.7),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ] ),
 
                   child: MaterialButton(
                     onPressed: () {
