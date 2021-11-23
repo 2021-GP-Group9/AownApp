@@ -1,7 +1,7 @@
-import 'dart:ui';
+
 
 import 'package:aownapp/book_appointment.dart';
-import 'package:aownapp/profile_screen.dart';
+import 'package:aownapp/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,18 +14,22 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
 bottomNavigationBar: Container(
   color: Color(0xffD6DACA),
-  height: 70,
+  height: 50,
+
   child: Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
       GestureDetector(
         onTap: (){
+
           Navigator.push(context,
             MaterialPageRoute(builder: (context) =>Profile()),);
         },
           child: Icon(Icons.person,)),
+
       GestureDetector(
           onTap: (){
+
             Navigator.push(context,
               MaterialPageRoute(builder: (context) =>Book_appointment()),);
           },
@@ -51,7 +55,7 @@ bottomNavigationBar: Container(
        print(value);
      },
      decoration: InputDecoration(
-       labelText: 'كلمة السر',
+       labelText: 'بحث',
        prefixIcon: Icon(
          Icons.search,
        ),
