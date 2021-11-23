@@ -1,6 +1,7 @@
 //heloo
 import 'home_screen.dart';
 import 'package:flutter/material.dart';
+import 'home_screen/home_screen.dart';
 import 'signup/signup_screen.dart';
 import 'login/login_screen.dart';
 
@@ -50,7 +51,7 @@ class WelcomeScrean extends StatelessWidget {
           Container(
             width: 200,
             height: 45,
-            decoration: BoxDecoration( color: Colors.black54,borderRadius: BorderRadius.circular(30),boxShadow:[
+            decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(30),boxShadow:[
             BoxShadow(
             color: Colors.grey.withOpacity(0.7),
             spreadRadius: 5,
