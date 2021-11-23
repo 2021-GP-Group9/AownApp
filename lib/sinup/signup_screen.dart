@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '../login/login_screen.dart';
 import 'signup_conn.dart';
@@ -31,7 +33,35 @@ class Signup extends StatelessWidget {
         ],
         centerTitle: true,
       ),
-      body: Padding(
+      body:Container(
+        child: Stack(
+            children:[
+        Positioned(
+        top: -MediaQuery.of(context).size.height * .15,
+        right: -MediaQuery.of(context).size.width * .4,
+        child: Container(
+            child: Transform.rotate(
+              angle: -pi / 3.5,
+              child: ClipPath(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * .5,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.lightGreen.shade50,
+                        Colors.lightGreen.shade50,
+
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )),
+      ),
+      Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
           child: SingleChildScrollView(
@@ -175,6 +205,7 @@ class Signup extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 SizedBox(
                   height: 10.0,
                 ),
@@ -199,6 +230,8 @@ class Signup extends StatelessWidget {
           ),
         ),
       ),
+   ], ),
+    ),
     );
-  }
+}
 }

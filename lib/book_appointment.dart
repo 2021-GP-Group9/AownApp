@@ -1,4 +1,4 @@
-import 'package:aownapp/profile_screen.dart';
+import 'package:aownapp/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'home_screen/home_screen.dart';
@@ -10,7 +10,7 @@ class Book_appointment extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: Container(
         color: Color(0xffD6DACA),
-        height: 70,
+        height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

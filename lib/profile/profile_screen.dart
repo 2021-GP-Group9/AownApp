@@ -1,22 +1,52 @@
 import 'dart:math';
 
-import 'package:aownapp/home_screen/home_screen.dart';
-import 'package:aownapp/sinup/signup_screen.dart';
-import '../home_screen.dart';
-import 'login_conn.dart';
+import 'package:aownapp/book_appointment.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
+import 'package:aownapp/home_screen/home_screen.dart';
+class Profile extends StatelessWidget {
 
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var phoneController = TextEditingController();
   @override
+
   Widget build(BuildContext context) {
+
     return Scaffold(
+      bottomNavigationBar: Container(
+        color: Color(0xffD6DACA),
+        height: 50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            GestureDetector(
+              // onTap: (){
+              //   Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) =>Profile()),);
+              // },
+                child: Icon(Icons.person,)),
+            GestureDetector(
+                onTap: (){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>Book_appointment()),);
+                },
+                child: Icon(Icons.add_circle,size: 49,)),
+            GestureDetector(
+                onTap: (){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>HomeScreen()),);
+                },
+                child: Icon(Icons.house))
+
+
+          ],
+        ),
+      ),
       appBar: AppBar(
         backgroundColor: Color(0xffD6DACB),
         title: Text(
-          'تسجيل دخول',
+          'الملف الشخصي',
           style: TextStyle(color: Colors.black87),),
         actions: [
           Align(
@@ -31,10 +61,11 @@ class LoginScreen extends StatelessWidget {
         ],
         centerTitle: true,
       ),
+
       body:Container(
         child: Stack(
-            children:[
-        Positioned(
+        children:[
+         Positioned(
         top: -MediaQuery.of(context).size.height * .15,
         right: -MediaQuery.of(context).size.width * .4,
         child: Container(
@@ -60,6 +91,7 @@ class LoginScreen extends StatelessWidget {
             )),
       ),
       Padding(
+
         padding: const EdgeInsets.all(20.0),
         child: Center(
           child: SingleChildScrollView(
@@ -67,14 +99,37 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'تسجيل الدخول',
+                  'الملف الشخصي',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 40.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
                 SizedBox(
                   height: 40.0,
+                ),
+                TextFormField(
+                  controller: nameController,
+                  keyboardType: TextInputType.name,
+                  onFieldSubmitted: (String value) {
+                    print(value);
+                  },
+                  onChanged: (String value) {
+                    print(value);
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'الإسم',
+                    prefixIcon: Icon(
+                      Icons.person,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),SizedBox(
+                  height: 10.0,
                 ),
                 TextFormField(
                   controller: emailController,
@@ -86,20 +141,18 @@ class LoginScreen extends StatelessWidget {
                     print(value);
                   },
                   decoration: InputDecoration(
-                    labelText: 'البريد الالكتروني',
+                    labelText: 'البريد الإلكتروني',
                     prefixIcon: Icon(
                       Icons.email,
                     ),
                     border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
                   ),
-                ),
-                SizedBox(
-                  height: 15.0,
+                ), SizedBox(
+                  height: 10.0,
                 ),
                 TextFormField(
-                  controller: passwordController,
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
+                  controller: phoneController,
+                  keyboardType: TextInputType.phone,
                   onFieldSubmitted: (String value) {
                     print(value);
                   },
@@ -107,37 +160,31 @@ class LoginScreen extends StatelessWidget {
                     print(value);
                   },
                   decoration: InputDecoration(
-                    labelText: 'كلمة المرور',
+                    labelText: 'رقم الجوال',
                     prefixIcon: Icon(
-                      Icons.lock,
-                    ),
-                    suffixIcon: Icon(
-                      Icons.remove_red_eye,
+                      Icons.phone,
                     ),
                     border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
                   ),
                 ),
+
                 SizedBox(
-                  height: 20.0,
+                  height: 10.0,
                 ),
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(30)),
 
                   child: MaterialButton(
-
                     onPressed: () {
+                      print(nameController.text);
                       print(emailController.text);
-                      print(passwordController.text);
-                      Conn_login(emailController.text,passwordController.text).login_function().then((value){
-                        print("login $value");
-                        Navigator.push(context,
-                          MaterialPageRoute(builder: (context) =>HomeScreen()),);
-                      });
+                      print(phoneController.text);
 
-                     },
+
+                    },
                     child: Text(
-                      'تسجيل الدخول',
+                      'حفظ',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -147,29 +194,16 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: 10.0,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                          MaterialPageRoute(builder: (context) =>Signup()),);
-                      },
-                      child: Text(
-                        'تسجيل جديد',
-                      ),
-                    ), Text(
-                      'ليس لديك حساب؟',
-                    ),
-                  ],
-                ),
+
               ],
             ),
           ),
         ),
       ),
-            ], ),
-      ),
+        ], ),
+    ),
+
+
     );
   }
 }

@@ -51,7 +51,7 @@ class WelcomeScrean extends StatelessWidget {
           Container(
             width: 200,
             height: 45,
-            decoration: BoxDecoration( color: Colors.black54,borderRadius: BorderRadius.circular(30),boxShadow:[
+            decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(30),boxShadow:[
             BoxShadow(
             color: Colors.grey.withOpacity(0.7),
             spreadRadius: 5,
