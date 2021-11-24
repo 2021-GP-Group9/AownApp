@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:aownapp/book_appointment.dart';
+import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:aownapp/home_screen/home_screen.dart';
