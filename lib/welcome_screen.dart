@@ -3,7 +3,7 @@ import 'book_appointment.dart';
 import 'home_screen.dart';
 import 'package:flutter/material.dart';
 import 'home_screen/home_screen.dart';
-import 'sinup/signup_screen.dart';
+import 'signup/signup_screen.dart';
 import 'login/login_screen.dart';
 
 class WelcomeScrean extends StatelessWidget {
