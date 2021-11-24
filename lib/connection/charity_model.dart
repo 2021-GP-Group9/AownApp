@@ -1,6 +1,9 @@
 import 'dart:convert';
 
-CharityModel charityModelFromJson(String str) => CharityModel.fromJson(json.decode(str));
+import 'package:flutter/cupertino.dart';
+
+CharityModel charityModelFromJson(String str) =>
+    CharityModel.fromJson(json.decode(str));
 
 class CharityModel {
   CharityModel({
@@ -16,10 +19,16 @@ class CharityModel {
   String description;
   String service;
   String city;
-  late String image = "";
+  String imageString = "";
+  late Image image;
 
-  void setImageLink(String link){
-    image = link;
+  void setImageLink(String link) {
+    imageString = link;
+    try {
+      image = Image.memory(base64Decode(link));
+    } catch (e) {
+      imageString = "";
+    }
   }
 
   factory CharityModel.fromJson(Map<String, dynamic> json) => CharityModel(
@@ -29,5 +38,4 @@ class CharityModel {
     service: json["service"],
     city: json["city"],
   );
-
 }

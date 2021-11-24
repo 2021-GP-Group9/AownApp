@@ -1,123 +1,191 @@
-
-
-import 'package:aownapp/book_appointment.dart';
+import 'dart:convert';
+import 'dart:ui';
+import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
+import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/profile/profile_screen.dart';
+import 'package:aownapp/view_screen.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   TextEditingController passwordController = TextEditingController();
+
+  bool _isLoadingData = true;
+  final CharityDataConnection _charityDataConnection = CharityDataConnection();
+
+  void requestData() {
+    _charityDataConnection.requestCharityData().then((value) {
+      setState(() {
+        _isLoadingData = false;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    requestData(); // method load befor load the page to get information of charities
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // main axis alignment : start
     // cross axis alignment : center
 
     return Scaffold(
-bottomNavigationBar: Container(
-  color: Color(0xffD6DACA),
-  height: 50,
-
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
-      GestureDetector(
-        onTap: (){
-
-          Navigator.push(context,
-            MaterialPageRoute(builder: (context) =>Profile()),);
-        },
-          child: Icon(Icons.person,)),
-
-      GestureDetector(
-          onTap: (){
-
-            Navigator.push(context,
-              MaterialPageRoute(builder: (context) =>Book_appointment()),);
-          },
-          child: Icon(Icons.add_circle,size: 49,)),
-      Icon(Icons.house)
-
-
-    ],
-  ),
-),
+      bottomNavigationBar: Container(
+        color: Color(0xffD6DACA),
+        height: 70,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Profile()),
+                  );
+                },
+                child: Icon(
+                  Icons.person,
+                  size: 35,
+                )),
+            GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Book_appointment()),
+                  );
+                },
+                child: Icon(
+                  Icons.add_circle,
+                  size: 49,
+                )),
+            Icon(
+              Icons.house ,
+            size: 35,)
+          ],
+        ),
+      ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-          backgroundColor: const Color(0xffD6DACA),
+        backgroundColor: const Color(0xffD6DACA),
         // leading: Icon(Icons.search),
-   title:TextFormField(
-     controller: passwordController,
-     keyboardType: TextInputType.visiblePassword,
-     obscureText: true,
-     onFieldSubmitted: (String value) {
-       print(value);
-     },
-     onChanged: (String value) {
-       print(value);
-     },
-     decoration: InputDecoration(
-       labelText: 'بحث',
-       prefixIcon: Icon(
-         Icons.search,
-       ),
-       // suffixIcon: Icon(
-       //   Icons.remove_red_eye,
-       // ),
-       // border: OutlineInputBorder(),
-     ),
-   ),
-        actions: [
+        title: TextFormField(
+          controller: passwordController,
+          keyboardType: TextInputType.visiblePassword,
+          obscureText: false,
+          onFieldSubmitted: (String value) {
+            print(value);
+          },
+          onChanged: (String value) {
+            setState(() {
+              _charityDataConnection.searchingTheCharityList(value);
+            });
+            print(value);
+          },
+          decoration: InputDecoration(
+            labelText: 'بحث',
+            prefixIcon: Icon(
+              Icons.search,
+            ),
 
-          Image.asset("assets/finalLogo.jpeg")
-        ],
+          ),
+        ),
+        actions: [Image.asset("assets/finalLogo.jpeg")],
       ),
-
-      body:ListView.builder(
+      body: (_isLoadingData)
+          ? Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Colors.white,
+        child: Center(
+          child:
+          CircularProgressIndicator(color: const Color(0xffD6DACA)),
+        ),
+      )
+          : ListView.builder(
           padding: const EdgeInsets.all(8),
           scrollDirection: Axis.vertical,
-          itemCount: 10, // #of charities
+          itemCount: _charityDataConnection.allCharityList.length,
+          // #of charities
           itemBuilder: (BuildContext context, int index) {
-    return Padding(
-      padding: const EdgeInsets.only(top:50,),
-      child: Container(
-      height: 100,
-      color: const Color(0xffD6DACA),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SizedBox(width: 40,),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center
-              ,crossAxisAlignment: CrossAxisAlignment.end,
-              children: const [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("text 1 small",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+            return Padding(
+              padding: const EdgeInsets.only(
+                top: 50,
+              ),
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewScreen()));
+                },
+                child: Container(
+                  // height: 100,
+                  color: const Color(0xffD6DACA),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              constraints: BoxConstraints(
+                                maxWidth:
+                                MediaQuery.of(context).size.width - 145,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  _charityDataConnection
+                                      .allCharityList[index].name,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              constraints: BoxConstraints(
+                                maxWidth:
+                                MediaQuery.of(context).size.width - 145,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(_charityDataConnection
+                                    .allCharityList[index].description),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 40),
+                        child: Container(
+                          height: 45,
+                          width: 45,
+                          child: (_charityDataConnection
+                              .allCharityList[index].imageString ==
+                              "")
+                              ? Icon(Icons.image)
+                              : _charityDataConnection
+                              .allCharityList[index].image,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("text 2 this is a long text"),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 40,left: 30),
-            child: Container(
-              height:45,
-              width: 45,
-              child: Image.asset("assets/finalLogo.jpeg",fit: BoxFit.cover,),
-            ),
-          )
-        ],
-
-      ),
-
-      ),
-    );
-    }
-    ),
-
+              ),
+            );
+          }),
     );
   }
 
