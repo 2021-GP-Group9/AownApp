@@ -325,6 +325,14 @@ class _SignupState extends State<Signup> {
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
+                Positioned(
+                    top: -60,
+                    child: CircleAvatar(
+                      backgroundColor:Color(0xffD6DACB),
+                      radius: 60,
+                      child: Icon(Icons.check_circle_outlined , color: Colors.white, size: 50,),
+                    )
+                ),
                 //Center(child: Text('Account created ')),
 
               ],
