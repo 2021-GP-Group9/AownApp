@@ -161,7 +161,7 @@ class _SignupState extends State<Signup> {
                     if (value.length < 10) {
 
                       validateMobile(value);
-                      //phone_err_msg="يجب أن يكون رقم جوال";
+                      phone_err_msg="يجب أن يكون رقم الجوال يحتوي على ١٠ أرقام";
                       setState(() {
                         phone_err = true;
                       });
@@ -320,7 +320,7 @@ class _SignupState extends State<Signup> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Account created'),
+          title: const Text('تم التسجيل بنجاح'),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
           content: SingleChildScrollView(
             child: ListBody(
@@ -332,7 +332,7 @@ class _SignupState extends State<Signup> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('OK'),
+              child: const Text('تم'),
               onPressed: () {
                 Navigator.push(
                   context,

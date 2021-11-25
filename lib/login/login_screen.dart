@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:aownapp/signup/signup_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'login_conn.dart';
@@ -42,7 +43,38 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
         centerTitle: true,
       ),
-      body: Padding(
+      body:
+      Container(
+        child: Stack(
+            children:[
+        Positioned(
+        top: -MediaQuery.of(context).size.height * .15,
+        right: -MediaQuery.of(context).size.width * .4,
+        child: Container(
+            child: Transform.rotate(
+              angle: -pi / 3.5,
+              child: ClipPath(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * .5,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.lightGreen.shade50,
+                        Colors.lightGreen.shade50,
+
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )),
+      ),
+
+
+      Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
           child: SingleChildScrollView(
@@ -86,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         email_err = true;
                       });
                     } else {
-                      email_err_msg = "الايميل مستخدم بالفعل";
+                     // email_err_msg = "يجب تعبئة الحقل";
                       setState(() {
                         email_err = false;
                       });
@@ -120,10 +152,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         password_err = true;
                       });
                     } else {
-                      password_err_msg = "كلمة السر خاطئة";
+                      //password_err_msg = "كلمة السر خاطئة";
                       setState(() {
                         password_err = false;
-                      });
+                      }); //جمعية تدوير
                     }
                   },
                   decoration: InputDecoration(
@@ -203,6 +235,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
+      ),
+            ], ),
       ),
     );
   }
