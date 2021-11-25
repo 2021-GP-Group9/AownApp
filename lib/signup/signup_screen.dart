@@ -244,6 +244,8 @@ class _SignupState extends State<Signup> {
                         } else if (value.toString() ==
                             'This phone number is already exists in our Application') {
                           showerror(false);
+                        }else{
+                          _accountCreated();
                         }
                       });
                     },
@@ -307,10 +309,43 @@ class _SignupState extends State<Signup> {
       phone_err_msg = "ادخل رقم جوال";
       return phone_err_msg;
     } else if (!regExp.hasMatch(value)) {
-      phone_err_msg = 'ادخل رقم جوال حقيقي';
+      phone_err_msg = 'أدخل رقم جوال يحتوي على ١٠ أرقام';
       return phone_err_msg;
     }
     return "null";
+  }
+  Future<void> _accountCreated() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Account created'),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                //Center(child: Text('Account created ')),
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LoginScreen()),
+                );
+
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 

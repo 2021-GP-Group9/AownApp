@@ -1,5 +1,5 @@
 import 'package:aownapp/signup/signup_screen.dart';
-import '../home_screen.dart';
+import 'package:aownapp/home_screen/home_screen.dart';
 import 'login_conn.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +15,10 @@ class _LoginScreenState extends State<LoginScreen> {
   var passwordController = TextEditingController();
   bool email_err = false;
   bool password_err = false;
+  bool credanitals=false;
   String? email_err_msg;
   String? password_err_msg;
+
 
 
   @override
@@ -62,19 +64,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.emailAddress,
                   onFieldSubmitted: (String value) {
                     print(value);
-                    if (value.toString() ==
-                        'fail mail') {
-
-                      email_err_msg ="خطا";
-                      setState(() {
-                        email_err = true;
-                      });
-                    } else {
-                      email_err_msg = "الايميل غير موجود";
-                      setState(() {
-                        email_err = false;
-                      });
-                    }
+                    // if (value.toString() ==
+                    //     'fail mail') {
+                    //
+                    //   email_err_msg ="خطا";
+                    //   setState(() {
+                    //     email_err = true;
+                    //   });
+                    // } else {
+                    //   email_err_msg = "الايميل غير موجود";
+                    //   setState(() {
+                    //     email_err = false;
+                    //   });
+                    // }
                   },
                   onChanged: (String value) {
                     print(value);
@@ -91,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   },
                   decoration: InputDecoration(
-                    errorText: email_err ? email_err_msg : null,
+                    errorText: email_err||credanitals ? email_err_msg : null,
                     labelText: 'البريد الالكتروني',
                     prefixIcon: Icon(
                       Icons.email,
@@ -125,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   },
                   decoration: InputDecoration(
-                    errorText: password_err ? password_err_msg : null,
+                    errorText: password_err||credanitals ? password_err_msg : null,
                     labelText: 'كلمة المرور',
                     prefixIcon: Icon(
                       Icons.lock,
@@ -155,12 +157,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           .then((value) {
                             print("login $value");
                         if (value.toString() ==
-                            'fail mail') {
+                            'fail') {
                           showerror(true);
 
                         } else if (value.toString() ==
-                            'fail pass') {
-                          showerror(false);
+                            'success') {
+                          Navigator.push(context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()),);
                         }
                             // Navigator.push(context,
                             //   MaterialPageRoute(
@@ -210,9 +214,9 @@ class _LoginScreenState extends State<LoginScreen> {
       if (bool) {
         email_err_msg = "الايميل غير صحيح";
         email_err = true;
-      } else {
         password_err_msg = "كلمة السر غير صحيحة";
         password_err = true;
+        credanitals=true;
       }
     });
   }
