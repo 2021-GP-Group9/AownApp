@@ -1,5 +1,6 @@
+import 'dart:math';
 import 'package:aownapp/signup/signup_screen.dart';
-import '../home_screen.dart';
+import 'package:aownapp/home_screen/home_screen.dart';
 import 'login_conn.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +16,10 @@ class _LoginScreenState extends State<LoginScreen> {
   var passwordController = TextEditingController();
   bool email_err = false;
   bool password_err = false;
+  bool credanitals=false;
   String? email_err_msg;
   String? password_err_msg;
+
 
 
   @override
@@ -40,7 +43,38 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
         centerTitle: true,
       ),
-      body: Padding(
+      body:
+      Container(
+        child: Stack(
+            children:[
+        Positioned(
+        top: -MediaQuery.of(context).size.height * .15,
+        right: -MediaQuery.of(context).size.width * .4,
+        child: Container(
+            child: Transform.rotate(
+              angle: -pi / 3.5,
+              child: ClipPath(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * .5,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.lightGreen.shade50,
+                        Colors.lightGreen.shade50,
+
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )),
+      ),
+
+
+      Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
           child: SingleChildScrollView(
@@ -62,19 +96,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.emailAddress,
                   onFieldSubmitted: (String value) {
                     print(value);
-                    if (value.toString() ==
-                        'fail mail') {
-
-                      email_err_msg ="خطا";
-                      setState(() {
-                        email_err = true;
-                      });
-                    } else {
-                      email_err_msg = "الايميل غير موجود";
-                      setState(() {
-                        email_err = false;
-                      });
-                    }
+                    // if (value.toString() ==
+                    //     'fail mail') {
+                    //
+                    //   email_err_msg ="خطا";
+                    //   setState(() {
+                    //     email_err = true;
+                    //   });
+                    // } else {
+                    //   email_err_msg = "الايميل غير موجود";
+                    //   setState(() {
+                    //     email_err = false;
+                    //   });
+                    // }
                   },
                   onChanged: (String value) {
                     print(value);
@@ -84,14 +118,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         email_err = true;
                       });
                     } else {
-                      email_err_msg = "الايميل مستخدم بالفعل";
+                     // email_err_msg = "يجب تعبئة الحقل";
                       setState(() {
                         email_err = false;
                       });
                     }
                   },
                   decoration: InputDecoration(
-                    errorText: email_err ? email_err_msg : null,
+                    errorText: email_err||credanitals ? email_err_msg : null,
                     labelText: 'البريد الالكتروني',
                     prefixIcon: Icon(
                       Icons.email,
@@ -118,14 +152,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         password_err = true;
                       });
                     } else {
-                      password_err_msg = "كلمة السر خاطئة";
+                      //password_err_msg = "كلمة السر خاطئة";
                       setState(() {
                         password_err = false;
-                      });
+                      }); //جمعية تدوير
                     }
                   },
                   decoration: InputDecoration(
-                    errorText: password_err ? password_err_msg : null,
+                    errorText: password_err||credanitals ? password_err_msg : null,
                     labelText: 'كلمة المرور',
                     prefixIcon: Icon(
                       Icons.lock,
@@ -155,12 +189,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           .then((value) {
                             print("login $value");
                         if (value.toString() ==
-                            'fail mail') {
+                            'fail') {
                           showerror(true);
 
                         } else if (value.toString() ==
-                            'fail pass') {
-                          showerror(false);
+                            'success') {
+                          Navigator.push(context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()),);
                         }
                             // Navigator.push(context,
                             //   MaterialPageRoute(
@@ -200,6 +236,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+            ], ),
+      ),
     );
   }
 
@@ -210,9 +248,9 @@ class _LoginScreenState extends State<LoginScreen> {
       if (bool) {
         email_err_msg = "الايميل غير صحيح";
         email_err = true;
-      } else {
         password_err_msg = "كلمة السر غير صحيحة";
         password_err = true;
+        credanitals=true;
       }
     });
   }
