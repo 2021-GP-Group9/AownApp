@@ -61,6 +61,24 @@ class _ViewScreenState extends State<ViewScreen> {
     ],
     ),
     ),
+      appBar: AppBar(
+        backgroundColor: Color(0xffD6DACB),
+        title: Text(
+          'تفاصيل الجمعية الخيرية',
+          style: TextStyle(color: Colors.black87),),
+        actions: [
+          Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+              'assets/finalLogo.jpeg',
+              fit: BoxFit.contain,
+              width: 45,
+              height: 45,
+            ),
+          ),
+        ],
+        centerTitle: true,
+      ),
     );
 
 }
