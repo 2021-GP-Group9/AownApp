@@ -16,7 +16,7 @@ class Profile extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: Container(
         color: Color(0xffD6DACA),
-        height: 50,
+        height: 70,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -25,7 +25,7 @@ class Profile extends StatelessWidget {
               //   Navigator.push(context,
               //     MaterialPageRoute(builder: (context) =>Profile()),);
               // },
-                child: Icon(Icons.person,)),
+                child: Icon(Icons.person,size: 35,)),
             GestureDetector(
                 onTap: (){
                   Navigator.push(context,
@@ -37,7 +37,7 @@ class Profile extends StatelessWidget {
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>HomeScreen()),);
                 },
-                child: Icon(Icons.house))
+                child: Icon(Icons.house,size: 35,))
 
 
           ],
