@@ -12,8 +12,8 @@ class Conn_login {
   {
   try{
     final response =await http.post(Uri.parse(constant.login_url),body:{
-      "email":email,
-      "password":password
+      "donorEmail":email,
+      "donorPassword":password
     });
     if(response.statusCode==constant.responseok)
     {
