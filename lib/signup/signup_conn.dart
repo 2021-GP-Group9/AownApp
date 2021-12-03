@@ -14,9 +14,9 @@ class Conn {
     try{
       final response =await http.post(Uri.parse(constant.url),body:{
         "donorName":donorName,
-        "email":email,
-        "phone":phonenumber,
-        "password":password
+        "donorEmail":email,
+        "donorPhone":phonenumber,
+        "donorPassword":password
       });
       if(true)
         {
