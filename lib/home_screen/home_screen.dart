@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
+import 'package:aownapp/connection/charity_model.dart';
 import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:aownapp/view_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../viewPage.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController passwordController = TextEditingController();
-
+//method to show the download icone befor get data
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
 
@@ -120,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewPage(charityModel:_charityDataConnection.allCharityList[index],)));
                 },
                 child: Container(
                   // height: 100,
@@ -170,12 +173,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.only(right: 40),
                         child: Container(
-                          height: 45,
-                          width: 45,
+                          height: 49,
+                          width: 49,
                           child: (_charityDataConnection
                               .allCharityList[index].imageString ==
                               "")
-                              ? Icon(Icons.image)
+                              ? Icon(
+                              Icons.image,
+                              size:55
+                          )
                               : _charityDataConnection
                               .allCharityList[index].image,
                         ),
