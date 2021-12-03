@@ -74,7 +74,33 @@ final CharityModel charityModel;
       body:Container(
         child:Column (
           children:[
-            Container(
+            Positioned(
+                top: 35,
+                child: Material(
+              child: Container(
+                // height: 180.0,
+                // width: width*0.9,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    // border: Border.all(color: Colors.white70) ,
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(50)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 4,
+                        blurRadius: 20,
+                        offset: Offset(-10.0, 10.0), // changes position of shadow
+                      ),
+                    ]
+                ),
+              ),
+
+            )),
+
+Positioned(
+    top: 35,
+    child: Container(
               child: Text(
               charityModel.name,
               style: TextStyle(
@@ -82,7 +108,8 @@ final CharityModel charityModel;
                   fontWeight: FontWeight.bold),
 
             ),
-            ),
+            )),
+            Divider(color: Colors.grey,),
             Container(
                 height: 100,
                 width: 100,
