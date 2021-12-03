@@ -4,7 +4,6 @@ import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
 import 'package:aownapp/connection/charity_model.dart';
 import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/profile/profile_screen.dart';
-import 'package:aownapp/view_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../viewPage.dart';

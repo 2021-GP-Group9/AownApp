@@ -1,28 +1,12 @@
-import 'dart:ui';
-import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:aownapp/profile/profile_screen.dart';
-import 'package:aownapp/view_screen.dart';
-import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
+import 'package:flutter/material.dart';
+import 'bookAppointment/book_appointment_screen.dart';
 import 'connection/charity_model.dart';
-import 'connection/get_charaty_data.dart';
 import 'home_screen/home_screen.dart';
-import 'package:http/http.dart' as http;
 
-
-
-
-class ViewScreen extends StatefulWidget {
-
-  @override
-  _ViewScreenState createState() => _ViewScreenState();
-  final CharityModel charityModel;
-  ViewScreen({Key? key,required this.charityModel}) : super(key: key);
-}
-
-class _ViewScreenState extends State<ViewScreen> {
-
-
+class ViewPage extends StatelessWidget {
+final CharityModel charityModel;
+  const ViewPage({Key? key,required this.charityModel}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,13 +71,40 @@ class _ViewScreenState extends State<ViewScreen> {
         ],
         centerTitle: true,
       ),
-      // body: Column(
-      //   children:[
-      //     Text(charityModel.name),
-      //     Image.network(charityModel.imageString),
-      //     Text(charityModel.description)
-      //   ],
-      // )
+      body:Container(
+        child:Column (
+          children:[
+            Container(
+              child: Text(
+              charityModel.name,
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+
+            ),
+            ),
+            Container(
+                height: 100,
+                width: 100,
+              child: (charityModel.imageString=="")?Icon(Icons.image, size:100)
+                  :charityModel.image,
+            ),
+            Container(
+              child:Text(charityModel.description,
+                style: TextStyle(fontSize: 20,)
+              )),
+               Container(
+                 child:
+                 Text(
+                     charityModel.city)
+               )
+
+          ],
+        )
+
+
+      )
 
     );
-  }}
+  }
+}
