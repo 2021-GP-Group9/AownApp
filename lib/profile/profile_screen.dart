@@ -2,48 +2,71 @@ import 'dart:math';
 
 import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:aownapp/login/login_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
-class Profile extends StatelessWidget {
+import 'package:shared_preferences/shared_preferences.dart';
+import '../welcome_screen.dart';
+import 'profile_data.dart';
+import 'profile_conn.dart';
+class Profile extends StatefulWidget {
+  const Profile({Key? key}) : super(key: key);
 
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
   @override
-
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      bottomNavigationBar: Container(
-        color: Color(0xffD6DACA),
-        height: 70,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-              // onTap: (){
-              //   Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) =>Profile()),);
-              // },
-                child: Icon(Icons.person,size: 35,)),
-            GestureDetector(
-                onTap: (){
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) =>Book_appointment()),);
-                },
-                child: Icon(Icons.add_circle,size: 49,)),
-            GestureDetector(
-                onTap: (){
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) =>HomeScreen()),);
-                },
-                child: Icon(Icons.house,size: 35,))
+    @override
+    void initState() {
+      super.initState();
+      // get_id();
+    }
+    return Scaffold( bottomNavigationBar: Container(
+      color: Color(0xffD6DACA),
+      height: 70,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          GestureDetector(
+            // onTap: (){
+            //   Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) =>Profile()),);
+            // },
+              child: Icon(Icons.person, size: 35,)),
+          GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (context) => Book_appointment()),);
+              },
+              child: Icon(Icons.add_circle, size: 49,)),
 
 
-          ],
-        ),
+          GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),);
+              },
+              child: Icon(Icons.house, size: 35,))
+
+
+        ],
       ),
+    ),
       appBar: AppBar(
+        leading: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) =>
+                      WelcomeScrean()), (Route<dynamic> route) => false);
+            },
+            child: Icon(Icons.logout_rounded)
+        ),
         backgroundColor: Color(0xffD6DACB),
         title: Text(
           'الملف الشخصي',
@@ -62,19 +85,31 @@ class Profile extends StatelessWidget {
         centerTitle: true,
       ),
 
-      body:Container(
+      body: Container(
         child: Stack(
-          children:[
+          children: [
             Positioned(
-              top: -MediaQuery.of(context).size.height * .15,
-              right: -MediaQuery.of(context).size.width * .4,
+              top: -MediaQuery
+                  .of(context)
+                  .size
+                  .height * .15,
+              right: -MediaQuery
+                  .of(context)
+                  .size
+                  .width * .4,
               child: Container(
                   child: Transform.rotate(
                     angle: -pi / 3.5,
                     child: ClipPath(
                       child: Container(
-                        height: MediaQuery.of(context).size.height * .5,
-                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * .5,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
@@ -128,7 +163,7 @@ class Profile extends StatelessWidget {
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                      ),SizedBox(
+                      ), SizedBox(
                         height: 10.0,
                       ),
                       TextFormField(
@@ -145,7 +180,8 @@ class Profile extends StatelessWidget {
                           prefixIcon: Icon(
                             Icons.email,
                           ),
-                          border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
+                          border: OutlineInputBorder(borderRadius: BorderRadius
+                              .circular(30),),
                         ),
                       ), SizedBox(
                         height: 10.0,
@@ -164,7 +200,8 @@ class Profile extends StatelessWidget {
                           prefixIcon: Icon(
                             Icons.phone,
                           ),
-                          border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
+                          border: OutlineInputBorder(borderRadius: BorderRadius
+                              .circular(30),),
                         ),
                       ),
 
@@ -173,15 +210,14 @@ class Profile extends StatelessWidget {
                       ),
                       Container(
                         width: double.infinity,
-                        decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(30)),
+                        decoration: BoxDecoration(color: Colors.black87,
+                            borderRadius: BorderRadius.circular(30)),
 
                         child: MaterialButton(
                           onPressed: () {
                             print(nameController.text);
                             print(emailController.text);
                             print(phoneController.text);
-
-
                           },
                           child: Text(
                             'حفظ',
@@ -200,10 +236,25 @@ class Profile extends StatelessWidget {
                 ),
               ),
             ),
-          ], ),
+          ],),
       ),
 
 
-    );
+    );;
   }
 }
+
+
+  // void get_id() async {
+  //   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  //   final SharedPreferences prefs = await _prefs;
+  //   if (prefs.containsKey("idKey")) {
+  //     profile_date mydata=Conn(prefs.getInt("idKey")).save_it_to_db() as profile_date;
+  //     print(mydata.name);
+  //   }
+  //   else {
+  //     print("key error");
+  //
+  //   }
+  // }
+

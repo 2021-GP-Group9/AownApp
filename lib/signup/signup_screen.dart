@@ -18,6 +18,7 @@ class _SignupState extends State<Signup> {
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
   var passwordController = TextEditingController();
+  bool name_err = false;
   bool email_err = false;
   bool phone_err = false;
   bool password_err = false;
@@ -25,6 +26,7 @@ class _SignupState extends State<Signup> {
   String? phone_err_msg;
   String? email_err_msg;
   String? password_err_msg;
+  String? name_err_msg;
 
   @override
   Widget build(BuildContext context) {
@@ -114,11 +116,28 @@ class _SignupState extends State<Signup> {
                         keyboardType: TextInputType.name,
                         onFieldSubmitted: (String value) {
                           print(value);
+                          if (value.isEmpty) {
+                            name_err_msg = "يجب تعبئة الحقل";
+                            setState(() {
+                              name_err = true;
+                            });
+                          }else{
+                            name_err = false;
+                          }
                         },
                         onChanged: (String value) {
                           print(value);
+                          if (value.isEmpty) {
+                            name_err_msg = "يجب تعبئة الحقل";
+                            setState(() {
+                              name_err = true;
+                            });
+                          }else{
+                            name_err = false;
+                          }
                         },
                         decoration: InputDecoration(
+                          errorText: name_err ? name_err_msg : null,
                           labelText: 'الإسم',
                           prefixIcon: Icon(
                             Icons.person,
@@ -173,7 +192,7 @@ class _SignupState extends State<Signup> {
                         keyboardType: TextInputType.phone,
                         onFieldSubmitted: (String value) {
                           print(value);
-                          if (value.length < 10) {
+                          if (value.length < 10 || int.tryParse(value) == null) {
                             validateMobile(value);
                             phone_err_msg =
                             "يجب أن يكون رقم الجوال يحتوي على ١٠ أرقام";
@@ -273,8 +292,10 @@ class _SignupState extends State<Signup> {
                               } else if (value.toString() ==
                                   'This phone number is already exists in our Application') {
                                 showerror(false);
-                              } else {
+                              } else if(value.toString()== "Account Created"){
                                 _accountCreated();
+                              }else if(value.toString()== "insert data" || value.toString()== "Getting Error"){
+                                _accountError();
                               }
                             });
                           },
@@ -334,7 +355,7 @@ class _SignupState extends State<Signup> {
   String? validateMobile(String value) {
     String pattern = r"^\+?0[0-9]{10}$";
     RegExp regExp = new RegExp(pattern);
-    if (value.isEmpty) {
+    if (value.isEmpty || int.tryParse(value) == null) {
       phone_err_msg = "ادخل رقم جوال";
       return phone_err_msg;
     } else if (!regExp.hasMatch(value)) {
@@ -371,7 +392,7 @@ class _SignupState extends State<Signup> {
                     top: -60,
                     child: CircleAvatar(
                       backgroundColor: Color(0xffD6DACB),
-                      radius: 60,
+                      radius: 30,
                       child: Icon(
                         Icons.check_circle_outlined, color: Colors.white,
                         size: 50,),
@@ -398,7 +419,49 @@ class _SignupState extends State<Signup> {
       },
     );
   }
+  Future<void> _accountError() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('ادخل جميع البيانات'),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30))),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Positioned(
+                    top: -60,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.red,
+                      radius: 30,
+                      child: Icon(
+                        Icons.clear_outlined, color: Colors.white,
+                        size: 50,),
+                    )
+                ),
+                //Center(child: Text('Account created ')),
 
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('تم'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Signup()),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 }
 

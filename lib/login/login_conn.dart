@@ -8,17 +8,17 @@ class Conn_login {
   final String password;
 
   Conn_login(@required this.email,@required this.password);
-  Future<String> login_function() async
+  Future<dynamic> login_function() async
   {
   try{
     final response =await http.post(Uri.parse(constant.login_url),body:{
-      "email":email,
-      "password":password
+      "donorEmail":email,
+      "donorPassword":password
     });
     if(response.statusCode==constant.responseok)
     {
       final result=jsonDecode(response.body);
-      return result;
+      return result.toString();
     }
     else{
       return "error";

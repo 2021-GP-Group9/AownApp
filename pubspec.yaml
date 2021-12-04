@@ -79,21 +79,21 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
 fonts:
-  - family: Almarai Light
-    fonts:
-      - asset: assets/fonts/Almarai-Light.ttf
-      - weight: 700
+     - family: Almarai Light
+       fonts:
+          - asset: assets/fonts/Almarai-Light.ttf
+          - weight: 700
 
-  - family: Almarai Bold
-    fonts:
-      - asset: assets/fonts/Almarai-Bold.ttf
-      - weight: 700
-  - family: Almarai ExtraBold
-    fonts:
-      - asset: assets/fonts/Almarai-ExtraBold.ttf
-  - family: Almarai Regular
-    fonts:
-      - asset: assets/fonts/Almarai-Regular.ttf
+     - family: Almarai Bold
+       fonts:
+          - asset: assets/fonts/Almarai-Bold.ttf
+          - weight: 700
+     - family: Almarai ExtraBold
+       fonts:
+          - asset: assets/fonts/Almarai-ExtraBold.ttf
+     - family: Almarai Regular
+       fonts:
+          - asset: assets/fonts/Almarai-Regular.ttf
 
   #   - family: Trajan Pro
   #     fonts:
