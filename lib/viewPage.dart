@@ -1,11 +1,10 @@
-
+import 'package:aownapp/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'bookAppointment/book_appointment_screen.dart';
 import 'connection/charity_model.dart';
 import 'home_screen/home_screen.dart';
-import 'package:aownapp/profile/profile_screen.dart';
 
-class ViewPage extends StatefulWidget {
+class ViewPage extends StatelessWidget {
 final CharityModel charityModel;
   const ViewPage({Key? key,required this.charityModel}) : super(key: key);
   @override
@@ -125,46 +124,14 @@ Positioned(
                  child:
                  Text(
                      charityModel.city)
-               ),
-            Container(
-              child: Text(charityModel.location),
-            ),
+               )
 
-           Container(
-            child: Text (charityModel.phone),
-
-           ),
-        Container(
-          child: Row(
-            children: [
-              Text('احجز موعد '),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Book_appointment()),
-                    );
-                  },
-                  child: Icon(
-                    Icons.add_circle ,
-                    size: 35,
-                  )),
-            ],
-          ),
-        ),
-
-        ],
+          ],
         )
 
 
       )
 
     );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
   }
 }

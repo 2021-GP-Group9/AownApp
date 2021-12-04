@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: EdgeInsets.all(8.0),
                                 child:
                                 Text(_charityDataConnection
-                                    .allCharityList[index].description,
+                                    .allCharityList[index].description, textAlign: TextAlign.right,textDirection:TextDirection.rtl ,
                                   style: TextStyle(
                                   fontSize: 13,
                                     color: Colors.blueGrey,
