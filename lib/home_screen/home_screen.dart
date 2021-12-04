@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
+import 'package:aownapp/connection/charity_model.dart';
 import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/profile/profile_screen.dart';
-import 'package:aownapp/view_screen.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+
+import '../viewPage.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,10 +16,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController passwordController = TextEditingController();
-
+//method to show the download icone befor get data
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
-
+  int selectedPage = 0;
+  final _pageOption=[Profile(),HomeScreen()];
   void requestData() {
     _charityDataConnection.requestCharityData().then((value) {
       setState(() {
@@ -37,40 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // cross axis alignment : center
 
     return Scaffold(
-      bottomNavigationBar: Container(
-        color: Color(0xffD6DACA),
-        height: 70,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Profile()),
-                  );
-                },
-                child: Icon(
-                  Icons.person,
-                  size: 35,
-                )),
-            GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Book_appointment()),
-                  );
-                },
-                child: Icon(
-                  Icons.add_circle,
-                  size: 49,
-                )),
-            Icon(
-              Icons.house ,
-            size: 35,)
-          ],
-        ),
-      ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xffD6DACA),
@@ -120,11 +90,25 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewPage(charityModel:_charityDataConnection.allCharityList[index],)));
                 },
                 child: Container(
                   // height: 100,
-                  color: const Color(0xffD6DACA),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                      // border: Border.all(color: Colors.white70) ,
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(50)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 4,
+                          blurRadius: 20,
+                          offset: Offset(-10.0, 10.0), // changes position of shadow
+                        ),
+                      ]
+                  ),
+
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -148,9 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   _charityDataConnection
                                       .allCharityList[index].name,
                                   style: TextStyle(
-                                      fontSize: 14,
+                                    fontFamily: 'almarai',
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold),
-                                ),
+                                    ),
+
                               ),
                             ),
                             Container(
@@ -160,22 +146,31 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: Text(_charityDataConnection
-                                    .allCharityList[index].description),
+                                child:
+                                Text(_charityDataConnection
+                                    .allCharityList[index].description, textAlign: TextAlign.right,textDirection:TextDirection.rtl ,
+                                  style: TextStyle(
+                                  fontSize: 13,
+                                    color: Colors.blueGrey,
+                                ),),
                               ),
                             )
+                            ,
                           ],
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 40),
                         child: Container(
-                          height: 45,
-                          width: 45,
+                          height: 49,
+                          width: 49,
                           child: (_charityDataConnection
                               .allCharityList[index].imageString ==
                               "")
-                              ? Icon(Icons.image)
+                              ? Icon(
+                              Icons.image,
+                              size:49
+                          )
                               : _charityDataConnection
                               .allCharityList[index].image,
                         ),
@@ -186,9 +181,45 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }),
-    );
-  }
+      bottomNavigationBar: ConvexAppBar(
+        items: [
+          TabItem(icon:Icon(Icons.person),title:'ملف شخصي'),
+         // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
+          TabItem(icon:Icon(Icons.house),title:'الرئيسية'),
+        ],
+        height: 55,
+        initialActiveIndex: selectedPage,
+        onTap: (int index){
+          print(index);
+          setState(() {
+            selectedPage = index;
+            _pn(selectedPage);
+          });
+        },
+        backgroundColor: const Color(0xffD6DACA),
+      ),
 
+    );
+
+  }
+  _pn(int selectedPage){
+    if(selectedPage == 0){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Profile()),
+      );
+    // } else if(selectedPage == 1){
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => Book_appointment()),
+    //   );
+    } else if(selectedPage == 1){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    }
+  }
   // when notification icon button clicked
   void onNotification() {
     print('notification clicked');

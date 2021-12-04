@@ -31,7 +31,8 @@ class Book_appointment extends StatelessWidget {
                     Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Profile()),);
                   },
-                  child: Icon(Icons.person,)),
+                  child: Icon(Icons.person,
+                  size: 35,)),
               GestureDetector(
                   onTap: () {
                     Navigator.push(context,
@@ -44,7 +45,8 @@ class Book_appointment extends StatelessWidget {
                     Navigator.push(context,
                       MaterialPageRoute(builder: (context) => HomeScreen()),);
                   },
-                  child: Icon(Icons.house))
+                  child: Icon(Icons.house,
+                  size:35,))
 
 
             ],
