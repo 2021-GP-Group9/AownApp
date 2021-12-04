@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [Image.asset("assets/finalLogo.jpeg")],
       ),
-      body: (_isLoadingData)
+       body:(_isLoadingData)
           ? Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
