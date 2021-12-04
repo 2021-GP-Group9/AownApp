@@ -71,44 +71,35 @@ final CharityModel charityModel;
         ],
         centerTitle: true,
       ),
-      body:Container(
+      body:Container(// container 1 that contain every thing
+        padding: const EdgeInsets.all(50),
+        height: MediaQuery.of(context).size.height,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 4,
+                blurRadius: 20,
+                offset: Offset(-10.0, 10.0), // changes position of shadow
+              ),
+            ]
+        ),
         child:Column (
           children:[
-            Positioned(
-                top: 35,
-                child: Material(
-              child: Container(
-                // height: 180.0,
-                // width: width*0.9,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    // border: Border.all(color: Colors.white70) ,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(50)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 4,
-                        blurRadius: 20,
-                        offset: Offset(-10.0, 10.0), // changes position of shadow
-                      ),
-                    ]
-                ),
-              ),
-
-            )),
-
-Positioned(
-    top: 35,
-    child: Container(
+           Container(
               child: Text(
               charityModel.name,
               style: TextStyle(
+                fontFamily: 'Almarai Bold',
                   fontSize: 20,
-                  fontWeight: FontWeight.bold),
+                 // fontWeight: FontWeight.bold
+                ),
 
             ),
-            )),
+            ),
             Divider(color: Colors.grey,),
             Container(
                 height: 100,
@@ -117,18 +108,94 @@ Positioned(
                   :charityModel.image,
             ),
             Container(
-              child:Text(charityModel.description,
-                style: TextStyle(fontSize: 20,)
+              child:Text(charityModel.description, textAlign: TextAlign.end,
+                style: TextStyle(
+                 fontFamily: 'Almarai Light' ,
+                fontSize: 20,)
               )),
-               Container(
-                 child:
-                 Text(
-                     charityModel.city)
-               )
+            Divider(color: Colors.grey,),
+            Row(
+               children: <Widget>[
+                Expanded(child: Text(
+                    charityModel.city,textAlign: TextAlign.right,textDirection:TextDirection.rtl,
+                    style: TextStyle(
+                      fontFamily: 'Almarai Light' ,
+                      fontSize: 20,)),
+                ),
+                 Expanded(child: Text("المدينة:", textAlign: TextAlign.right,textDirection:TextDirection.rtl,
+                     style: TextStyle(
+                       fontFamily: 'Almarai Light' ,
+                       fontSize: 20,))
+                 )
 
+               ]
+                ),
+            Row(
+                children: <Widget>[
+                  Expanded(child: Text(
+                      charityModel.city,textAlign: TextAlign.right,textDirection:TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Almarai Light' ,
+                        fontSize: 20,)),
+                  ),
+                  Expanded(child: Text("الموقع:", textAlign: TextAlign.right,textDirection:TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Almarai Light' ,
+                        fontSize: 20,))
+                  )
+
+                ]
+            ),
+            Row(
+                children: <Widget>[
+                  Expanded(child: Text(
+                      charityModel.city,textAlign: TextAlign.right,textDirection:TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Almarai Light' ,
+                        fontSize: 20,)),
+                  ),
+                  Expanded(child: Text("رقم الهاتف:", textAlign: TextAlign.right,textDirection:TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Almarai Light' ,
+                        fontSize: 20,))
+                  )
+
+                ]
+            ),
+            Row(
+                children: <Widget>[
+                  Expanded(child: Text(
+                      charityModel.city,textAlign: TextAlign.right,textDirection:TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Almarai Light' ,
+                        fontSize: 20,)),
+                  ),
+                  Expanded(child: Text("البريد الإلكتروني:", textAlign: TextAlign.right,textDirection:TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Almarai Light' ,
+                        fontSize: 20,))
+                  )
+
+                ]
+            ),
+            Row(
+                children: <Widget>[
+                  Expanded(child: Text(
+                      charityModel.city,textAlign: TextAlign.right,textDirection:TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Almarai Light' ,
+                        fontSize: 20,)),
+                  ),
+                  Expanded(child: Text("نوع التبرعات:", textAlign: TextAlign.right,textDirection:TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Almarai Light' ,
+                        fontSize: 20,))
+                  )
+
+                ]
+            )
           ],
         )
-
 
       )
 
