@@ -26,11 +26,11 @@ class CharityModel {
   final String service;
   final String city;
   final String status ;
-  final String phone;
+  final int phone;
   final String location;
   final String email;
   final String donationType;
-  final String licenseNumber;
+  final int licenseNumber;
   String imageString = "";
   late Image image;
 
