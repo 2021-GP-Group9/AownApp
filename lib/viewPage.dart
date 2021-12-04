@@ -4,9 +4,11 @@ import 'bookAppointment/book_appointment_screen.dart';
 import 'connection/charity_model.dart';
 import 'home_screen/home_screen.dart';
 
-class ViewPage extends StatefulWidget {
-final CharityModel charityModel;
-  const ViewPage({Key? key,required this.charityModel}) : super(key: key);
+class ViewPage extends StatelessWidget {
+  final CharityModel charityModel;
+
+  const ViewPage({Key? key, required this.charityModel}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,103 +73,201 @@ final CharityModel charityModel;
         ],
         centerTitle: true,
       ),
-      body:Container(
-        child:Column (
-          children:[
-            Positioned(
-                top: 35,
-                child: Material(
-              child: Container(
-                // height: 180.0,
-                // width: width*0.9,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    // border: Border.all(color: Colors.white70) ,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(50)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 4,
-                        blurRadius: 20,
-                        offset: Offset(-10.0, 10.0), // changes position of shadow
-                      ),
-                    ]
-                ),
+      body: Container(
+        // container 1 that contain every thing
+
+        padding: const EdgeInsets.all(50),
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 4,
+                blurRadius: 20,
+                offset: Offset(-10.0, 10.0), // changes position of shadow
               ),
+            ]
+        ),
+        child: Column(
+          children:[
+        Container(
+        child: Text(
+        charityModel.name,
+          style: TextStyle(
+            fontFamily: 'Almarai Bold',
+            fontSize: 20,
+            // fontWeight: FontWeight.bold
+          ),
 
-            )),
+        ),
+      ),
+      Divider(color: Colors.grey,),
+      Container(
+        height: 100,
+        width: 100,
+        child: (charityModel.imageString == "") ? Icon(Icons.image, size: 100)
+            : charityModel.image,
+      ),
+      Container(
 
-Positioned(
-    top: 35,
-    child: Container(
-              child: Text(
-              charityModel.name,
+          child: Text(charityModel.description, textAlign: TextAlign.end,
               style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+                fontFamily: 'Almarai Light',
+                fontSize: 14,)
+          )),
+      Divider(color: Colors.grey,),
+      Row(
+          children: <Widget>[
+            Expanded(child: Text(
+                charityModel.city, textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,)),
+            ),
+            Expanded(child: Text("المدينة:", textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,))
+            )
 
+          ]
+      ),
+      Row(
+          children: <Widget>[
+            Expanded(child: Text(
+                charityModel.location, textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,)),
             ),
-            )),
-            Divider(color: Colors.grey,),
-            Container(
-                height: 100,
-                width: 100,
-              child: (charityModel.imageString=="")?Icon(Icons.image, size:100)
-                  :charityModel.image,
-            ),
-            Container(
-              child:Text(charityModel.description,
-                style: TextStyle(fontSize: 20,)
-              )),
-               Container(
-                 child:
-                 Text(
-                     charityModel.city)
-               ),
-            Container(
-              child: Text(charityModel.location) ,
-            ),
-            Container(
-              child: Text(charityModel.phone) ,
-            ),
-            Container(
-              child: Text(charityModel.donationType) ,
-            ),
-            Container(
-              child: Text(charityModel.email) ,
-            ),
-            Container(
-              child: Text(charityModel.service) ,
-            ),
-            Container(
-              child: Text(charityModel.licenseNumber) ,
-            ),
-            Container(
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Book_appointment()),
-                    );
-                  },
-                  child: Icon(
-                    Icons.add_circle,
-                    size: 50,
-                  )),
-            ),
-          ],
-        )
+            Expanded(child: Text("الموقع:", textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,))
+            )
 
+          ]
+      ),
+      Row(
+          children: <Widget>[
+            Expanded(child: Text(
+                charityModel.phone, textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,)),
+            ),
+            Expanded(child: Text("رقم الهاتف:", textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,))
+            )
 
-      )
+          ]
+      ), Row(
+                children: <Widget>[
+                  Expanded(child: Text(
+                      charityModel.licenseNumber,textAlign:
+                  TextAlign.right,textDirection:TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Almarai Light' ,
+                        fontSize: 14,)),
+                  ),
+                  Expanded(child: Text("رقم الترخيص:", textAlign: TextAlign.right,textDirection:TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Almarai Light' ,
+                        fontSize: 14,))
+                  )
+
+                ]
+            ),
+      Row(
+
+          children: <Widget>[
+            Expanded(child: Text(
+                charityModel.email, textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,)),
+            ),
+            Expanded(child: Text(
+                "البريد الإلكتروني:", textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,))
+            )
+
+          ]
+      ),
+      Row(
+          children: <Widget>[
+            Expanded(child: Text(
+                charityModel.donationType, textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,)),
+            ),
+            Expanded(child: Text("نوع التبرعات:", textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,))
+            )
+
+          ]
+      ),
+      Row(
+          children: <Widget>[
+            Expanded(child: Text(
+                charityModel.service, textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,)),
+            ),
+            Expanded(child: Text(
+                "استلام التبرعات من المنزل:", textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: 'Almarai Light',
+                  fontSize: 14,))
+            )
+
+          ]
+      ),
+
+    Container(
+    child: GestureDetector(
+    onTap: () {
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => Book_appointment()),
+    );
+    },
+    child: Icon(
+    Icons.add_circle,
+    size: 50,
+    )),
+    ),
+    ],
+    )
+
+    )
 
     );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
   }
 }
