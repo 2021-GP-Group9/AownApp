@@ -12,6 +12,11 @@ class CharityModel {
     required this.service,
     required this.city,
     required this.status,
+    required this.location,
+    required this.phone,
+    required this.email,
+    required this.donationType,
+    required this.licenseNumber,
 
   });
 
@@ -21,6 +26,11 @@ class CharityModel {
   final String service;
   final String city;
   final String status ;
+  final String phone;
+  final String location;
+  final String email;
+  final String donationType;
+  final String licenseNumber;
   String imageString = "";
   late Image image;
 
@@ -40,6 +50,11 @@ class CharityModel {
     service: json["service"],
     city: json["city"],
     status: json['status'],
+    phone: json['phone'],
+    location: json['location'],
+    email: json['email'],
+    licenseNumber: json['licenseNumber'],
+    donationType: json['donationType'],
 
 
   );

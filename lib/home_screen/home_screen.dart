@@ -6,7 +6,6 @@ import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-
 import '../viewPage.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -68,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [Image.asset("assets/finalLogo.jpeg")],
       ),
-      body: (_isLoadingData)
+       body:(_isLoadingData)
           ? Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
