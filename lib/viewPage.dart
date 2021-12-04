@@ -5,7 +5,7 @@ import 'connection/charity_model.dart';
 import 'home_screen/home_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 
-class ViewPage extends StatelessWidget {
+class ViewPage extends StatefulWidget {
 final CharityModel charityModel;
   const ViewPage({Key? key,required this.charityModel}) : super(key: key);
   @override
@@ -133,5 +133,11 @@ final CharityModel charityModel;
       )
 
     );
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }
