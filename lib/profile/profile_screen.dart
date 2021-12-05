@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:aownapp/login/login_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
@@ -16,6 +17,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  int selectedPage = 0;
+  final _pageOption=[Profile(),HomeScreen()];
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
@@ -29,38 +32,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold( bottomNavigationBar: Container(
-      color: Color(0xffD6DACA),
-      height: 70,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          GestureDetector(
-            // onTap: (){
-            //   Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) =>Profile()),);
-            // },
-              child: Icon(Icons.person, size: 35,)),
-          GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                  MaterialPageRoute(
-                      builder: (context) => Book_appointment()),);
-              },
-              child: Icon(Icons.add_circle, size: 49,)),
-
-
-          GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),);
-              },
-              child: Icon(Icons.house, size: 35,))
-
-
-        ],
-      ),
-    ),
+    return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
             onTap: () {
@@ -241,9 +213,40 @@ class _ProfileState extends State<Profile> {
             ),
           ],),
       ),
-
+      bottomNavigationBar: ConvexAppBar(
+        items: [
+          TabItem(icon:Icon(Icons.person),title:'ملف شخصي'),
+          // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
+          TabItem(icon:Icon(Icons.house),title:'الرئيسية'),
+        ],
+        height: 55,
+        initialActiveIndex: selectedPage,
+        onTap: (int index){
+          print(index);
+          setState(() {
+            selectedPage = index;
+            _pageOption[selectedPage];
+            _pn(selectedPage);
+          });
+        },
+        backgroundColor: const Color(0xffD6DACA),
+      ),
 
     );;
+  }
+  _pn(int selectedPage) {
+    if (selectedPage == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Profile()),
+      );
+    }else if (selectedPage == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+
+    }
   }
 }
 
