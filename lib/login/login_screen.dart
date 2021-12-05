@@ -3,6 +3,7 @@ import 'package:aownapp/signup/signup_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'login_conn.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -24,6 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    @override
+    void initState() {
+      super.initState();
+    veryfy();
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffD6DACB),
@@ -189,11 +195,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           .then((value) {
                             print("login $value");
                         if (value.toString() ==
-                            'fail') {
-                          showerror(true);
-
-                        } else if (value.toString() ==
-                            'success') {
+                            'fail'&&!emailController.text.isEmpty&&!passwordController.text.isEmpty) {
+    showerror(true);
+    }
+                        else{
+                          putInt(int.parse(value));
                           Navigator.push(context,
                             MaterialPageRoute(
                                 builder: (context) => HomeScreen()),);
@@ -239,9 +245,31 @@ class _LoginScreenState extends State<LoginScreen> {
             ], ),
       ),
     );
+
+  }
+void veryfy() async {
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final SharedPreferences prefs = await _prefs;
+  if(prefs.containsKey("idKey"))
+  {
+    Navigator.push(context,
+      MaterialPageRoute(
+          builder: (context) => HomeScreen()),);
   }
 
 
+}
+  void putInt(val) async {
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+    if(prefs.containsKey("idKey"))
+      {
+        prefs.remove("idKey");
+      }
+    else
+    var _res = prefs.setInt("idkey", val);
+
+  }
 
   void showerror(bool bool) {
     setState(() {
