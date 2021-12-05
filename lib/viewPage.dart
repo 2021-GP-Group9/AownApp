@@ -7,6 +7,12 @@ import 'home_screen/home_screen.dart';
 class ViewPage extends StatefulWidget {
 final CharityModel charityModel;
   const ViewPage({Key? key,required this.charityModel}) : super(key: key);
+
+  @override
+  State<ViewPage> createState() => _ViewPageState();
+}
+
+class _ViewPageState extends State<ViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +108,7 @@ Positioned(
     top: 35,
     child: Container(
               child: Text(
-              charityModel.name,
+              widget.charityModel.name,
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
@@ -113,35 +119,35 @@ Positioned(
             Container(
                 height: 100,
                 width: 100,
-              child: (charityModel.imageString=="")?Icon(Icons.image, size:100)
-                  :charityModel.image,
+              child: (widget.charityModel.imageString=="")?Icon(Icons.image, size:100)
+                  :widget.charityModel.image,
             ),
             Container(
-              child:Text(charityModel.description,
+              child:Text(widget.charityModel.description,
                 style: TextStyle(fontSize: 20,)
               )),
                Container(
                  child:
                  Text(
-                     charityModel.city)
+                     widget.charityModel.city)
                ),
             Container(
-              child: Text(charityModel.location) ,
+              child: Text(widget.charityModel.location) ,
             ),
             Container(
-              child: Text(charityModel.phone) ,
+              child: Text(widget.charityModel.phone) ,
             ),
             Container(
-              child: Text(charityModel.donationType) ,
+              child: Text(widget.charityModel.donationType) ,
             ),
             Container(
-              child: Text(charityModel.email) ,
+              child: Text(widget.charityModel.email) ,
             ),
             Container(
-              child: Text(charityModel.service) ,
+              child: Text(widget.charityModel.service) ,
             ),
             Container(
-              child: Text(charityModel.licenseNumber) ,
+              child: Text(widget.charityModel.licenseNumber) ,
             ),
             Container(
               child: GestureDetector(
@@ -156,6 +162,7 @@ Positioned(
                     size: 50,
                   )),
             ),
+
           ],
         )
 
@@ -163,11 +170,5 @@ Positioned(
       )
 
     );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
   }
 }
