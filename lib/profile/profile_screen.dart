@@ -19,13 +19,16 @@ class _ProfileState extends State<Profile> {
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    get_id();
+  }
+
   @override
   Widget build(BuildContext context) {
-    @override
-    void initState() {
-      super.initState();
-      // get_id();
-    }
+
     return Scaffold( bottomNavigationBar: Container(
       color: Color(0xffD6DACA),
       height: 70,
@@ -245,16 +248,19 @@ class _ProfileState extends State<Profile> {
 }
 
 
-  // void get_id() async {
-  //   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  //   final SharedPreferences prefs = await _prefs;
-  //   if (prefs.containsKey("idKey")) {
-  //     profile_date mydata=Conn(prefs.getInt("idKey")).save_it_to_db() as profile_date;
-  //     print(mydata.name);
-  //   }
-  //   else {
-  //     print("key error");
-  //
-  //   }
-  // }
+void get_id() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  // final SharedPreferences prefs = await _prefs;
+  if (prefs.containsKey("idKey")) {
+    print(prefs.getInt("idKey"));
+    profile_date mydata=await Conn(prefs.getInt("idKey")).save_it_to_db() as profile_date;
+    // profile_date mydata=Conn(prefs.getInt("idKey")).save_it_to_db() as profile_date;
+    print(mydata.name.toString());
+  }
+  else {
+    print(prefs.getInt("idKey"));
+    print("key error");
+
+  }
+}
 
