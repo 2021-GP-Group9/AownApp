@@ -65,7 +65,7 @@ class _ProfileState extends State<Profile> {
                   MaterialPageRoute(builder: (context) =>
                       WelcomeScrean()), (Route<dynamic> route) => false);
             },
-            child: Icon(Icons.logout_rounded)
+            child: Icon(Icons.logout_rounded, color: Colors.black54,)
         ),
         backgroundColor: Color(0xffD6DACB),
         title: Text(
