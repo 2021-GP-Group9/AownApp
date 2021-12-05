@@ -192,6 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
           print(index);
           setState(() {
             selectedPage = index;
+            _pageOption[selectedPage];
             _pn(selectedPage);
           });
         },
@@ -217,6 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
+
     }else if (selectedPage == 1) {
       Navigator.push(
         context,
