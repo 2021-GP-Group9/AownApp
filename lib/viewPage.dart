@@ -192,13 +192,13 @@ class _ViewPageState extends State<ViewPage> {
                   widget.charityModel.donationType, textAlign: TextAlign.right,
                   textDirection: TextDirection.rtl,
                   style: TextStyle(
-                    fontFamily: 'Almarai Light',
+                    fontFamily: 'Almarai ExtraBold',
                     fontSize: 14,color: Colors.blueGrey,)),
               ),
               Expanded(child: Text("نوع التبرعات:", textAlign: TextAlign.right,
                   textDirection: TextDirection.rtl,
                   style: TextStyle(
-                    fontFamily: 'Almarai Light',
+                    fontFamily: 'Almarai ExtraBold',
                     fontSize: 14,))
               )
 

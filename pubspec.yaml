@@ -82,12 +82,10 @@ fonts:
      - family: Almarai Light
        fonts:
           - asset: assets/fonts/Almarai-Light.ttf
-          - weight: 700
 
      - family: Almarai Bold
        fonts:
           - asset: assets/fonts/Almarai-Bold.ttf
-          - weight: 700
      - family: Almarai ExtraBold
        fonts:
           - asset: assets/fonts/Almarai-ExtraBold.ttf
