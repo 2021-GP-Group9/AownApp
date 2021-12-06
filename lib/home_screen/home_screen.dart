@@ -192,6 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
           print(index);
           setState(() {
             selectedPage = index;
+            _pageOption[selectedPage];
             _pn(selectedPage);
           });
         },
@@ -212,11 +213,18 @@ class _HomeScreenState extends State<HomeScreen> {
     //     context,
     //     MaterialPageRoute(builder: (context) => Book_appointment()),
     //   );
-    } else if(selectedPage == 1){
+    } else if(selectedPage == 0){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Profile()),
+      );
+
+    }else if (selectedPage == 1) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),
       );
+
     }
   }
   // when notification icon button clicked
