@@ -56,6 +56,20 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  fonts:
+    - family: Almarai Light
+      fonts:
+        - asset: assets/fonts/Almarai-Light.ttf
+
+    - family: Almarai Bold
+      fonts:
+        - asset: assets/fonts/Almarai-Bold.ttf
+    - family: Almarai ExtraBold
+      fonts:
+        - asset: assets/fonts/Almarai-ExtraBold.ttf
+    - family: Almarai Regular
+      fonts:
+        - asset: assets/fonts/Almarai-Regular.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -78,20 +92,7 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-fonts:
-     - family: Almarai Light
-       fonts:
-          - asset: assets/fonts/Almarai-Light.ttf
 
-     - family: Almarai Bold
-       fonts:
-          - asset: assets/fonts/Almarai-Bold.ttf
-     - family: Almarai ExtraBold
-       fonts:
-          - asset: assets/fonts/Almarai-ExtraBold.ttf
-     - family: Almarai Regular
-       fonts:
-          - asset: assets/fonts/Almarai-Regular.ttf
 
   #   - family: Trajan Pro
   #     fonts:

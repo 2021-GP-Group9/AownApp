@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../login/login_screen.dart';
+import '../welcome_screen.dart';
 import 'signup_conn.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -35,8 +36,17 @@ class _SignupState extends State<Signup> {
         backgroundColor: Color(0xffD6DACB),
         title: Text(
           'تسجيل جديد',
-          style: TextStyle(color: Colors.black87),
-        ),
+          style: TextStyle(color: Colors.black87,fontFamily: 'Almarai Light'),
+        ),leading:
+      GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => WelcomeScrean()),
+            );
+          },
+          child:Icon(Icons.arrow_back, color: Colors.black54,)
+      ),
         actions: [
           Align(
             alignment: Alignment.center,
@@ -104,8 +114,9 @@ class _SignupState extends State<Signup> {
                         'تسجيل جديد',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Almarai Bold'
                         ),
                       ),
                       SizedBox(
@@ -237,8 +248,8 @@ class _SignupState extends State<Signup> {
                             });
                           } else{
                             setState(() {
-                            password_err = false;
-                          }); //جمعية تدوير
+                              password_err = false;
+                            }); //جمعية تدوير
                           }
                         },
                         onChanged: (String value) {
@@ -302,7 +313,7 @@ class _SignupState extends State<Signup> {
                           child: Text(
                             'تسجيل',
                             style: TextStyle(
-                              color: Colors.white,
+                                color: Colors.white,fontFamily: 'Almarai Bold'
                             ),
                           ),
                         ),
@@ -323,10 +334,15 @@ class _SignupState extends State<Signup> {
                             },
                             child: Text(
                               'سجل دخولك',
+                              style: TextStyle(
+                                  color: Colors.blue,fontFamily: 'Almarai light'
+                              ),
                             ),
                           ),
                           Text(
-                            'لديك حساب؟',
+                            'لديك حساب؟', style: TextStyle(
+                              color: Colors.black,fontFamily: 'Almarai light'
+                          ),
                           ),
                         ],
                       ),
