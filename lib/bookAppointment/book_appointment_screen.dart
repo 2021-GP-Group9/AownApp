@@ -13,44 +13,37 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:http/http.dart' as http;
 import 'package:aownapp/constant.dart';
-
 class Book_appointment extends StatelessWidget {
   final String charityId;
   String? donorLocation;
 
-  Book_appointment({Key? key, required this.charityId, this.donorLocation})
-      : super(key: key);
+  Book_appointment({Key? key,required this.charityId,this.donorLocation}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: "حجز المواعيد ",
-      home: Calendar(
-        charityId: charityId,
-        donorLocation: donorLocation,
-      ),
+      home: Calendar(charityId: charityId,donorLocation: donorLocation,),
     );
   }
 }
-
 class Calendar extends StatefulWidget {
   final String charityId;
   String? donorLocation;
 
-  Calendar({Key? key, required this.charityId, this.donorLocation})
-      : super(key: key);
+  Calendar({Key? key,required this.charityId,this.donorLocation}) : super(key: key);
   @override
   State<Calendar> createState() => _CalendarState();
 }
 
 class _CalendarState extends State<Calendar> {
+
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
-  BookAppointmentController _bookAppointmentController =
-  Get.put(BookAppointmentController());
-  ConstantController _constantController = Get.find<ConstantController>();
+  BookAppointmentController _bookAppointmentController=Get.put(BookAppointmentController());
+  ConstantController _constantController=Get.find<ConstantController>();
   Future<AppointementModel>? getAppointementRef;
-  List<Event> eventList = [];
+  List<Event> eventList=[];
   TextEditingController _eventController = TextEditingController();
 
   @override
@@ -59,19 +52,14 @@ class _CalendarState extends State<Calendar> {
   }
 
   List<Event> _getEventsfromDay(DateTime date) {
-    print(_bookAppointmentController
-        .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
-        []);
-    eventList = _bookAppointmentController
-        .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
-        [];
-    return _bookAppointmentController
-        .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
-        [];
+    print(_bookAppointmentController.selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ?? []);
+    eventList=_bookAppointmentController.selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ?? [];
+    return _bookAppointmentController.selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ?? [];
+
   }
 
   @override
-  void dispose() {
+  void dispose(){
     _eventController.dispose();
     super.dispose();
   }
@@ -108,9 +96,7 @@ class _CalendarState extends State<Calendar> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Book_appointment(
-                          charityId: "0",
-                        )),
+                        builder: (context) => Book_appointment(charityId: "0",)),
                   );
                 },
                 child: Icon(
@@ -129,11 +115,11 @@ class _CalendarState extends State<Calendar> {
         ),
       ),
       body: FutureBuilder<AppointementModel?>(
-          future: _bookAppointmentController.getAppointmentApi(
-              widget.charityId, _constantController.donorId!),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Column(
+          future: _bookAppointmentController.getAppointmentApi(widget.charityId, _constantController.donorId!),
+          builder: (context,snapshot){
+            if(snapshot.connectionState==ConnectionState.done){
+
+              return  Column(
                 children: [
                   TableCalendar(
                     focusedDay: selectedDay,
@@ -209,29 +195,30 @@ class _CalendarState extends State<Calendar> {
                   ),
                   //if(snapshot.data!=null)
                   Expanded(
-                    child: GridView.builder(
-                        gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisExtent:
-                          50, // <== change the height to fit your needs
-                        ),
+                    child: GridView.builder(gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisExtent: 50, // <== change the height to fit your needs
+                    ),
                         // physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: _getEventsfromDay(selectedDay).length,
-                        itemBuilder: (context, index) {
+                        itemBuilder: (context,index){
                           return GestureDetector(
-                            onTap: () async {
-                              if (_constantController.donorId != null) {
-                                await showAlertDialog(
-                                    context, eventList[index]);
-                                setState(() {});
+                            onTap: ()async{
+                              if(_constantController.donorId!=null){
+                                await showAlertDialog(context, eventList[index]);
+                                setState(() {
+
+                                });
                                 //Get.snackbar('ALERT', response.body);
-                              } else {
-                                Get.snackbar('ALERT',
-                                    'Please login to book an appointment');
+                              }else{
+                                Get.snackbar('ALERT', 'يجب تسجبل الدخول لحجز موعد');
                               }
-                              setState(() {});
+                              setState(() {
+
+                              });
+
+
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(14.0),
@@ -240,8 +227,7 @@ class _CalendarState extends State<Calendar> {
                                 width: 120,
                                 decoration: BoxDecoration(
                                     color: Colors.black,
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(6))),
+                                    borderRadius: BorderRadius.all(Radius.circular(6))),
                                 child: Center(
                                     child: Text(
                                       eventList[index].time,
@@ -250,6 +236,7 @@ class _CalendarState extends State<Calendar> {
                               ),
                             ),
                           );
+
                         }),
                   ),
                   // ..._getEventsfromDay(selectedDay).map(
@@ -264,42 +251,43 @@ class _CalendarState extends State<Calendar> {
                 ],
               );
             }
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return Center(child: CircularProgressIndicator(),);
           }),
+
     );
   }
 
-  Future<bool?> showAlertDialog(BuildContext context, Event event) async {
+  Future<bool?> showAlertDialog(BuildContext context,Event event)async {
+
     // set up the AlertDialog
+
 
     // show the dialog
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Are You Sure"),
-          content: Text("Do you want to confirm appointment at ${event.time}"),
+        return   AlertDialog(
+          title: Text("هل انت متأكد؟"),
+          content: Text("هل تريد حجز موعد في ${event.time}"),
           actions: [
             TextButton(
-              child: Text("YES"),
-              onPressed: () async {
+              child: Text("نعم"),
+              onPressed:  ()async {
                 print(_constantController.donorId);
-                final response = await http
-                    .post(Uri.parse(constant.bookAppointmentUrl), body: {
-                  'appointmentId': event.appointmentId,
-                  'donorId': _constantController.donorId,
+                final response=await http.post(Uri.parse(constant.bookAppointmentUrl),body: {
+                  'appointmentId':event.appointmentId,
+                  'donorId':_constantController.donorId,
                 });
-                Navigator.pop(context, true);
+                Navigator.pop(context,true);
                 //Get.snackbar('ALERT', response.body);
-                Get.to(() => LocationScreen());
+                Get.to(()=>LocationScreen());
+
               },
             ),
             TextButton(
-              child: Text("NO"),
-              onPressed: () {
-                Navigator.pop(context, false);
+              child: Text("لا"),
+              onPressed:  () {
+                Navigator.pop(context,false);
               },
             ),
           ],
@@ -309,13 +297,11 @@ class _CalendarState extends State<Calendar> {
   }
 }
 
+
 class Event {
   final String time;
   final String reserved;
   final String appointmentId;
-  Event(
-      {required this.appointmentId,
-        required this.reserved,
-        required this.time});
+  Event({required this.appointmentId, required this.reserved, required this.time});
   String toString() => this.time;
 }
