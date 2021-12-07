@@ -9,6 +9,7 @@ import 'package:aownapp/constant.dart';
 import 'package:intl/intl.dart';
 class BookAppointmentController extends GetxController{
   Rx<TimeOfDay> selectedTime=TimeOfDay(hour: 0, minute: 0).obs;
+   Map<String, List<Event>> selectedEvents={};
   Map<String, List<Event>> selectedEvents={};
   Future<AppointementModel?> getAppointmentApi(String charityId,String donorId)async{
 
