@@ -273,7 +273,7 @@ class _ViewPageState extends State<ViewPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => Book_appointment()),
+                                  MaterialPageRoute(builder: (context) => Book_appointment(charityId: '0',)),
                                 );
                               },
                               child: Icon(
