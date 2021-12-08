@@ -1,3 +1,4 @@
+
 name: aownapp
 description: A new Flutter application.
 
@@ -29,13 +30,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  dcdg: ^4.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.4
   table_calendar: ^3.0.3
   convex_bottom_bar: ^3.0.0
+  get: ^4.5.1
+  intl: ^0.17.0
+
+#dio: ^4.0.0
+ # flutter_polyline_point: ^0.2.4
+ # google_maps_flutter: ^2.1.1
+
 
 dev_dependencies:
   http: ^0.13.4
@@ -56,6 +64,20 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  fonts:
+    - family: Almarai Light
+      fonts:
+        - asset: assets/fonts/Almarai-Light.ttf
+
+    - family: Almarai Bold
+      fonts:
+        - asset: assets/fonts/Almarai-Bold.ttf
+    - family: Almarai ExtraBold
+      fonts:
+        - asset: assets/fonts/Almarai-ExtraBold.ttf
+    - family: Almarai Regular
+      fonts:
+        - asset: assets/fonts/Almarai-Regular.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -78,22 +100,7 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-fonts:
-     - family: Almarai Light
-       fonts:
-          - asset: assets/fonts/Almarai-Light.ttf
-          - weight: 700
 
-     - family: Almarai Bold
-       fonts:
-          - asset: assets/fonts/Almarai-Bold.ttf
-          - weight: 700
-     - family: Almarai ExtraBold
-       fonts:
-          - asset: assets/fonts/Almarai-ExtraBold.ttf
-     - family: Almarai Regular
-       fonts:
-          - asset: assets/fonts/Almarai-Regular.ttf
 
   #   - family: Trajan Pro
   #     fonts:

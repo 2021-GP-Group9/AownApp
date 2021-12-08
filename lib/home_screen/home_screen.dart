@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [Image.asset("assets/finalLogo.jpeg")],
       ),
-       body:(_isLoadingData)
+      body:(_isLoadingData)
           ? Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -94,10 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   // height: 100,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                      color: Colors.white,
                       // border: Border.all(color: Colors.white70) ,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(50)),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(50)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.3),
@@ -131,10 +131,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   _charityDataConnection
                                       .allCharityList[index].name,
                                   style: TextStyle(
-                                    fontFamily: 'almarai',
+                                      fontFamily: 'almarai Bold',
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
-                                    ),
+                                ),
 
                               ),
                             ),
@@ -149,9 +149,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text(_charityDataConnection
                                     .allCharityList[index].description, textAlign: TextAlign.right,textDirection:TextDirection.rtl ,
                                   style: TextStyle(
-                                  fontSize: 13,
+                                    fontFamily: 'almarai Regular',
+                                    fontSize: 13,
                                     color: Colors.blueGrey,
-                                ),),
+                                  ),),
                               ),
                             )
                             ,
@@ -183,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon:Icon(Icons.person),title:'ملف شخصي'),
-         // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
+          // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
           TabItem(icon:Icon(Icons.house),title:'الرئيسية'),
         ],
         height: 55,
@@ -208,11 +209,11 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
-    // } else if(selectedPage == 1){
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => Book_appointment()),
-    //   );
+      // } else if(selectedPage == 1){
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => Book_appointment()),
+      //   );
     } else if(selectedPage == 0){
       Navigator.push(
         context,

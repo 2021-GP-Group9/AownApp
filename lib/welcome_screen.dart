@@ -1,4 +1,3 @@
-//heloo
 import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class WelcomeScrean extends StatelessWidget {
               height: 200,
             ),
           ),
-        SizedBox(height: 83,),
+          SizedBox(height: 83,),
           Container(
             width: 200,
             height: 45,
@@ -44,7 +43,7 @@ class WelcomeScrean extends StatelessWidget {
                 Navigator.push(context,
                   MaterialPageRoute(builder: (context) =>Signup()),);
               },
-              child: Center(child: Text("تسجيل جديد",style: TextStyle(color: Colors.white),)),
+              child: Center(child: Text("تسجيل جديد",style: TextStyle(color: Colors.white,fontFamily: 'Almarai Bold'),)),
             ),
           ),
 
@@ -53,20 +52,20 @@ class WelcomeScrean extends StatelessWidget {
             width: 200,
             height: 45,
             decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(30),boxShadow:[
-            BoxShadow(
-            color: Colors.grey.withOpacity(0.7),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ] ),
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.7),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ] ),
             child: MaterialButton(
               onPressed: () {
                 Navigator.push(context,
                   MaterialPageRoute(builder: (context) =>LoginScreen()),);
               },
-            child: Center(child: Text("دخول",style: TextStyle(color: Colors.white),)),
-          ),
+              child: Center(child: Text("دخول",style: TextStyle(color: Colors.white,fontFamily: 'Almarai Bold'),)),
+            ),
           ),
 
           SizedBox(height:28,),
@@ -80,7 +79,7 @@ class WelcomeScrean extends StatelessWidget {
                 },
                 child: Text(
                   '<<تخطي',
-                    style: TextStyle(color: Colors.black87),
+                  style: TextStyle(color: Colors.black87),
                 ),
               ),
             ],
@@ -91,5 +90,3 @@ class WelcomeScrean extends StatelessWidget {
     );
   }
 }
-
-
