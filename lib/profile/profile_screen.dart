@@ -69,7 +69,7 @@ class _ProfileState extends State<Profile> {
         backgroundColor: Color(0xffD6DACB),
         title: Text(
           'الملف الشخصي',
-          style: TextStyle(color: Colors.black87),
+          style: TextStyle(color: Colors.black87,fontFamily: 'Almarai Light'),
         ),
         actions: [
           Align(
@@ -124,6 +124,7 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                           fontSize: 40.0,
                           fontWeight: FontWeight.bold,
+                            fontFamily: 'Almarai Bold'
                         ),
                       ),
                       SizedBox(
@@ -274,7 +275,7 @@ class _ProfileState extends State<Profile> {
                           child: Text(
                             'حفظ',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.white,fontFamily: 'Almarai Light'
                             ),
                           ),
                         ),

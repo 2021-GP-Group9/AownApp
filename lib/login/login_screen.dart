@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Color(0xffD6DACB),
         title: Text(
           'تسجيل دخول',
-          style: TextStyle(color: Colors.black87),
+          style: TextStyle(color: Colors.black87,fontFamily: 'Almarai Light'),
         ),
         actions: [
           Align(
@@ -88,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           fontSize: 40.0,
                           fontWeight: FontWeight.bold,
+                            fontFamily: 'Almarai Bold'
                         ),
                       ),
                       SizedBox(
@@ -215,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             'تسجيل الدخول',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.white,fontFamily: 'Almarai Light'
                             ),
                           ),
                         ),
