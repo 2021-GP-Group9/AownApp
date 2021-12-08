@@ -66,7 +66,7 @@ class _ProfileState extends State<Profile> {
                       (Route<dynamic> route) => false);
             },
             child: Icon(Icons.logout_rounded)),
-        backgroundColor: Color(0xffD6DACB),
+        backgroundColor: Colors.black87,
         title: Text(
           'الملف الشخصي',
           style: TextStyle(color: Colors.black87),
