@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+
 import 'package:aownapp/appointment/appointment_model.dart';
 import 'package:aownapp/bookAppointment/book_appointment_controller.dart';
 import 'package:aownapp/controller/constant_controller.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/location/location_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
@@ -36,7 +38,8 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-
+  int selectedPage = 0;
+  final _pageOption=[Profile(),HomeScreen()];
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
@@ -75,45 +78,7 @@ class _CalendarState extends State<Calendar> {
         backgroundColor: const Color(0xffd6daca),
         actions: [Image.asset("assets/finalLogo.jpeg")],
       ),
-      bottomNavigationBar: Container(
-        color: const Color(0xffD6DACA),
-        height: 70,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Profile()),
-                  );
-                },
-                child: Icon(
-                  Icons.person,
-                )),
-            GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Book_appointment(charityId: "0",)),
-                  );
-                },
-                child: Icon(
-                  Icons.add_circle,
-                  size: 49,
-                )),
-            GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
-                },
-                child: Icon(Icons.house))
-          ],
-        ),
-      ),
+
       body: FutureBuilder<AppointementModel?>(
           future: _bookAppointmentController.getAppointmentApi(widget.charityId, _constantController.donorId!),
           builder: (context,snapshot){
@@ -253,10 +218,55 @@ class _CalendarState extends State<Calendar> {
             }
             return Center(child: CircularProgressIndicator(),);
           }),
+      bottomNavigationBar: ConvexAppBar(
+        items: [
+          TabItem(icon:Icon(Icons.person),title:'ملف شخصي'),
+          TabItem(icon:Icon(Icons.house),title:'الرئيسية'),
+        ],
+        height: 55,
+        initialActiveIndex: selectedPage,
+        onTap: (int index){
+          print(index);
+          setState(() {
+            selectedPage = index;
+            _pageOption[selectedPage];
+            _pn(selectedPage);
+          });
+        },
+        backgroundColor: const Color(0xffD6DACA),
 
+      ),
     );
   }
+  _pn(int selectedPage){
+    if(selectedPage == 0){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Profile()),
+      );
+      // } else if(selectedPage == 1){
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => Book_appointment()),
+      //   );
+    } else if(selectedPage == 0){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Profile()),
+      );
 
+    }else if (selectedPage == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+
+    }
+  }
+  // when notification icon button clicked
+  void onNotification() {
+    print('notification clicked');
+  }
   Future<bool?> showAlertDialog(BuildContext context,Event event)async {
 
     // set up the AlertDialog
