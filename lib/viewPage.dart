@@ -270,12 +270,12 @@ class _ViewPageState extends State<ViewPage> {
                       if(widget.charityModel.service=='نعم')
                         Expanded(child: Container(
                           child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => Book_appointment(charityId: '0',)),
-                                );
-                              },
+                              // onTap: () {
+                              //   Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(builder: (context) => Book_appointment(charityId: '0',)),
+                              //   );
+                              // },
                               child: Icon(
                                 Icons.calendar_today_outlined,
                                 size: 30,
