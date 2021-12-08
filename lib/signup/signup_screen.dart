@@ -410,7 +410,7 @@ class _SignupState extends State<Signup> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => LoginScreen()),
+                      builder: (context) =>LoginScreen()),
                 );
               },
             ),
