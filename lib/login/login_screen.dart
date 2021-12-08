@@ -1,8 +1,6 @@
 import 'dart:math';
-import 'package:aownapp/controller/constant_controller.dart';
 import 'package:aownapp/signup/signup_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
-import 'package:get/get.dart';
 import 'login_conn.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool credanitals = false;
   String? email_err_msg;
   String? password_err_msg;
-  ConstantController _constantController=Get.find<ConstantController>();
 
   @override
   Widget build(BuildContext context) {
@@ -198,14 +195,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 .login_function()
                                 .then((value) {
                               print("login $value");
-
                               if (value.toString() == 'fail' &&
                                   !emailController.text.isEmpty &&
                                   !passwordController.text.isEmpty) {
                                 showerror(true);
                               } else {
-                                _constantController.donorId=value;
-
+                                putInt(int.parse(value));
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
