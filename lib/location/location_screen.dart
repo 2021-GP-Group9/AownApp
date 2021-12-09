@@ -62,7 +62,6 @@ class _LocationScreenState extends State<LocationScreen> {
                 }
               },
               child: Text('حجز موعد'),
-              //color: Colors(#fffffff);
             ),
           ),
         ],
