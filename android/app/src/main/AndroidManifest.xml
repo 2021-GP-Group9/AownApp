@@ -8,7 +8,7 @@
 
     <application
         android:label="عون"
-        android:icon="@mipmap/aoown">
+        android:icon="@mipmap/ic_launcher">
 
         <activity
             android:name=".MainActivity"
