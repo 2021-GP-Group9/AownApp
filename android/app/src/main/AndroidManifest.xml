@@ -9,7 +9,7 @@
     <application
         android:label="aownapp"
         android:icon="@mipmap/ic_launcher">
-
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCACX752h37EElOLCTzoAa-cCwIMks7FY0"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -37,8 +37,6 @@
               android:resource="@drawable/launch_background"
               />
 
-            <meta-data android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyCACX752h37EElOLCTzoAa-cCwIMks7FY0"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -49,7 +47,5 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-       <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyCACX752h37EElOLCTzoAa-cCwIMks7FY0"/>
     </application>
 </manifest>

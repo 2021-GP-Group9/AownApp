@@ -198,14 +198,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 .login_function()
                                 .then((value) {
                               print("login $value");
-
                               if (value.toString() == 'fail' &&
                                   !emailController.text.isEmpty &&
                                   !passwordController.text.isEmpty) {
                                 showerror(true);
                               } else {
                                 _constantController.donorId=value;
-
+                                putInt(int.parse(value));
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
