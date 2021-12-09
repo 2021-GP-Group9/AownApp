@@ -1,6 +1,8 @@
 import 'dart:math';
+import 'package:aownapp/controller/constant_controller.dart';
 import 'package:aownapp/signup/signup_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
+import 'package:get/get.dart';
 import 'login_conn.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool credanitals = false;
   String? email_err_msg;
   String? password_err_msg;
+  ConstantController constantController = Get.put(ConstantController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Color(0xffD6DACB),
         title: Text(
           'تسجيل دخول',
-          style: TextStyle(color: Colors.black87,fontFamily: 'Almarai Light'),
+          style: TextStyle(color: Colors.black87, fontFamily: 'Almarai Light'),
         ),
         actions: [
           Align(
@@ -57,24 +60,24 @@ class _LoginScreenState extends State<LoginScreen> {
               right: -MediaQuery.of(context).size.width * .4,
               child: Container(
                   child: Transform.rotate(
-                    angle: -pi / 3.5,
-                    child: ClipPath(
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * .5,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.lightGreen.shade50,
-                              Colors.lightGreen.shade50,
-                            ],
-                          ),
-                        ),
+                angle: -pi / 3.5,
+                child: ClipPath(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * .5,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.lightGreen.shade50,
+                          Colors.lightGreen.shade50,
+                        ],
                       ),
                     ),
-                  )),
+                  ),
+                ),
+              )),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -86,10 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         'تسجيل الدخول',
                         style: TextStyle(
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
-                            fontFamily: 'Almarai Bold'
-                        ),
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Almarai Bold'),
                       ),
                       SizedBox(
                         height: 40.0,
@@ -129,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         decoration: InputDecoration(
                           errorText:
-                          email_err || credanitals ? email_err_msg : null,
+                              email_err || credanitals ? email_err_msg : null,
                           labelText: 'البريد الالكتروني',
                           prefixIcon: Icon(
                             Icons.email,
@@ -192,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             print(emailController.text);
                             print(passwordController.text);
                             Conn_login(emailController.text,
-                                passwordController.text)
+                                    passwordController.text)
                                 .login_function()
                                 .then((value) {
                               print("login $value");
@@ -201,9 +203,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   !passwordController.text.isEmpty) {
                                 showerror(true);
                               } else {
-                                if(value.toString()=="Enter all info"){
+                                if (value.toString() == "Enter all info") {
                                   _accountError();
                                 }
+                                constantController.donorId = value;
                                 putInt(int.parse(value));
                                 Navigator.push(
                                   context,
@@ -219,8 +222,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             'تسجيل الدخول',
                             style: TextStyle(
-                              color: Colors.white,fontFamily: 'Almarai Light'
-                            ),
+                                color: Colors.white,
+                                fontFamily: 'Almarai Light'),
                           ),
                         ),
                       ),
@@ -289,6 +292,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     });
   }
+
   Future<void> _accountError() async {
     return showDialog<void>(
       context: context,
@@ -307,12 +311,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundColor: Colors.red,
                       radius: 30,
                       child: Icon(
-                        Icons.clear_outlined, color: Colors.white,
-                        size: 50,),
-                    )
-                ),
+                        Icons.clear_outlined,
+                        color: Colors.white,
+                        size: 50,
+                      ),
+                    )),
                 //Center(child: Text('Account created ')),
-
               ],
             ),
           ),
@@ -322,8 +326,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
               },
             ),
@@ -333,5 +336,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-

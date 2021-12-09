@@ -8,7 +8,6 @@ import 'dart:convert';
 AppointementModel appointementModelFromJson(String str) => AppointementModel.fromJson(json.decode(str));
 
 String appointementModelToJson(AppointementModel data) => json.encode(data.toJson());
-
 class AppointementModel {
   AppointementModel({
     required this.data,
