@@ -195,6 +195,21 @@ class _CalendarState extends State<Calendar> {
                       ),
                     ),
                   ),
+            Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+            Text(
+            'الأوقات المتاحة',
+              style: TextStyle(
+                  color: Colors.black87,
+                  fontFamily: 'Almarai Light'),
+
+            ),
+            ],
+            ),
+
+
                   // will fit the GridView.blilder : it is a table with colums and rows in the given place
                   Expanded(
                     child: GridView.builder(
@@ -241,6 +256,7 @@ class _CalendarState extends State<Calendar> {
                 ],
               );
             }
+
             return Center(
               child: CircularProgressIndicator(),
             );
