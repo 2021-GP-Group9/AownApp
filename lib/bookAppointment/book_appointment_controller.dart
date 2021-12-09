@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:aownapp/appointment/appointment_model.dart';
 import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +8,6 @@ import 'package:aownapp/constant.dart';
 import 'package:intl/intl.dart';
 
 class BookAppointmentController extends GetxController {
-
-  // that should be inside onInit method
-  Rx<TimeOfDay> selectedTime = TimeOfDay(hour: 0, minute: 0).obs;
   Map<String, List<Event>> selectedEvents =
       {}; // to save appointment information
 
