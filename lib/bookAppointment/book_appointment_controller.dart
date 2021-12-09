@@ -15,7 +15,6 @@ class BookAppointmentController extends GetxController {
       String charityId, String donorId) async {
 //getting appointments from database using api
     try {
-      print('call api');
       final response =
           await http.post(Uri.parse(constant.getBookAppointmentUrl), body: {
         'charityId': charityId,
@@ -43,7 +42,6 @@ class BookAppointmentController extends GetxController {
                   reserved: item.reserved,
                   appointmentId: item.appointmentId));
             } else {
-              //if eventList is empty against appointment date it  will assign a list of single event to it
               selectedEvents[
                   DateFormat('yyyy-MM-dd').format(item.appointmentDate)] = [
                 Event(
