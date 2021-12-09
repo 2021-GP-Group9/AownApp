@@ -69,21 +69,7 @@ class WelcomeScrean extends StatelessWidget {
           ),
 
           SizedBox(height:28,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) =>HomeScreen()),);
-                },
-                child: Text(
-                  '<<تخطي',
-                  style: TextStyle(color: Colors.black87),
-                ),
-              ),
-            ],
-          ),
+
         ],
 
       ),

@@ -18,9 +18,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  //profile_date mydata1;
+  
   var mydata;
-  //mydata1=mydata;
+ 
 
   bool _isLoadingData = true;
   var nameController = TextEditingController();
@@ -30,11 +30,10 @@ class _ProfileState extends State<Profile> {
   bool name_err = false;
   bool email_err = false;
   bool phone_err = false;
-  bool password_err = false;
+
 
   String? phone_err_msg;
   String? email_err_msg;
-  String? password_err_msg;
   String? name_err_msg;
   int selectedPage = 0;
   final _pageOption=[Profile(),HomeScreen()];
@@ -49,8 +48,7 @@ class _ProfileState extends State<Profile> {
       mydata.then((value) => phoneController.text = value.phone_number);
     });
     var mydata11 = get_donarId().then((value) => donar_id = value);
-    // mydata1.ge
-    //mydata1=(profile_date)mydata1;
+    
   }
 
   @override
@@ -69,7 +67,7 @@ class _ProfileState extends State<Profile> {
         backgroundColor: Color(0xffD6DACB),
         title: Text(
           'الملف الشخصي',
-          style: TextStyle(color: Colors.black87),
+          style: TextStyle(color: Colors.black87,fontFamily: 'Almarai Light'),
         ),
         actions: [
           Align(
@@ -124,6 +122,7 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                           fontSize: 40.0,
                           fontWeight: FontWeight.bold,
+                            fontFamily: 'Almarai Bold'
                         ),
                       ),
                       SizedBox(
@@ -274,7 +273,7 @@ class _ProfileState extends State<Profile> {
                           child: Text(
                             'حفظ',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.white,fontFamily: 'Almarai Light'
                             ),
                           ),
                         ),
@@ -293,7 +292,7 @@ class _ProfileState extends State<Profile> {
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon:Icon(Icons.person),title:'ملف شخصي'),
-          // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
+      
           TabItem(icon:Icon(Icons.house),title:'الرئيسية'),
         ],
         height: 55,
@@ -318,11 +317,7 @@ class _ProfileState extends State<Profile> {
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
-      // } else if(selectedPage == 1){
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => Book_appointment()),
-      //   );
+      
     } else if(selectedPage == 0){
       Navigator.push(
         context,
@@ -403,29 +398,26 @@ class _ProfileState extends State<Profile> {
     return "null";
   }
 }
-
-Future<profile_date> get_id() async {
+//get the user id to get his profile
+Future<profile_data> get_id() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  // final SharedPreferences prefs = await _prefs;
   if (prefs.containsKey("idKey")) {
     print("Helo");
     print(prefs.getInt("idKey"));
-    profile_date mydata =
+    profile_data mydata =
     await Conn(prefs.getInt("idKey"), " ", " ", " ").save_it_to_db();
-    // profile_date mydata=Conn(prefs.getInt("idKey")).save_it_to_db() as profile_date;
     print(mydata.name.toString());
 
     return mydata;
   } else {
     print(prefs.getInt("idKey"));
     print("key error");
-    return new profile_date("error", "error", "000");
+    return new profile_data("error", "error", "000");
   }
 }
-
+//get the user id to update his profile
 Future<int> get_donarId() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  // final SharedPreferences prefs = await _prefs;
   if (prefs.containsKey("idKey")) {
     return prefs.getInt("idKey") as int;
     //return id;
@@ -434,6 +426,7 @@ Future<int> get_donarId() async {
   }
 }
 
+//log out
 void remove_id() async {
   print('Removed the id from pref');
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -442,20 +435,3 @@ void remove_id() async {
     prefs.remove("idKey");
   }
 }
-
-//
-// void update_profile(profile_date mydata) async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   // final SharedPreferences prefs = await _prefs;
-//   if (prefs.containsKey("idKey")) {
-//     print(prefs.getInt("update idKey"));
-//     Future data = await Conn(prefs.getInt("idKey"), mydata.name,
-//             mydata.phone_number, mydata.email)
-//         .update_it_to_db();
-//     // profile_date mydata=Conn(prefs.getInt("idKey")).save_it_to_db() as profile_date;
-//     // print(mydata.name.toString());
-//   } else {
-//     print(prefs.getInt("updateidKey"));
-//     print("key error");
-//   }
-// }

@@ -1,8 +1,6 @@
 import 'dart:math';
-import 'package:aownapp/controller/constant_controller.dart';
 import 'package:aownapp/signup/signup_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
-import 'package:get/get.dart';
 import 'login_conn.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool credanitals = false;
   String? email_err_msg;
   String? password_err_msg;
-  ConstantController _constantController=Get.find<ConstantController>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Color(0xffD6DACB),
         title: Text(
           'تسجيل دخول',
-          style: TextStyle(color: Colors.black87),
+          style: TextStyle(color: Colors.black87,fontFamily: 'Almarai Light'),
         ),
         actions: [
           Align(
@@ -91,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           fontSize: 40.0,
                           fontWeight: FontWeight.bold,
+                            fontFamily: 'Almarai Bold'
                         ),
                       ),
                       SizedBox(
@@ -203,7 +201,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   !passwordController.text.isEmpty) {
                                 showerror(true);
                               } else {
-                                _constantController.donorId=value;
+                                if(value.toString()=="Enter all info"){
+                                  _accountError();
+                                }
                                 putInt(int.parse(value));
                                 Navigator.push(
                                   context,
@@ -219,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             'تسجيل الدخول',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.white,fontFamily: 'Almarai Light'
                             ),
                           ),
                         ),
@@ -289,145 +289,49 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     });
   }
+  Future<void> _accountError() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('ادخل جميع البيانات'),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30))),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Positioned(
+                    top: -60,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.red,
+                      radius: 30,
+                      child: Icon(
+                        Icons.clear_outlined, color: Colors.white,
+                        size: 50,),
+                    )
+                ),
+                //Center(child: Text('Account created ')),
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('تم'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LoginScreen()),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
-//
-// class LoginScreen extends StatelessWidget {
-//   var emailController = TextEditingController();
-//   var passwordController = TextEditingController();
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Color(0xffD6DACB),
-//         title: Text(
-//           'تسجيل دخول',
-//           style: TextStyle(color: Colors.black87),),
-//         actions: [
-//           Align(
-//             alignment: Alignment.center,
-//             child: Image.asset(
-//               'assets/finalLogo.jpeg',
-//               fit: BoxFit.contain,
-//               width: 45,
-//               height: 45,
-//             ),
-//           ),
-//         ],
-//         centerTitle: true,
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(20.0),
-//         child: Center(
-//           child: SingleChildScrollView(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children: [
-//                 Text(
-//                   'تسجيل الدخول',
-//                   style: TextStyle(
-//                     fontSize: 40.0,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   height: 40.0,
-//                 ),
-//                 TextFormField(
-//                   controller: emailController,
-//                   keyboardType: TextInputType.emailAddress,
-//                   onFieldSubmitted: (String value) {
-//                     print(value);
-//                   },
-//                   onChanged: (String value) {
-//                     print(value);
-//                   },
-//                   decoration: InputDecoration(
-//
-//                     labelText: 'البريد الالكتروني',
-//                     prefixIcon: Icon(
-//                       Icons.email,
-//                     ),
-//                     border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   height: 15.0,
-//                 ),
-//                 TextFormField(
-//                   controller: passwordController,
-//                   keyboardType: TextInputType.visiblePassword,
-//                   obscureText: true,
-//                   onFieldSubmitted: (String value) {
-//                     print(value);
-//                   },
-//                   onChanged: (String value) {
-//                     print(value);
-//                   },
-//                   decoration: InputDecoration(
-//                     labelText: 'كلمة المرور',
-//                     prefixIcon: Icon(
-//                       Icons.lock,
-//                     ),
-//                     suffixIcon: Icon(
-//                       Icons.remove_red_eye,
-//                     ),
-//                     border: OutlineInputBorder( borderRadius: BorderRadius.circular(30),),
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   height: 20.0,
-//                 ),
-//                 Container(
-//                   width: double.infinity,
-//                   decoration: BoxDecoration( color: Colors.black87,borderRadius: BorderRadius.circular(30)),
-//
-//                   child: MaterialButton(
-//
-//                     onPressed: () {
-//                       print(emailController.text);
-//                       print(passwordController.text);
-//                       Conn_login(emailController.text,passwordController.text).login_function().then((value){
-//                         print("login $value");
-//                         Navigator.push(context,
-//                           MaterialPageRoute(builder: (context) =>HomeScreen()),);
-//                       });
-//
-//                      },
-//                     child: Text(
-//                       'تسجيل الدخول',
-//                       style: TextStyle(
-//                         color: Colors.white,
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   height: 10.0,
-//                 ),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     TextButton(
-//                       onPressed: () {
-//                         Navigator.push(context,
-//                           MaterialPageRoute(builder: (context) =>Signup()),);
-//                       },
-//                       child: Text(
-//                         'تسجيل جديد',
-//                       ),
-//                     ), Text(
-//                       'ليس لديك حساب؟',
-//                     ),
-//                   ],
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+
