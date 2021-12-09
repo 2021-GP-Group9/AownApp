@@ -92,7 +92,6 @@ class _SignupState extends State<Signup> {
                             colors: [
                               Colors.lightGreen.shade50,
                               Colors.lightGreen.shade50,
-
                             ],
                           ),
                         ),
@@ -100,8 +99,6 @@ class _SignupState extends State<Signup> {
                     ),
                   )),
             ),
-
-
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
@@ -248,7 +245,7 @@ class _SignupState extends State<Signup> {
                           } else{
                             setState(() {
                               password_err = false;
-                            }); //جمعية تدوير
+                            });
                           }
                         },
                         onChanged: (String value) {
@@ -379,6 +376,7 @@ class _SignupState extends State<Signup> {
     }
     return "null";
   }
+  // To check password must contains capital , small , numbers
   bool isPasswordCompliant(String password) {
     if (password.length < 8) return false;
     if (!password.contains(RegExp(r"[a-z]"))) return false;
@@ -387,8 +385,6 @@ class _SignupState extends State<Signup> {
     if (!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]')))
       password_err = false;
     password_err = true;
-    return password_err;
-
     return password_err;
   }
   Future<void> _accountCreated() async {
@@ -413,7 +409,7 @@ class _SignupState extends State<Signup> {
                         size: 50,),
                     )
                 ),
-                              ],
+              ],
             ),
           ),
           actions: <Widget>[
@@ -423,7 +419,7 @@ class _SignupState extends State<Signup> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>LoginScreen()),
+                      builder: (context) => LoginScreen()),
                 );
               },
             ),
@@ -454,7 +450,7 @@ class _SignupState extends State<Signup> {
                         size: 50,),
                     )
                 ),
-                ],
+              ],
             ),
           ),
           actions: <Widget>[

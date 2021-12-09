@@ -142,9 +142,7 @@ class _CalendarState extends State<Calendar> {
                         selectedDay = selectDay;
                         focusedDay = focusDay;
                       });
-                      //test
-                      print(focusedDay);
-                    },
+                                          },
                     selectedDayPredicate: (DateTime date) {
                       return isSameDay(selectedDay, date);
                     },
@@ -267,11 +265,6 @@ class _CalendarState extends State<Calendar> {
     }
   }
 
-  // when notification icon button clicked
-  void onNotification() {
-    print('notification clicked');
-  }
-
   Future<void> appointmentConfirmation(
       BuildContext context, Event event) async {
     return showDialog<void>(
@@ -308,7 +301,6 @@ class _CalendarState extends State<Calendar> {
               child: const Text('نعم'),
               onPressed: () async {
                 Navigator.pop(context, true);
-                print('dsdsdsdsdsd');
                 await Get.to(() => LocationScreen(
                       appointmentId: event.appointmentId,
                       donorId: _constantController.donorId!,

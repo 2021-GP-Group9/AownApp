@@ -21,13 +21,14 @@ class BookAppointmentController extends GetxController {
       });
       Map map = jsonDecode(response.body);
       if (map['ResponseCode'] == "200") {
-
+//to store json date in appointmentModel which will bring data from the database
         AppointementModel appointementModel =
             AppointementModel.fromJson(jsonDecode(response.body));
         selectedEvents = {};
-
+        // to store events in selectedEvents Map
         for (Datum item in appointementModel.data) {
             if (selectedEvents.isNotEmpty) {
+              // if appointment date is not available in the map it will return null  then the value is null is converted into [] because of ??
             List<Event> eventList = selectedEvents[
                     DateFormat('yyyy-MM-dd').format(item.appointmentDate)] ??
                 [];
