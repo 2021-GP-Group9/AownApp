@@ -272,7 +272,7 @@ class _CalendarState extends State<Calendar> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("هل انت متأكد هل تريد حجز موعد في ${event.time} "),
+          title: Text("هل انت متأكد؟ هل تريد حجز موعد في ${event.time} "),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30))),
           content: SingleChildScrollView(
