@@ -5,7 +5,7 @@ import 'package:aownapp/controller/constant_controller.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/location/location_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+//import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
@@ -209,6 +209,7 @@ class _CalendarState extends State<Calendar> {
                           crossAxisCount: 3,
                           mainAxisExtent: 50,
                         ),
+
                         shrinkWrap: true,
                         itemCount: _getEventsfromDay(selectedDay).length,
                         itemBuilder: (context, index) {
