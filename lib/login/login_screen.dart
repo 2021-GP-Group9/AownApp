@@ -201,6 +201,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   !passwordController.text.isEmpty) {
                                 showerror(true);
                               } else {
+                                if(value.toString()=="Enter all info"){
+                                  _accountError();
+                                }
                                 putInt(int.parse(value));
                                 Navigator.push(
                                   context,
@@ -286,7 +289,51 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     });
   }
+  Future<void> _accountError() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('ادخل جميع البيانات'),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30))),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Positioned(
+                    top: -60,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.red,
+                      radius: 30,
+                      child: Icon(
+                        Icons.clear_outlined, color: Colors.white,
+                        size: 50,),
+                    )
+                ),
+                //Center(child: Text('Account created ')),
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('تم'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LoginScreen()),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
+
 
 //
 // class LoginScreen extends StatelessWidget {
