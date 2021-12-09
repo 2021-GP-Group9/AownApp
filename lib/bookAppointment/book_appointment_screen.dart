@@ -188,6 +188,19 @@ class _CalendarState extends State<Calendar> {
                       ),
                     ),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+
+                      Text(
+                        'الأوقات المتاحة',
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontFamily: 'Almarai Light'),
+
+                      ),
+                    ],
+                  ),
                   //available times here
                   Expanded(
                     child: GridView.builder(
