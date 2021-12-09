@@ -8,7 +8,6 @@ import 'dart:convert';
 AppointementModel appointementModelFromJson(String str) => AppointementModel.fromJson(json.decode(str));
 
 String appointementModelToJson(AppointementModel data) => json.encode(data.toJson());
-// to take date from database with json
 class AppointementModel {
   AppointementModel({
     required this.data,
@@ -16,7 +15,7 @@ class AppointementModel {
     required this.result,
     required this.responseMsg,
   });
-// list to store date
+
   final List<Datum> data;
   final String responseCode;
   final String result;
