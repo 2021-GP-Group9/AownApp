@@ -5,7 +5,7 @@ import 'package:aownapp/controller/constant_controller.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/location/location_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+//import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
@@ -46,7 +46,7 @@ class _CalendarState extends State<Calendar> {
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
-  //use to do backend tasks
+  // to do backend tasks
   BookAppointmentController _bookAppointmentController =
       Get.put(BookAppointmentController());
   //to store donor id
@@ -58,13 +58,12 @@ class _CalendarState extends State<Calendar> {
   TextEditingController _eventController = TextEditingController();
 
   @override
-  //first method called when your screen loads
   void initState() {
     super.initState();
   }
 
   List<Event> _getEventsfromDay(DateTime date) {
-    // this function takes the selected date and return all events available
+    // takes the selected date and return all events available
     eventList = _bookAppointmentController
             .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
         [];
@@ -74,7 +73,6 @@ class _CalendarState extends State<Calendar> {
   }
 
   @override
-  // for destroying objects
   void dispose() {
     _eventController.dispose();
     super.dispose();
@@ -82,7 +80,6 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    //var floatingActionButton;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffD6DACB),
@@ -115,7 +112,7 @@ class _CalendarState extends State<Calendar> {
         ],
         centerTitle: true,
       ),
-// mostly used to call APIs,to deals with future values
+//  used to call APIs,to deals with future values
       body: FutureBuilder<AppointementModel?>(
           future: _bookAppointmentController.getAppointmentApi(
               widget.charityId, _constantController.donorId!),
@@ -142,12 +139,10 @@ class _CalendarState extends State<Calendar> {
                         selectedDay = selectDay;
                         focusedDay = focusDay;
                       });
-                                          },
+                    },
                     selectedDayPredicate: (DateTime date) {
                       return isSameDay(selectedDay, date);
                     },
-                    //eventLoader: (Dat),
-
                     // To style the Calendar
                     calendarStyle: CalendarStyle(
                       isTodayHighlighted: true,
@@ -193,15 +188,28 @@ class _CalendarState extends State<Calendar> {
                       ),
                     ),
                   ),
-                  // will fit the GridView.blilder : it is a table with colums and rows in the given place
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+
+                      Text(
+                        'الأوقات المتاحة',
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontFamily: 'Almarai Light'),
+
+                      ),
+                    ],
+                  ),
+                  //available times here
                   Expanded(
                     child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
-                          mainAxisExtent:
-                              50, // <== change the height to fit your needs
+                          mainAxisExtent: 50,
                         ),
+
                         shrinkWrap: true,
                         itemCount: _getEventsfromDay(selectedDay).length,
                         itemBuilder: (context, index) {
@@ -272,7 +280,7 @@ class _CalendarState extends State<Calendar> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("هل انت متأكد هل تريد حجز موعد في ${event.time} "),
+          title: Text("هل انت متأكد؟ هل تريد حجز موعد في ${event.time} "),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30))),
           content: SingleChildScrollView(
