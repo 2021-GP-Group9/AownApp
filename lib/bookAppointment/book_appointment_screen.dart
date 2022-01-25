@@ -5,7 +5,7 @@ import 'package:aownapp/controller/constant_controller.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/location/location_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+//import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
@@ -46,9 +46,9 @@ class _CalendarState extends State<Calendar> {
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
-  //use to do backend tasks
+  // to do backend tasks
   BookAppointmentController _bookAppointmentController =
-      Get.put(BookAppointmentController());
+  Get.put(BookAppointmentController());
   //to store donor id
   ConstantController _constantController = Get.find<ConstantController>();
 
@@ -58,23 +58,21 @@ class _CalendarState extends State<Calendar> {
   TextEditingController _eventController = TextEditingController();
 
   @override
-  //first method called when your screen loads
   void initState() {
     super.initState();
   }
 
   List<Event> _getEventsfromDay(DateTime date) {
-    // this function takes the selected date and return all events available
+    // takes the selected date and return all events available
     eventList = _bookAppointmentController
-            .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
+        .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
         [];
     return _bookAppointmentController
-            .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
+        .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
         [];
   }
 
   @override
-  // for destroying objects
   void dispose() {
     _eventController.dispose();
     super.dispose();
@@ -82,14 +80,13 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    //var floatingActionButton;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffD6DACB),
         title: Text(
           'جدول المواعيد',
           style:
-              TextStyle(color: Colors.black87, fontFamily: 'Almarai Regular'),
+          TextStyle(color: Colors.black87, fontFamily: 'Almarai Regular'),
         ),
         leading: GestureDetector(
             onTap: () {
@@ -115,7 +112,7 @@ class _CalendarState extends State<Calendar> {
         ],
         centerTitle: true,
       ),
-// mostly used to call APIs,to deals with future values
+//  used to call APIs,to deals with future values
       body: FutureBuilder<AppointementModel?>(
           future: _bookAppointmentController.getAppointmentApi(
               widget.charityId, _constantController.donorId!),
@@ -142,14 +139,10 @@ class _CalendarState extends State<Calendar> {
                         selectedDay = selectDay;
                         focusedDay = focusDay;
                       });
-                      //test
-                      print(focusedDay);
                     },
                     selectedDayPredicate: (DateTime date) {
                       return isSameDay(selectedDay, date);
                     },
-                    //eventLoader: (Dat),
-
                     // To style the Calendar
                     calendarStyle: CalendarStyle(
                       isTodayHighlighted: true,
@@ -195,30 +188,28 @@ class _CalendarState extends State<Calendar> {
                       ),
                     ),
                   ),
-            Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
 
-            Text(
-            'الأوقات المتاحة',
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontFamily: 'Almarai Light'),
+                      Text(
+                        'الأوقات المتاحة',
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontFamily: 'Almarai Light'),
 
-            ),
-            ],
-            ),
-
-
-                  // will fit the GridView.blilder : it is a table with colums and rows in the given place
+                      ),
+                    ],
+                  ),
+                  //available times here
                   Expanded(
                     child: GridView.builder(
                         gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
-                          mainAxisExtent:
-                              50, // <== change the height to fit your needs
+                          mainAxisExtent: 50,
                         ),
+
                         shrinkWrap: true,
                         itemCount: _getEventsfromDay(selectedDay).length,
                         itemBuilder: (context, index) {
@@ -242,12 +233,12 @@ class _CalendarState extends State<Calendar> {
                                 decoration: BoxDecoration(
                                     color: Colors.black,
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(6))),
+                                    BorderRadius.all(Radius.circular(6))),
                                 child: Center(
                                     child: Text(
-                                  eventList[index].time,
-                                  style: TextStyle(color: Colors.white),
-                                )),
+                                      eventList[index].time,
+                                      style: TextStyle(color: Colors.white),
+                                    )),
                               ),
                             ),
                           );
@@ -256,7 +247,6 @@ class _CalendarState extends State<Calendar> {
                 ],
               );
             }
-
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -283,11 +273,6 @@ class _CalendarState extends State<Calendar> {
     }
   }
 
-  // when notification icon button clicked
-  void onNotification() {
-    print('notification clicked');
-  }
-
   Future<void> appointmentConfirmation(
       BuildContext context, Event event) async {
     return showDialog<void>(
@@ -295,7 +280,7 @@ class _CalendarState extends State<Calendar> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("هل انت متأكد هل تريد حجز موعد في ${event.time} "),
+          title: Text("هل انت متأكد؟ هل تريد حجز موعد في ${event.time} "),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30))),
           content: SingleChildScrollView(
@@ -324,11 +309,10 @@ class _CalendarState extends State<Calendar> {
               child: const Text('نعم'),
               onPressed: () async {
                 Navigator.pop(context, true);
-                print('dsdsdsdsdsd');
                 await Get.to(() => LocationScreen(
-                      appointmentId: event.appointmentId,
-                      donorId: _constantController.donorId!,
-                    ));
+                  appointmentId: event.appointmentId,
+                  donorId: _constantController.donorId!,
+                ));
                 setState(() {});
               },
             ),
@@ -345,7 +329,7 @@ class Event {
   final String appointmentId;
   Event(
       {required this.appointmentId,
-      required this.reserved,
-      required this.time});
+        required this.reserved,
+        required this.time});
   String toString() => this.time;
 }
