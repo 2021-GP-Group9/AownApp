@@ -1,3 +1,4 @@
+import 'package:aownapp/cases/cases_page.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class ViewPage extends StatefulWidget {
 
 class _ViewPageState extends State<ViewPage> {
   int selectedPage = 0;
-  final _pageOption=[Profile(),HomeScreen()];
+  final _pageOption=[Profile(),HomeScreen(), CasesPage()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -302,6 +303,7 @@ class _ViewPageState extends State<ViewPage> {
           TabItem(icon:Icon(Icons.person),title:'ملف شخصي'),
           // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
           TabItem(icon:Icon(Icons.house),title:'الرئيسية'),
+          TabItem(icon:Icon(Icons.assignment_rounded),title:'الحالات‎'),
         ],
         height: 55,
         initialActiveIndex: selectedPage,
@@ -318,18 +320,38 @@ class _ViewPageState extends State<ViewPage> {
     );
 
   }
-  _pn(int selectedPage) {
-    if (selectedPage == 0) {
+  _pn(int selectedPage){
+    if(selectedPage == 0){
+      Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
+      // } else if(selectedPage == 1){
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => Book_appointment()),
+      //   );
+    } else if(selectedPage == 0){
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Profile()),
+      );
+
     }else if (selectedPage == 1) {
+      Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),
       );
-
+    }
+    else if(selectedPage == 2){
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CasesPage()),
+      );
     }
   }
 }

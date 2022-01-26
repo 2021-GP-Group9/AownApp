@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
+import 'package:aownapp/cases/cases_page.dart';
 import 'package:aownapp/connection/charity_model.dart';
 import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/profile/profile_screen.dart';
@@ -19,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
   int selectedPage = 0;
-  final _pageOption=[Profile(),HomeScreen()];
+  final _pageOption=[Profile(), HomeScreen(), CasesPage()];
   void requestData() {
     _charityDataConnection.requestCharityData().then((value) {
       setState(() {
@@ -186,6 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
           TabItem(icon:Icon(Icons.person),title:'ملف شخصي'),
           // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
           TabItem(icon:Icon(Icons.house),title:'الرئيسية'),
+          TabItem(icon:Icon(Icons.assignment_rounded),title:'الحالات‎'),
         ],
         height: 55,
         initialActiveIndex: selectedPage,
@@ -205,6 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   _pn(int selectedPage){
     if(selectedPage == 0){
+      Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Profile()),
@@ -215,17 +218,25 @@ class _HomeScreenState extends State<HomeScreen> {
       //     MaterialPageRoute(builder: (context) => Book_appointment()),
       //   );
     } else if(selectedPage == 0){
+      Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
 
     }else if (selectedPage == 1) {
+      Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),
       );
-
+    }
+    else if(selectedPage == 2){
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CasesPage()),
+      );
     }
   }
   // when notification icon button clicked
