@@ -7,7 +7,7 @@
         android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:label="aownapp"
+        android:label="عون"
         android:icon="@mipmap/ic_launcher">
 
         <activity
