@@ -106,137 +106,137 @@ class _CasesPageState extends State<CasesPage> {
       ),
       body: (_isLoadingData)
           ? Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              color: Colors.white,
-              child: Center(
-                child:
-                    CircularProgressIndicator(color: const Color(0xffD6DACA)),
-              ),
-            )
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Colors.white,
+        child: Center(
+          child:
+          CircularProgressIndicator(color: const Color(0xffD6DACA)),
+        ),
+      )
           : ListView.builder(
-              padding: const EdgeInsets.all(8),
-              scrollDirection: Axis.vertical,
-              itemCount: _casesConnection.getAllCasesList.length,
-              // #of charities
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    top: 50,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ViewSpecificPage(
-                                _casesConnection
-                                    .getAllCasesList[index].donationId,
-                                _casesConnection)),
-                      );
-                    },
-                    child: Container(
-                      // height: 100,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          // border: Border.all(color: Colors.white70) ,
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(50)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 4,
-                              blurRadius: 20,
-                              offset: Offset(
-                                  -10.0, 10.0), // changes position of shadow
-                            ),
-                          ]),
+          padding: const EdgeInsets.all(8),
+          scrollDirection: Axis.vertical,
+          itemCount: _casesConnection.getAllCasesList.length,
+          // #of charities
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.only(
+                top: 50,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ViewSpecificPage(
+                            _casesConnection
+                                .getAllCasesList[index].donationId,
+                            _casesConnection)),
+                  );
+                },
+                child: Container(
+                  // height: 100,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      // border: Border.all(color: Colors.white70) ,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(50)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 4,
+                          blurRadius: 20,
+                          offset: Offset(
+                              -10.0, 10.0), // changes position of shadow
+                        ),
+                      ]),
 
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Icon(
-                              _casesConnection.getAllCasesList[index].icon,
-                              size: 50,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          Container(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth:
-                                        MediaQuery.of(context).size.width - 145,
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      _casesConnection
-                                          .getAllCasesList[index].itemName,
-                                      style: TextStyle(
-                                          fontFamily: 'almarai Bold',
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth:
-                                        MediaQuery.of(context).size.width - 145,
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      _casesConnection
-                                          .getAllCasesList[index].itemType,
-                                      textAlign: TextAlign.right,
-                                      textDirection: TextDirection.rtl,
-                                      style: TextStyle(
-                                        fontFamily: 'almarai Regular',
-                                        fontSize: 13,
-                                        color: Colors.blueGrey,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth:
-                                        MediaQuery.of(context).size.width - 145,
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      _casesConnection.getAllCasesList[index]
-                                          .donationDescription,
-                                      textAlign: TextAlign.right,
-                                      textDirection: TextDirection.rtl,
-                                      style: TextStyle(
-                                        fontFamily: 'almarai Regular',
-                                        fontSize: 13,
-                                        color: Colors.blueGrey,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Icon(
+                          _casesConnection.getAllCasesList[index].icon,
+                          size: 50,
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              constraints: BoxConstraints(
+                                maxWidth:
+                                MediaQuery.of(context).size.width - 145,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  _casesConnection
+                                      .getAllCasesList[index].itemName,
+                                  style: TextStyle(
+                                      fontFamily: 'almarai Bold',
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              constraints: BoxConstraints(
+                                maxWidth:
+                                MediaQuery.of(context).size.width - 145,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  _casesConnection
+                                      .getAllCasesList[index].itemType,
+                                  textAlign: TextAlign.right,
+                                  textDirection: TextDirection.rtl,
+                                  style: TextStyle(
+                                    fontFamily: 'almarai Regular',
+                                    fontSize: 13,
+                                    color: Colors.blueGrey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              constraints: BoxConstraints(
+                                maxWidth:
+                                MediaQuery.of(context).size.width - 145,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  _casesConnection.getAllCasesList[index]
+                                      .donationDescription,
+                                  textAlign: TextAlign.right,
+                                  textDirection: TextDirection.rtl,
+                                  style: TextStyle(
+                                    fontFamily: 'almarai Regular',
+                                    fontSize: 13,
+                                    color: Colors.blueGrey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              }),
+                ),
+              ),
+            );
+          }),
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
