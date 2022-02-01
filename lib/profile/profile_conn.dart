@@ -13,8 +13,8 @@ class Conn {
 
   Conn(@required this.donorId, this._name, this._phone_number, this._email);
 
-
-  Future<profile_data> save_it_to_db() async {
+  // ignore: non_constant_identifier_names
+  Future<profile_date> save_it_to_db() async {
     String deb;
 
     try {
@@ -25,18 +25,19 @@ class Conn {
         print(jsonDecode(response.body));
 
         String objText = response.body.toString();
-        profile_data mydata = profile_data.fromJson(jsonDecode(objText));
-
+        profile_date mydata = profile_date.fromJson(jsonDecode(objText));
+        // profile_date mydata =
+        //   new profile_date(list[0], list[1].toString(), list[2]);
         print("mydata");
         print(mydata.name);
         return mydata;
       } else {
         print("error");
-        return new profile_data("error", "error", "000");
+        return new profile_date("error", "error", "000");
       }
     } catch (exception) {
       print(exception.toString());
-      return new profile_data("error", "error", "000");
+      return new profile_date("error", "error", "000");
     }
   }
 
@@ -55,10 +56,12 @@ class Conn {
         return result;
       } else {
         print("uperror");
+        //return profile_date("error", "error", "000");
         return "objText";
       }
     } catch (exception) {
       print(exception.toString());
+      //return new profile_date("error", "error", "000");
       return "objText";
     }
   }
