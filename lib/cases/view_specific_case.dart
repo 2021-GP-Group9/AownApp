@@ -1,5 +1,6 @@
 import 'package:aownapp/cases/cases_connection.dart';
 import 'package:aownapp/cases/cases_page.dart';
+import 'package:aownapp/donation/donation_page.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -234,7 +235,12 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
                     ),
 
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DonationPage(widget.Id, widget.casesConnection.specificCase)),
+                        );
+                      },
                       child: Container(
                         width: 80,
                         height: 40,

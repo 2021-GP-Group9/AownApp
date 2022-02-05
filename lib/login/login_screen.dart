@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:aownapp/controller/constant_controller.dart';
+import 'package:aownapp/donation/donation_conn.dart';
 import 'package:aownapp/signup/signup_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:get/get.dart';
@@ -206,6 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (value.toString() == "Enter all info") {
                                   _accountError();
                                 }
+                                DonationConnection.donorId = value;
                                 constantController.donorId = value;
                                 putInt(int.parse(value));
                                 Navigator.push(
