@@ -4,6 +4,7 @@ import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:aownapp/favoriteList/favoirte_screen.dart';
 
 class CasesPage extends StatefulWidget {
   const CasesPage({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class _CasesPageState extends State<CasesPage> {
   @override
   Widget build(BuildContext context) {
     int selectedPage = 0;
-    final _pageOption = [Profile(), HomeScreen(), CasesPage()];
+    final _pageOption = [Profile(), HomeScreen(), CasesPage() ,Favorite_screen()];
 
     return Scaffold(
       appBar: AppBar(
@@ -59,48 +60,7 @@ class _CasesPageState extends State<CasesPage> {
           ),
         ),
         actions: [
-          PopupMenuButton(
-              icon: Icon(
-                Icons.filter_alt,
-                size: 22,
-                color: Colors.grey[700],
-              ),
-              onSelected: (v) async {
-                if (v == 1) {
-                  _casesConnection.addingFilter("كتب_وورق");
-                } else if (v == 2) {
-                  _casesConnection.addingFilter("أثاث");
-                } else if (v == 3) {
-                  _casesConnection.addingFilter("الكترونيات");
-                } else if (v == 4) {
-                  _casesConnection.addingFilter("ملابس");
-                } else if(v == 5){
-                  _casesConnection.addingFilter("الكل");
-                }
-                setState(() {});
-              },
-              itemBuilder: (context) => [
-                const PopupMenuItem(
-                  child: Text("كتب_وورق"),
-                  value: 1,
-                ),
-                const PopupMenuItem(
-                  child: Text("أثاث"),
-                  value: 2,
-                ),
-                const PopupMenuItem(
-                  child: Text("الكترونيات"),
-                  value: 3,
-                ),
-                const PopupMenuItem(
-                  child: Text("ملابس"),
-                  value: 4,
-                ),
-                const PopupMenuItem(
-                  child: Text("الكل"),
-                  value: 5,
-                ),
-              ]),
+
           Image.asset("assets/finalLogo.jpeg")
         ],
       ),
@@ -155,13 +115,13 @@ class _CasesPageState extends State<CasesPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Icon(
-                          _casesConnection.getAllCasesList[index].icon,
-                          size: 50,
-                        ),
-                      ),
+                     // Padding(
+                        //padding: const EdgeInsets.only(left: 20),
+                        //child: Icon(
+                        //  _casesConnection.getAllCasesList[index].icon,
+                         // size: 50,
+                      //  ),
+                     // ),
                       SizedBox(
                         width: 40,
                       ),
@@ -236,26 +196,31 @@ class _CasesPageState extends State<CasesPage> {
                 ),
               ),
             );
-          }),
-      bottomNavigationBar: ConvexAppBar(
-        items: [
-          TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
-          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
-          TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
-        ],
-        height: 55,
-        initialActiveIndex: selectedPage,
-        onTap: (int index) {
-          print(index);
-          setState(() {
-            selectedPage = index;
-            _pageOption[selectedPage];
-            _pn(selectedPage);
-          });
-        },
-        backgroundColor: const Color(0xffD6DACA),
-      ),
+          }),      bottomNavigationBar: ConvexAppBar(
+      items: [
+        TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
+        // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
+        TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
+        TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
+        TabItem(
+            icon: Icon(
+              Icons.favorite,
+              color: Colors.black,
+            ),
+            title: 'المفضلة '),
+      ],
+      height: 55,
+      initialActiveIndex: selectedPage,
+      onTap: (int index) {
+        print(index);
+        setState(() {
+          selectedPage = index;
+          _pageOption[selectedPage];
+          _pn(selectedPage);
+        });
+      },
+      backgroundColor: const Color(0xffD6DACA),
+    ),
     );
   }
 
@@ -288,6 +253,12 @@ class _CasesPageState extends State<CasesPage> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
+      );
+    } else if (selectedPage == 3) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Favorite_screen()),
       );
     }
   }

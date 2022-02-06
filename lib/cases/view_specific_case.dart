@@ -99,7 +99,7 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
                     ]),
                 child: Column(
                   children: [
-                    Icon(widget.casesConnection.specificCase.icon, size: 50,),
+                   // Icon(widget.casesConnection.specificCase.icon, size: 50,),
                     Container(
                       child: Text(
                         widget.casesConnection.specificCase.itemName,
