@@ -52,7 +52,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
 
   @override
   void initState() {
-    requestData(); // method load befor load the page to get information of charities
+    requestData();
     _get_list().then((value) {
       myList = value;
       print(myList.toString());
@@ -64,7 +64,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
   void fill_color() {
     int length = _charityDataConnection.allCharityList.length;
     print("length".length);
-    // _charityDataConnection.allCharityList[i];
+
 
     for (int i = 0; i < length; i++) {
       colors_list[i] = Colors.grey;
@@ -74,14 +74,13 @@ class _Favorite_screenState extends State<Favorite_screen> {
 
   @override
   Widget build(BuildContext context) {
-    // main axis alignment : start
-    // cross axis alignment : center
+
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xffD6DACA),
-        // leading: Icon(Icons.search),
+
         title: TextFormField(
           controller: passwordController,
           keyboardType: TextInputType.visiblePassword,
@@ -118,7 +117,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
           padding: const EdgeInsets.all(8),
           scrollDirection: Axis.vertical,
           itemCount: _charityDataConnection.allCharityList.length,
-          // #of charities
+
           itemBuilder: (BuildContext context, int index) {
             return check_favo(
                 _charityDataConnection.allCharityList[index].charityId)
@@ -138,7 +137,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
                         spreadRadius: 4,
                         blurRadius: 20,
                         offset: Offset(-10.0,
-                            10.0), // changes position of shadow
+                            10.0),
                       ),
                     ]),
                 child: Row(
@@ -345,18 +344,16 @@ class _Favorite_screenState extends State<Favorite_screen> {
 
     int id = int.parse(_CharityModel.charityId);
     if (myList.contains(id)) {
-      //myList.add(1);
+
       myList.removeWhere((item) => item == id);
-      //replytile.removeWhere((item) => item.id == '001')
-      //myList.add(int.parse(_CharityModel.charityId));
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
       List<String> myList1 =
       (prefs.getStringList('mylist12') ?? List<String>.empty());
-      //List<int> myOriginaList = myList1.map((i) => int.parse(i)).toList();
-      //print('Your list  $myOriginaList');
+
       print('before remove Your list  $myList1');
       myList1.removeWhere((item) => item == id.toString());
-      // myList1.indexOf(id.);
+
       print('After remove Your list  $myList1');
       await prefs.setStringList('mylist12', myList1);
     }

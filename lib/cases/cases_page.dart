@@ -60,7 +60,48 @@ class _CasesPageState extends State<CasesPage> {
           ),
         ),
         actions: [
-
+          PopupMenuButton(
+              icon: Icon(
+                Icons.filter_alt,
+                size: 22,
+                color: Colors.grey[700],
+              ),
+              onSelected: (v) async {
+                if (v == 1) {
+                  _casesConnection.addingFilter("كتب_وورق");
+                } else if (v == 2) {
+                  _casesConnection.addingFilter("أثاث");
+                } else if (v == 3) {
+                  _casesConnection.addingFilter("الكترونيات");
+                } else if (v == 4) {
+                  _casesConnection.addingFilter("ملابس");
+                } else if(v == 5){
+                  _casesConnection.addingFilter("الكل");
+                }
+                setState(() {});
+              },
+              itemBuilder: (context) => [
+                const PopupMenuItem(
+                  child: Text("كتب_وورق"),
+                  value: 1,
+                ),
+                const PopupMenuItem(
+                  child: Text("أثاث"),
+                  value: 2,
+                ),
+                const PopupMenuItem(
+                  child: Text("الكترونيات"),
+                  value: 3,
+                ),
+                const PopupMenuItem(
+                  child: Text("ملابس"),
+                  value: 4,
+                ),
+                const PopupMenuItem(
+                  child: Text("الكل"),
+                  value: 5,
+                ),
+              ]),
           Image.asset("assets/finalLogo.jpeg")
         ],
       ),

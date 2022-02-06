@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    requestData(); // method load befor load the page to get information of charities
+    requestData();
     _get_list().then((value) {
       myList = value;
       print(myList.toString());
@@ -321,13 +321,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     int id = int.parse(_CharityModel.charityId);
     if (!myList.contains(id)) {
-      //myList.add(1);
+
       myList.add(int.parse(_CharityModel.charityId));
       SharedPreferences prefs = await SharedPreferences.getInstance();
       List<String> myList1 =
       (prefs.getStringList('mylist12') ?? List<String>.empty());
       List<int> myOriginaList = myList1.map((i) => int.parse(i)).toList();
-      //print('Your list  $myOriginaList');
+
       myListOfStrings = myList1.toList();
       myListOfStrings.add(_CharityModel.charityId);
       print('Your list  $myListOfStrings');
