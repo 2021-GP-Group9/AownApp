@@ -27,7 +27,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
 //method to show the download icone befor get data
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
-  int selectedPage = 0;
+  int selectedPage = 2;
   final _pageOption = [
     Profile(),
     Favorite_screen(),
@@ -271,16 +271,12 @@ class _Favorite_screenState extends State<Favorite_screen> {
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
+          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
           TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
-          TabItem(
-              icon: Icon(
-                Icons.favorite,
-                color: Colors.black,
-              ),
-              title: 'المفضلة '),
+          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
         ],
-        height: 55,
+        color: Colors.black,
+        height: 60,
         initialActiveIndex: selectedPage,
         onTap: (int index) {
           print(index);

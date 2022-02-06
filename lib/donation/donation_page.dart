@@ -64,11 +64,15 @@ class _DonationPageState extends State<DonationPage> {
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               child: Column(
                 children: [
-                  const Text("هل انت متأكد ؟ ‎"),
-                  _getYesNoOption("نوع المنتج :" + widget.thisCase.itemType, 0),
-                  _getYesNoOption("عدد القطع :" + widget.thisCase.itemCount, 1),
-                  _getYesNoOption("لون المنتج :" + widget.thisCase.itemColor, 2),
-                  _getYesNoOption("حجم المنتج:" + widget.thisCase.itemSize, 3),
+                  const Text("هل أنت متأكد ؟ ‎",style: TextStyle(
+                    fontFamily: 'Almarai bold',
+                    fontSize: 16,
+                    color: Colors.black,
+                  )),
+                  _getYesNoOption("نوع المنتج : " + widget.thisCase.itemType, 0),
+                  _getYesNoOption("عدد القطع : " + widget.thisCase.itemCount, 1),
+                  _getYesNoOption("لون المنتج : " + widget.thisCase.itemColor, 2),
+                  _getYesNoOption("حجم المنتج : " + widget.thisCase.itemSize, 3),
                   GestureDetector(
                     onTap: () async {
                       setState(() {
@@ -101,7 +105,10 @@ class _DonationPageState extends State<DonationPage> {
                             const BorderRadius.all(Radius.circular(10)),
                       ),
                       child: const Center(
-                        child: Text("ارسال "),
+                        child: Text("إرسال ", style: TextStyle(
+                          fontFamily: 'Almarai Regular',
+                          fontSize: 14,
+                        )),
                       ),
                     ),
                   )
@@ -116,7 +123,10 @@ class _DonationPageState extends State<DonationPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('تم ارسال المعلومات بنجاح سيتم التواصل عن طريق الايميل'),
+          title: const Text('تم ارسال المعلومات بنجاح سيتم التواصل عن طريق الايميل',style:TextStyle(
+            fontFamily: 'Almarai Light',
+            fontSize: 14,
+          )),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30))),
           content: SingleChildScrollView(
@@ -174,7 +184,10 @@ class _DonationPageState extends State<DonationPage> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               color: (chooseBoolean[option]) ? Colors.white : _primaryColor,
-              child: const Text("نعم"),
+              child: const Text("نعم",style: TextStyle(
+                fontFamily: 'Almarai Regular',
+                fontSize: 12,
+              ),),
             ),
           ),
           GestureDetector(
@@ -186,13 +199,19 @@ class _DonationPageState extends State<DonationPage> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               color: (!chooseBoolean[option]) ? Colors.white : _primaryColor,
-              child: const Text("لا"),
+              child: const Text("لا",style: TextStyle(
+                fontFamily: 'Almarai Regular',
+                fontSize: 12,
+              ),),
             ),
           ),
           Container(
             width: MediaQuery.of(context).size.width * .5,
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(title),
+            child: Text(title,style: TextStyle(
+              fontFamily: 'Almarai bold',
+              fontSize: 14,
+            ),),
           ),
         ],
       ),

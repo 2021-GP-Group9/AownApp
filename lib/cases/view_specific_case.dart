@@ -1,6 +1,7 @@
 import 'package:aownapp/cases/cases_connection.dart';
 import 'package:aownapp/cases/cases_page.dart';
 import 'package:aownapp/donation/donation_page.dart';
+import 'package:aownapp/favoriteList/favoirte_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -17,8 +18,8 @@ class ViewSpecificPage extends StatefulWidget {
 }
 
 class _ViewSpecificPageState extends State<ViewSpecificPage> {
-  int selectedPage = 0;
-  final _pageOption = [Profile(), HomeScreen(), CasesPage()];
+  int selectedPage = 2;
+  final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen()];
   bool _showLoading = true;
 
   void _getThisSpecificCase() {
@@ -159,7 +160,7 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
                                 )),
                       ),
                       Expanded(
-                          child: Text("نوع المنتج",
+                          child: Text("نوع المنتج:",
                               textAlign: TextAlign.right,
                               textDirection: TextDirection.rtl,
                               style: TextStyle(
@@ -180,7 +181,7 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
                                 )),
                       ),
                       Expanded(
-                          child: Text("حجم المنتج",
+                          child: Text("حجم المنتج:",
                               textAlign: TextAlign.right,
                               textDirection: TextDirection.rtl,
                               style: TextStyle(
@@ -201,7 +202,7 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
                                 )),
                       ),
                       Expanded(
-                          child: Text("لون المنتج",
+                          child: Text("لون المنتج:",
                               textAlign: TextAlign.right,
                               textDirection: TextDirection.rtl,
                               style: TextStyle(
@@ -222,17 +223,35 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
                                 )),
                       ),
                       Expanded(
-                          child: Text("عدد القطع",
+                          child: Text("عدد القطع:",
                               textAlign: TextAlign.right,
                               textDirection: TextDirection.rtl,
                               style: TextStyle(
                                 fontFamily: 'Almarai Regular',
                                 fontSize: 14,
                               )))
+                    ]),Row(children: <Widget>[
+                      Expanded(
+                          child: Text("",
+                              textAlign: TextAlign.right,
+                              textDirection: TextDirection.rtl,
+                              style: TextStyle(
+                                fontFamily: 'Almarai Light',
+                                fontSize: 14,
+                              )))
                     ]),
                     Divider(
                       color: Colors.grey,
-                    ),
+                    ),Row(children: <Widget>[
+                      Expanded(
+                          child: Text("",
+                              textAlign: TextAlign.right,
+                              textDirection: TextDirection.rtl,
+                              style: TextStyle(
+                                fontFamily: 'Almarai Light',
+                                fontSize: 14,
+                              )))
+                    ]),
 
                     GestureDetector(
                       onTap: () {
@@ -249,7 +268,9 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: Center(
-                          child: Text("تبرع الآن‎"),
+                          child: Text("تبرع الآن‎",
+                              style: TextStyle(fontFamily: 'almarai Regular'))
+                            ,
                         ),
                       ),
                     )
@@ -260,11 +281,12 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
-          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
+          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
           TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
+          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
         ],
-        height: 55,
+        color: Colors.black,
+        height: 60,
         initialActiveIndex: selectedPage,
         onTap: (int index) {
           print(index);
@@ -297,7 +319,7 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
-    } else if (selectedPage == 1) {
+    } else if (selectedPage == 3) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -308,6 +330,12 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
+      );
+    }else if (selectedPage == 1) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Favorite_screen()),
       );
     }
   }

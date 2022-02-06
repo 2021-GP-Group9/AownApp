@@ -355,7 +355,7 @@ class _SignupState extends State<Signup> {
   void showerror(bool bool) {
     setState(() {
       if (bool) {
-        email_err_msg = "الايميل مستخدم بالفعل";
+        email_err_msg = "الإيميل مستخدم بالفعل";
         email_err = true;
       } else {
         phone_err_msg = "رقم الجوال مستخدم بالفعل";

@@ -67,11 +67,11 @@ class _ProfileState extends State<Profile> {
                   MaterialPageRoute(builder: (context) => WelcomeScrean()),
                       (Route<dynamic> route) => false);
             },
-            child: Icon(Icons.logout_rounded)),
+            child: Icon(Icons.logout_rounded, color: Colors.black54)),
         backgroundColor: Color(0xffD6DACB),
         title: Text(
           'الملف الشخصي',
-          style: TextStyle(color: Colors.black87),
+          style: TextStyle( fontFamily: 'almarai light',color: Colors.black87),
         ),
         actions: [
           Align(
@@ -124,6 +124,7 @@ class _ProfileState extends State<Profile> {
                         'الملف الشخصي',
                         textAlign: TextAlign.center,
                         style: TextStyle(
+                          fontFamily: 'almarai Bold',
                           fontSize: 40.0,
                           fontWeight: FontWeight.bold,
                         ),
@@ -276,6 +277,7 @@ class _ProfileState extends State<Profile> {
                           child: Text(
                             'حفظ',
                             style: TextStyle(
+                              fontFamily: 'almarai light',
                               color: Colors.white,
                             ),
                           ),
@@ -295,16 +297,12 @@ class _ProfileState extends State<Profile> {
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
+          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
           TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
-          TabItem(
-              icon: Icon(
-                Icons.favorite,
-                color: Colors.black,
-              ),
-              title: 'المفضلة '),
+          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
         ],
-        height: 55,
+        color: Colors.black,
+        height: 60,
         initialActiveIndex: selectedPage,
         onTap: (int index) {
           print(index);
@@ -337,7 +335,7 @@ class _ProfileState extends State<Profile> {
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
-    } else if (selectedPage == 1) {
+    } else if (selectedPage == 3) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -349,7 +347,7 @@ class _ProfileState extends State<Profile> {
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
       );
-    } else if (selectedPage == 3) {
+    } else if (selectedPage == 2) {
       Navigator.of(context).pop();
       Navigator.push(
         context,

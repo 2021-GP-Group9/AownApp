@@ -12,7 +12,6 @@ class CasesPage extends StatefulWidget {
   @override
   _CasesPageState createState() => _CasesPageState();
 }
-
 class _CasesPageState extends State<CasesPage> {
   final CasesConnection _casesConnection = CasesConnection();
   bool _isLoadingData = true;
@@ -33,7 +32,7 @@ class _CasesPageState extends State<CasesPage> {
 
   @override
   Widget build(BuildContext context) {
-    int selectedPage = 0;
+    int selectedPage = 2;
     final _pageOption = [Profile(), HomeScreen(), CasesPage() ,Favorite_screen()];
 
     return Scaffold(
@@ -105,7 +104,8 @@ class _CasesPageState extends State<CasesPage> {
           Image.asset("assets/finalLogo.jpeg")
         ],
       ),
-      body: (_isLoadingData)
+      body:
+        (_isLoadingData)
           ? Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -240,17 +240,12 @@ class _CasesPageState extends State<CasesPage> {
           }),      bottomNavigationBar: ConvexAppBar(
       items: [
         TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-        // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
-        TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
+        TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
         TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
-        TabItem(
-            icon: Icon(
-              Icons.favorite,
-              color: Colors.black,
-            ),
-            title: 'المفضلة '),
+        TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
       ],
-      height: 55,
+      color: Colors.black,
+      height: 60,
       initialActiveIndex: selectedPage,
       onTap: (int index) {
         print(index);
@@ -283,7 +278,7 @@ class _CasesPageState extends State<CasesPage> {
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
-    } else if (selectedPage == 1) {
+    } else if (selectedPage == 3) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -295,7 +290,7 @@ class _CasesPageState extends State<CasesPage> {
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
       );
-    } else if (selectedPage == 3) {
+    } else if (selectedPage == 1) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
