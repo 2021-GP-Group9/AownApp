@@ -27,7 +27,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
 //method to show the download icone befor get data
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
-  int selectedPage = 2;
+  int selectedPage = 1;
   final _pageOption = [
     Profile(),
     Favorite_screen(),

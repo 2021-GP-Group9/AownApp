@@ -347,7 +347,7 @@ class _ProfileState extends State<Profile> {
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
       );
-    } else if (selectedPage == 2) {
+    } else if (selectedPage == 1) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
