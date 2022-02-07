@@ -48,7 +48,7 @@ class _CalendarState extends State<Calendar> {
   DateTime focusedDay = DateTime.now();
   // to do backend tasks
   BookAppointmentController _bookAppointmentController =
-      Get.put(BookAppointmentController());
+  Get.put(BookAppointmentController());
   //to store donor id
   ConstantController _constantController = Get.find<ConstantController>();
 
@@ -65,10 +65,10 @@ class _CalendarState extends State<Calendar> {
   List<Event> _getEventsfromDay(DateTime date) {
     // takes the selected date and return all events available
     eventList = _bookAppointmentController
-            .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
+        .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
         [];
     return _bookAppointmentController
-            .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
+        .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
         [];
   }
 
@@ -86,7 +86,7 @@ class _CalendarState extends State<Calendar> {
         title: Text(
           'جدول المواعيد',
           style:
-              TextStyle(color: Colors.black87, fontFamily: 'Almarai Regular'),
+          TextStyle(color: Colors.black87, fontFamily: 'Almarai Regular'),
         ),
         leading: GestureDetector(
             onTap: () {
@@ -205,7 +205,7 @@ class _CalendarState extends State<Calendar> {
                   Expanded(
                     child: GridView.builder(
                         gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
                           mainAxisExtent: 50,
                         ),
@@ -233,12 +233,12 @@ class _CalendarState extends State<Calendar> {
                                 decoration: BoxDecoration(
                                     color: Colors.black,
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(6))),
+                                    BorderRadius.all(Radius.circular(6))),
                                 child: Center(
                                     child: Text(
-                                  eventList[index].time,
-                                  style: TextStyle(color: Colors.white),
-                                )),
+                                      eventList[index].time,
+                                      style: TextStyle(color: Colors.white),
+                                    )),
                               ),
                             ),
                           );
@@ -310,9 +310,9 @@ class _CalendarState extends State<Calendar> {
               onPressed: () async {
                 Navigator.pop(context, true);
                 await Get.to(() => LocationScreen(
-                      appointmentId: event.appointmentId,
-                      donorId: _constantController.donorId!,
-                    ));
+                  appointmentId: event.appointmentId,
+                  donorId: _constantController.donorId!,
+                ));
                 setState(() {});
               },
             ),
@@ -329,7 +329,7 @@ class Event {
   final String appointmentId;
   Event(
       {required this.appointmentId,
-      required this.reserved,
-      required this.time});
+        required this.reserved,
+        required this.time});
   String toString() => this.time;
 }

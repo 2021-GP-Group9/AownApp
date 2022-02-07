@@ -4,6 +4,7 @@ import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:aownapp/favoriteList/favoirte_screen.dart';
 
 class CasesPage extends StatefulWidget {
   const CasesPage({Key? key}) : super(key: key);
@@ -11,7 +12,6 @@ class CasesPage extends StatefulWidget {
   @override
   _CasesPageState createState() => _CasesPageState();
 }
-
 class _CasesPageState extends State<CasesPage> {
   final CasesConnection _casesConnection = CasesConnection();
   bool _isLoadingData = true;
@@ -32,8 +32,8 @@ class _CasesPageState extends State<CasesPage> {
 
   @override
   Widget build(BuildContext context) {
-    int selectedPage = 0;
-    final _pageOption = [Profile(), HomeScreen(), CasesPage()];
+    int selectedPage = 2;
+    final _pageOption = [Profile(), HomeScreen(), CasesPage() ,Favorite_screen()];
 
     return Scaffold(
       appBar: AppBar(
@@ -104,7 +104,8 @@ class _CasesPageState extends State<CasesPage> {
           Image.asset("assets/finalLogo.jpeg")
         ],
       ),
-      body: (_isLoadingData)
+      body:
+        (_isLoadingData)
           ? Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -155,13 +156,13 @@ class _CasesPageState extends State<CasesPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Icon(
-                          _casesConnection.getAllCasesList[index].icon,
-                          size: 50,
-                        ),
-                      ),
+                     // Padding(
+                        //padding: const EdgeInsets.only(left: 20),
+                        //child: Icon(
+                        //  _casesConnection.getAllCasesList[index].icon,
+                         // size: 50,
+                      //  ),
+                     // ),
                       SizedBox(
                         width: 40,
                       ),
@@ -236,26 +237,26 @@ class _CasesPageState extends State<CasesPage> {
                 ),
               ),
             );
-          }),
-      bottomNavigationBar: ConvexAppBar(
-        items: [
-          TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          // TabItem(icon:Icon(Icons.add_circle),title:'موعد '),
-          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
-          TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
-        ],
-        height: 55,
-        initialActiveIndex: selectedPage,
-        onTap: (int index) {
-          print(index);
-          setState(() {
-            selectedPage = index;
-            _pageOption[selectedPage];
-            _pn(selectedPage);
-          });
-        },
-        backgroundColor: const Color(0xffD6DACA),
-      ),
+          }),      bottomNavigationBar: ConvexAppBar(
+      items: [
+        TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
+        TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
+        TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
+        TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
+      ],
+      color: Colors.black,
+      height: 60,
+      initialActiveIndex: selectedPage,
+      onTap: (int index) {
+        print(index);
+        setState(() {
+          selectedPage = index;
+          _pageOption[selectedPage];
+          _pn(selectedPage);
+        });
+      },
+      backgroundColor: const Color(0xffD6DACA),
+    ),
     );
   }
 
@@ -277,7 +278,7 @@ class _CasesPageState extends State<CasesPage> {
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
-    } else if (selectedPage == 1) {
+    } else if (selectedPage == 3) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -288,6 +289,12 @@ class _CasesPageState extends State<CasesPage> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
+      );
+    } else if (selectedPage == 1) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Favorite_screen()),
       );
     }
   }
