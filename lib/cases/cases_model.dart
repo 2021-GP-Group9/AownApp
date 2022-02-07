@@ -125,7 +125,7 @@ IconData _getIcon(String itemType){
     _icon = Icons.microwave_rounded;
   }
   else if(itemType == "ملابس") {
-    _icon = Icons.circle;
+    _icon = Icons.checkroom_sharp;
   }
 
   return _icon;
