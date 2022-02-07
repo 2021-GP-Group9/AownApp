@@ -5,18 +5,19 @@ import 'package:aownapp/cases/cases_page.dart';
 import 'package:aownapp/connection/charity_model.dart';
 import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/favoriteList/favoirte_screen.dart';
+import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import '../viewPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeScreen extends StatefulWidget {
+class Favorite_screen extends StatefulWidget {
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<Favorite_screen> createState() => _Favorite_screenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _Favorite_screenState extends State<Favorite_screen> {
   List<String> myListOfStrings = [];
   List<int> myList = [];
   Color _favIconColor = Colors.grey;
@@ -26,8 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
 //method to show the download icone befor get data
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
-  int selectedPage = 3;
-  final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen()];
+  int selectedPage = 1;
+  final _pageOption = [
+    Profile(),
+    Favorite_screen(),
+    CasesPage(),
+    Favorite_screen()
+  ];
   void requestData() {
     _charityDataConnection.requestCharityData().then((value) {
       setState(() {
@@ -58,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void fill_color() {
     int length = _charityDataConnection.allCharityList.length;
     print("length".length);
-    // _charityDataConnection.allCharityList[i];
+
 
     for (int i = 0; i < length; i++) {
       colors_list[i] = Colors.grey;
@@ -68,14 +74,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // main axis alignment : start
-    // cross axis alignment : center
+
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xffD6DACA),
-        // leading: Icon(Icons.search),
+
         title: TextFormField(
           controller: passwordController,
           keyboardType: TextInputType.visiblePassword,
@@ -112,36 +117,41 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(8),
           scrollDirection: Axis.vertical,
           itemCount: _charityDataConnection.allCharityList.length,
-          // #of charities
+
           itemBuilder: (BuildContext context, int index) {
-            return Padding(
+            return check_favo(
+                _charityDataConnection.allCharityList[index].charityId)
+                ? Padding(
               padding: const EdgeInsets.only(
-                top: 50,
+                top: 20,
               ),
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: Colors.white70),
-                    borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(50)),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(50)),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.3),
                         spreadRadius: 4,
                         blurRadius: 20,
-                        offset: Offset(
-                            -10.0, 10.0), // changes position of shadow
+                        offset: Offset(-10.0,
+                            10.0),
                       ),
                     ]),
                 child: Row(
                   children: [
                     GestureDetector(
                       onTap: () {
-                        _save(_charityDataConnection.allCharityList[index])
-                            .whenComplete(() => setState(() {
-                          print(index);
-                          colors_list[index] = Colors.red;
-                        }));
+                        _remove(_charityDataConnection
+                            .allCharityList[index])
+                            .whenComplete(() {
+                          setState(() {
+                            //print(index);
+                            //colors_list[index] = Colors.grey;
+                          });
+                        });
                       },
                       child: Container(
                         margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -158,7 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ViewPage(
-                                  charityModel: _charityDataConnection
+                                  charityModel:
+                                  _charityDataConnection
                                       .allCharityList[index],
                                 )));
                       },
@@ -175,8 +186,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 240,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment:
+                                MainAxisAlignment.center,
+                                crossAxisAlignment:
+                                CrossAxisAlignment.end,
                                 children: [
                                   Container(
                                     constraints: BoxConstraints(
@@ -189,11 +202,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       padding: EdgeInsets.all(8.0),
                                       child: Text(
                                         _charityDataConnection
-                                            .allCharityList[index].name,
+                                            .allCharityList[index]
+                                            .name,
                                         style: TextStyle(
-                                            fontFamily: 'almarai Bold',
+                                            fontFamily:
+                                            'almarai Bold',
                                             fontSize: 15,
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight:
+                                            FontWeight.bold),
                                       ),
                                     ),
                                   ),
@@ -211,9 +227,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .allCharityList[index]
                                             .description,
                                         textAlign: TextAlign.right,
-                                        textDirection: TextDirection.rtl,
+                                        textDirection:
+                                        TextDirection.rtl,
                                         style: TextStyle(
-                                          fontFamily: 'almarai Regular',
+                                          fontFamily:
+                                          'almarai Regular',
                                           fontSize: 13,
                                           color: Colors.blueGrey,
                                         ),
@@ -224,13 +242,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 40),
+                              padding:
+                              const EdgeInsets.only(right: 40),
                               child: Container(
                                 height: 49,
                                 width: 49,
                                 child: (_charityDataConnection
                                     .allCharityList[index]
-                                    .imageString =="")
+                                    .imageString ==
+                                    "")
                                     ? Icon(Icons.image, size: 49)
                                     : _charityDataConnection
                                     .allCharityList[index].image,
@@ -243,6 +263,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+            )
+                : Container(
+              color: Colors.white,
             );
           }),
       bottomNavigationBar: ConvexAppBar(
@@ -286,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
-    } else if (selectedPage == 3) {
+    } else if (selectedPage == 1) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -298,7 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
       );
-    } else if (selectedPage == 1) {
+    } else if (selectedPage == 3) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -312,22 +335,23 @@ class _HomeScreenState extends State<HomeScreen> {
     print('notification clicked');
   }
 
-  Future _save(CharityModel _CharityModel) async {
+  Future _remove(CharityModel _CharityModel) async {
     // print('hello');
 
     int id = int.parse(_CharityModel.charityId);
-    if (!myList.contains(id)) {
+    if (myList.contains(id)) {
 
-      myList.add(int.parse(_CharityModel.charityId));
+      myList.removeWhere((item) => item == id);
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
       List<String> myList1 =
       (prefs.getStringList('mylist12') ?? List<String>.empty());
-      List<int> myOriginaList = myList1.map((i) => int.parse(i)).toList();
 
-      myListOfStrings = myList1.toList();
-      myListOfStrings.add(_CharityModel.charityId);
-      print('Your list  $myListOfStrings');
-      await prefs.setStringList('mylist12', myListOfStrings);
+      print('before remove Your list  $myList1');
+      myList1.removeWhere((item) => item == id.toString());
+
+      print('After remove Your list  $myList1');
+      await prefs.setStringList('mylist12', myList1);
     }
   }
 
