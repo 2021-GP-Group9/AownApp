@@ -100,7 +100,7 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
                     ]),
                 child: Column(
                   children: [
-                   // Icon(widget.casesConnection.specificCase.icon, size: 50,),
+                    Icon(widget.casesConnection.specificCase.icon, size: 50,),
                     Container(
                       child: Text(
                         widget.casesConnection.specificCase.itemName,
@@ -242,16 +242,19 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
                     ]),
                     Divider(
                       color: Colors.grey,
-                    ),Row(children: <Widget>[
-                      Expanded(
-                          child: Text("",
-                              textAlign: TextAlign.right,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(
-                                fontFamily: 'Almarai Light',
-                                fontSize: 14,
-                              )))
-                    ]),
+                    ),
+
+                    _charityData("معلومات الجمعية:‎", ""),
+                    const SizedBox(height: 15,),
+                    _charityData("اسم الجمعية:‎", widget.casesConnection.specificCase.charityName),
+                    _charityData("رقم الهاتف:‎", widget.casesConnection.specificCase.charityPhone),
+                    _charityData("الموقع:", widget.casesConnection.specificCase.charityLocation),
+                    _charityData("المدينة:‎", widget.casesConnection.specificCase.charityCity),
+                    _charityData("البريد الالكتروني:‎", widget.casesConnection.specificCase.charityEmail),
+
+                    const Divider(
+                      color: Colors.grey,
+                    ),
 
                     GestureDetector(
                       onTap: () {
@@ -299,6 +302,30 @@ class _ViewSpecificPageState extends State<ViewSpecificPage> {
         backgroundColor: const Color(0xffD6DACA),
       ),
     );
+  }
+
+  Widget _charityData(String title, String value){
+    return Row(children: <Widget>[
+      Expanded(
+        child:
+        Text(value,
+            textAlign: TextAlign.right,
+            textDirection: TextDirection.rtl,
+            style: const TextStyle(
+              fontFamily: 'Almarai Light',
+              fontSize: 14,
+              color: Colors.blueGrey,
+            )),
+      ),
+      Expanded(
+          child: Text(title,
+              textAlign: TextAlign.right,
+              textDirection: TextDirection.rtl,
+              style: const TextStyle(
+                fontFamily: 'Almarai Regular',
+                fontSize: 14,
+              )))
+    ]);
   }
 
   _pn(int selectedPage) {

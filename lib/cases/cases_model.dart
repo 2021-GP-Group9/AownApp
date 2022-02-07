@@ -26,21 +26,23 @@ class CasesDisplayModel {
   String itemSize;
   String itemColor;
   String itemCount;
+  late String charityName;
+  late String charityPhone;
+  late String charityCity;
+  late String charityLocation;
+  late String charityEmail;
   late var icon;
 
   void getIcon(){
-    if(itemType == "كتب_وورق") {
-      icon = Icons.menu_book_rounded;
-    }
-    else if(itemType == "أثاث"){
-      icon = Icons.house_rounded;
-    }
-    else if(itemType == "الكترونيات") {
-      icon = Icons.microwave_rounded;
-    }
-    else if(itemType == "ملابس") {
-      icon = Icons.luggage_rounded;
-    }
+    icon = _getIcon(itemType);
+  }
+
+  void setCharityData(String _name, String _city, String _location, String _phone, String _email){
+    charityName = _name;
+    charityCity = _city;
+    charityEmail = _email;
+    charityLocation = _location;
+    charityPhone = _phone;
   }
 
   factory CasesDisplayModel.fromJson(Map<String, dynamic> json) => CasesDisplayModel(
@@ -77,27 +79,18 @@ class CasesModel {
     required this.donationDescription,
     required this.itemName,
     required this.itemType,
+    required this.city,
   });
 
   String donationId;
   String donationDescription;
   String itemName;
   String itemType;
+  String city;
   late var icon;
 
   void getIcon(){
-    if(itemType == "كتب_وورق") {
-      icon = Icons.menu_book_rounded;
-    }
-    else if(itemType == "أثاث"){
-      icon = Icons.house_rounded;
-    }
-    else if(itemType == "الكترونيات") {
-      icon = Icons.microwave_rounded;
-    }
-    else if(itemType == "ملابس") {
-      icon = Icons.luggage_rounded;
-    }
+    icon = _getIcon(itemType);
   }
 
   factory CasesModel.fromJson(Map<String, dynamic> json) =>
@@ -106,6 +99,7 @@ class CasesModel {
         donationDescription: json["donationDescription"],
         itemName: json["itemName"],
         itemType: json["itemType"],
+        city: json["city"]
       );
 
   Map<String, dynamic> toJson() =>
@@ -114,5 +108,25 @@ class CasesModel {
         "donationDescription": donationDescription,
         "itemName": itemName,
         "itemType": itemType,
+        "city": city
       };
+}
+
+IconData _getIcon(String itemType){
+  late IconData _icon;
+  itemType = itemType.trim();
+  if(itemType == "كتب_وورق") {
+    _icon = Icons.menu_book_rounded;
+  }
+  else if(itemType == "أثاث" || itemType == "اثاث"){
+    _icon = Icons.house_rounded;
+  }
+  else if(itemType == "الكترونيات") {
+    _icon = Icons.microwave_rounded;
+  }
+  else if(itemType == "ملابس") {
+    _icon = Icons.circle;
+  }
+
+  return _icon;
 }
