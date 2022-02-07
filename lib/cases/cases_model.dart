@@ -128,5 +128,8 @@ IconData _getIcon(String itemType){
     _icon = Icons.checkroom_sharp;
   }
 
+  else{
+    _icon = Icons.circle; // if there is no category
+  }
   return _icon;
 }
