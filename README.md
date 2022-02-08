@@ -1,16 +1,9 @@
 # aownapp
 
-A new Flutter application.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Project Title:Awon Application
+Introduction: TThe mobile application is used by the donor to search for the right charity to donate clothes, electronic devices, furniture, and books. The mobile application is used by the donor who can register into the system, manage his/her profile, find the charities, view specific charities, view the donation requests,respond to donation requests and favor charities.
+Technologies:
+languages: dart, php.
+libraries:
+versions: php 7.4
+Launch: First you need to update pubspec.yalm to remove import libraries errors, then you must have an emulator to lunch the application.
