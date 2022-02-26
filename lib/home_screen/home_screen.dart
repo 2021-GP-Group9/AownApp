@@ -4,19 +4,25 @@ import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
 import 'package:aownapp/cases/cases_page.dart';
 import 'package:aownapp/connection/charity_model.dart';
 import 'package:aownapp/connection/get_charaty_data.dart';
+import 'package:aownapp/favoriteList/add_Conn.dart';
 import 'package:aownapp/favoriteList/favoirte_screen.dart';
+import 'package:aownapp/favoriteList/get_favorite_list.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import '../global.dart';
 import '../viewPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  String user_id=AppColors.user;
   List<String> myListOfStrings = [];
   List<int> myList = [];
   Color _favIconColor = Colors.grey;
@@ -26,33 +32,49 @@ class _HomeScreenState extends State<HomeScreen> {
 //method to show the download icone befor get data
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
+  final get_favorite_DataConnection _get_favorite_DataConnection=get_favorite_DataConnection();
+
+
+
   int selectedPage = 3;
   final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen()];
+
+
   void requestData() {
-    _charityDataConnection.requestCharityData().then((value) {
-      setState(() {
-        _isLoadingData = false;
-        print(_charityDataConnection.allCharityList.length);
-        int length = _charityDataConnection.allCharityList.length;
-        for (int i = 0; i < length; i++) {
-          check_favo(_charityDataConnection.allCharityList[i].charityId)
-              ? colors_list.add(Colors.red)
-              : colors_list.add(Colors.grey);
-        }
-        print(colors_list[0].toString());
-      });
-    });
+    _charityDataConnection.requestCharityData().then((value) =>
+
+        _get_list()
+
+    );
+
   }
 
   @override
   void initState() {
-    requestData();
-    _get_list().then((value) {
-      myList = value;
-      print(myList.toString());
-    });
+    // method load befor load the page to get information of charities
+    // _get_list().then((value) {
+    //   myList = value;
+    //   print(myList.toString());
+    // });
+    getuser_id();
     fill_color();
     super.initState();
+  }
+  Future<void> getuser_id()async{
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+
+    if (prefs.containsKey("idKey")) {
+
+      user_id=prefs.get('idKey').toString();
+      print("user_id1");
+      print(user_id);
+      requestData();
+
+    }else{
+      requestData();
+    }
+
   }
 
   void fill_color() {
@@ -172,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 5,
                             ),
                             Container(
-                              width: 240,
+                              width: 245,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -230,7 +252,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: 49,
                                 child: (_charityDataConnection
                                     .allCharityList[index]
-                                    .imageString =="")
+                                    .imageString ==
+                                    "")
                                     ? Icon(Icons.image, size: 49)
                                     : _charityDataConnection
                                     .allCharityList[index].image,
@@ -307,42 +330,56 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+
   // when notification icon button clicked
   void onNotification() {
     print('notification clicked');
   }
 
   Future _save(CharityModel _CharityModel) async {
-    // print('hello');
+
 
     int id = int.parse(_CharityModel.charityId);
     if (!myList.contains(id)) {
+      print('user_id11 $user_id');
 
-      myList.add(int.parse(_CharityModel.charityId));
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      List<String> myList1 =
-      (prefs.getStringList('mylist12') ?? List<String>.empty());
-      List<int> myOriginaList = myList1.map((i) => int.parse(i)).toList();
+      add_favorite _add_favorite= add_favorite(1,id,int.parse(user_id));
+      _add_favorite.save_it_to_db();
 
-      myListOfStrings = myList1.toList();
-      myListOfStrings.add(_CharityModel.charityId);
-      print('Your list  $myListOfStrings');
-      await prefs.setStringList('mylist12', myListOfStrings);
     }
   }
 
-  Future _get_list() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> myList =
-    (prefs.getStringList('mylist12') ?? List<String>.empty());
-    List<int> myOriginaList = myList.map((i) => int.parse(i)).toList();
-    print('Your list  $myOriginaList');
-    return myOriginaList;
+  Future<void> _get_list() async {
+
+    print("user_id111");
+    print(user_id);
+
+    _get_favorite_DataConnection.requestFavouriteData(user_id).then((value) {
+      myList =_get_favorite_DataConnection.favoriteList;
+      print(myList.toString());
+      int length = _charityDataConnection.allCharityList.length;
+      print(length);
+      for (int i = 0; i < length; i++) {
+        check_favo(_charityDataConnection.allCharityList[i].charityId)
+            ? colors_list.add(Colors.red)
+            : colors_list.add(Colors.grey);
+      }
+      colors_list.toString();
+
+      setState(() {
+        _isLoadingData = false;
+
+
+
+      });
+    });
+
   }
+
 
   check_favo(String charityId) {
     int id = int.parse(charityId);
-    print(myList.contains(id));
+
     return myList.contains(id);
   }
 }
