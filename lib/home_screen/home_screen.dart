@@ -10,7 +10,6 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import '../viewPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:aownapp/cases/cases_connection.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -55,23 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
     fill_color();
     super.initState();
   }
-  final List<String> _filterString = [
-    'كتب_وورق',
-    'أثاث',
-    'الكترونيات',
-    'ملابس',
-    '--------------------',
-
-    'منطقة الرياض',
-    'منطقة مكة المكرمة',
-    'منطقة المدينة المنورة',
-    'منطقة القصيم',
-    'المنطقة الشرقية',
-    'منطقة عسير',
-    'منطقة تبوك',
-    'الكل',
-  ];
-
 
   void fill_color() {
     int length = _charityDataConnection.allCharityList.length;
@@ -114,29 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        actions: [
-
-          PopupMenuButton(
-              icon: Icon(
-                Icons.filter_alt,
-                size: 22,
-                color: Colors.grey[700],
-              ),
-              // onSelected: (int v) async {
-              //   _casesConnection.addingFilter(_filterString[v]);
-              //   setState(() {});
-              // },
-              itemBuilder: (context) => [
-                for (int i = 0; i < _filterString.length; i++)
-                  PopupMenuItem(
-                    child: Text(_filterString[i]),
-                    value: i,
-                  ),
-              ]),
-
-
-
-          Image.asset("assets/finalLogo.jpeg")],
+        actions: [Image.asset("assets/finalLogo.jpeg")],
       ),
       body: (_isLoadingData)
           ? Container(

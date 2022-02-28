@@ -69,7 +69,7 @@ class _DonationPageState extends State<DonationPage> {
                     fontSize: 16,
                     color: Colors.black,
                   )),
-                  _getYesNoOption("نوع المنتج : " + widget.thisCase.itemType, 0),
+                  _getYesNoOption("اسم المنتج : " + widget.thisCase.itemType, 0),
                   _getYesNoOption("عدد القطع : " + widget.thisCase.itemCount, 1),
                   _getYesNoOption("لون المنتج : " + widget.thisCase.itemColor, 2),
                   _getYesNoOption("حجم المنتج : " + widget.thisCase.itemSize, 3),
