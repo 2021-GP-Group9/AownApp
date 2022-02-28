@@ -25,6 +25,22 @@ class _CasesPageState extends State<CasesPage> {
     });
   }
 
+  final List<String> _filterString = [
+    'كتب_وورق',
+    'أثاث',
+    'الكترونيات',
+    'ملابس',
+    '--------------------',
+
+    'منطقة الرياض',
+    'منطقة مكة المكرمة',
+    'منطقة المدينة المنورة',
+    'منطقة القصيم',
+    'المنطقة الشرقية',
+    'منطقة عسير',
+    'منطقة تبوك',
+    'الكل',
+  ];
 
 
 
@@ -54,7 +70,10 @@ class _CasesPageState extends State<CasesPage> {
           obscureText: false,
           onFieldSubmitted: (String value) {
             print(value);
+
           },
+
+
           onChanged: (String value) {
             setState(() {
               _casesConnection.searchingTheCasesList(value);
@@ -68,6 +87,23 @@ class _CasesPageState extends State<CasesPage> {
           ),
         ),
         actions: [
+          PopupMenuButton(
+              icon: Icon(
+                Icons.filter_alt,
+                size: 22,
+                color: Colors.grey[700],
+              ),
+              onSelected: (int v) async {
+                _casesConnection.addingFilter(_filterString[v]);
+                setState(() {});
+              },
+              itemBuilder: (context) => [
+                for (int i = 0; i < _filterString.length; i++)
+                  PopupMenuItem(
+                    child: Text(_filterString[i]),
+                    value: i,
+                  ),
+              ]),
 
           Image.asset("assets/finalLogo.jpeg")
         ],
