@@ -9,8 +9,12 @@ import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import '../global.dart';
 import '../viewPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'delete_Conn.dart';
+import 'get_favorite_list.dart';
 
 class Favorite_screen extends StatefulWidget {
   @override
@@ -18,6 +22,7 @@ class Favorite_screen extends StatefulWidget {
 }
 
 class _Favorite_screenState extends State<Favorite_screen> {
+  String user_id=AppColors.user;
   List<String> myListOfStrings = [];
   List<int> myList = [];
   Color _favIconColor = Colors.grey;
@@ -27,6 +32,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
 //method to show the download icone befor get data
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
+  final get_favorite_DataConnection _get_favorite_DataConnection=get_favorite_DataConnection();
   int selectedPage = 1;
   final _pageOption = [
     Profile(),
@@ -35,36 +41,43 @@ class _Favorite_screenState extends State<Favorite_screen> {
     Favorite_screen()
   ];
   void requestData() {
-    _charityDataConnection.requestCharityData().then((value) {
-      setState(() {
-        _isLoadingData = false;
-        print(_charityDataConnection.allCharityList.length);
-        int length = _charityDataConnection.allCharityList.length;
-        for (int i = 0; i < length; i++) {
-          check_favo(_charityDataConnection.allCharityList[i].charityId)
-              ? colors_list.add(Colors.red)
-              : colors_list.add(Colors.grey);
-        }
-        print(colors_list[0].toString());
-      });
-    });
+    _charityDataConnection.requestCharityData().then((value) =>
+
+        _get_list()
+
+    );
+
   }
 
   @override
   void initState() {
-    requestData();
-    _get_list().then((value) {
-      myList = value;
-      print(myList.toString());
-    });
+
+    getuser_id();
+
     fill_color();
+
     super.initState();
   }
+  Future<void> getuser_id()async{
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
 
+    if (prefs.containsKey("idKey")) {
+
+      user_id=prefs.get('idKey').toString();
+      print("user_id1");
+      print(user_id);
+      requestData(); // method load befor load the page to get information of charities
+
+    }else{
+      requestData();
+    }
+
+  }
   void fill_color() {
     int length = _charityDataConnection.allCharityList.length;
     print("length".length);
-
+    // _charityDataConnection.allCharityList[i];
 
     for (int i = 0; i < length; i++) {
       colors_list[i] = Colors.grey;
@@ -74,13 +87,14 @@ class _Favorite_screenState extends State<Favorite_screen> {
 
   @override
   Widget build(BuildContext context) {
-
+    // main axis alignment : start
+    // cross axis alignment : center
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xffD6DACA),
-
+        // leading: Icon(Icons.search),
         title: TextFormField(
           controller: passwordController,
           keyboardType: TextInputType.visiblePassword,
@@ -117,7 +131,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
           padding: const EdgeInsets.all(8),
           scrollDirection: Axis.vertical,
           itemCount: _charityDataConnection.allCharityList.length,
-
+          // #of charities
           itemBuilder: (BuildContext context, int index) {
             return check_favo(
                 _charityDataConnection.allCharityList[index].charityId)
@@ -137,7 +151,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
                         spreadRadius: 4,
                         blurRadius: 20,
                         offset: Offset(-10.0,
-                            10.0),
+                            10.0), // changes position of shadow
                       ),
                     ]),
                 child: Row(
@@ -183,7 +197,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
                               width: 5,
                             ),
                             Container(
-                              width: 240,
+                              width: 245,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment:
@@ -309,7 +323,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
-    } else if (selectedPage == 1) {
+    } else if (selectedPage == 3) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -321,7 +335,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
       );
-    } else if (selectedPage == 3) {
+    } else if (selectedPage == 1) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -338,34 +352,57 @@ class _Favorite_screenState extends State<Favorite_screen> {
   Future _remove(CharityModel _CharityModel) async {
     // print('hello');
 
+
+
     int id = int.parse(_CharityModel.charityId);
     if (myList.contains(id)) {
+      print('charity_id $id');
+      print('user_id $user_id');
 
-      myList.removeWhere((item) => item == id);
+      Conn_delete_favorite _remove= Conn_delete_favorite(id,int.parse(user_id));
+      _remove.delete_function().then((value) => {
+        setState(() {
+          myList.removeWhere((item) => item == id);
+        })
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      List<String> myList1 =
-      (prefs.getStringList('mylist12') ?? List<String>.empty());
 
-      print('before remove Your list  $myList1');
-      myList1.removeWhere((item) => item == id.toString());
+      });
 
-      print('After remove Your list  $myList1');
-      await prefs.setStringList('mylist12', myList1);
+
+
     }
   }
 
-  Future _get_list() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> myList =
-    (prefs.getStringList('mylist12') ?? List<String>.empty());
-    List<int> myOriginaList = myList.map((i) => int.parse(i)).toList();
-    print('Your list  $myOriginaList');
-    return myOriginaList;
+  Future<void> _get_list() async {
+
+    print("user_id1");
+    print(user_id);
+
+    _get_favorite_DataConnection.requestFavouriteData(user_id).then((value) {
+      myList =_get_favorite_DataConnection.favoriteList;
+      print(myList.toString());
+      int length = _charityDataConnection.allCharityList.length;
+      print(length);
+      for (int i = 0; i < length; i++) {
+        check_favo(_charityDataConnection.allCharityList[i].charityId)
+            ? colors_list.add(Colors.red)
+            : colors_list.add(Colors.grey);
+      }
+      colors_list.toString();
+
+      setState(() {
+        _isLoadingData = false;
+
+
+
+      });
+    });
   }
+
 
   check_favo(String charityId) {
     int id = int.parse(charityId);
+    print(id);
     print(myList.contains(id));
     return myList.contains(id);
   }

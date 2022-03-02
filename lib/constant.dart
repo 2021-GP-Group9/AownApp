@@ -14,4 +14,8 @@ class constant {
   static String bookAppointmentUrl = "https://awoon.000webhostapp.com/book_appointement.php";
   static String getBookAppointmentUrl = "https://awoon.000webhostapp.com/get_book_appointment.php";
   static int responseok = 200;
+
+  //static String localurl = "http://192.168.100.76/fiver/favourite_fun.php";
+  static String favouriteurl = "https://awoon.000webhostapp.com/favourite.php";
+
 }

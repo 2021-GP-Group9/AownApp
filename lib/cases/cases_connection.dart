@@ -72,6 +72,7 @@ class CasesConnection {
     }
   }
 
+
   void searchingTheCasesList(String query) {
     casesToPresent.clear();
     if (query.isEmpty) {
