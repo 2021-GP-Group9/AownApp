@@ -6,7 +6,9 @@ import 'package:aownapp/connection/charity_model.dart';
 import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/favoriteList/favoirte_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
+import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../viewPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,11 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Color> colors_list = [];
 
   TextEditingController passwordController = TextEditingController();
+
 //method to show the download icone befor get data
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
   int selectedPage = 3;
   final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen()];
+
   void requestData() {
     _charityDataConnection.requestCharityData().then((value) {
       setState(() {
@@ -44,13 +48,15 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     });
   }
-  final List<String> _filterString = [
+
+  final List<String> _filterStringType = [
     'كتب_وورق',
     'أثاث',
     'الكترونيات',
     'ملابس',
-    '--------------------',
+  ];
 
+  final List<String> _filterStringCity = [
     'منطقة الرياض',
     'منطقة مكة المكرمة',
     'منطقة المدينة المنورة',
@@ -58,8 +64,151 @@ class _HomeScreenState extends State<HomeScreen> {
     'المنطقة الشرقية',
     'منطقة عسير',
     'منطقة تبوك',
-    'الكل',
   ];
+
+  void _showSheetWithoutList() {
+    showFlexibleBottomSheet(
+      minHeight: 0,
+      initHeight: 0.4,
+      maxHeight: 1,
+      context: context,
+      builder: _buildBottomSheet,
+      anchors: [0, 0.4, 0.4],
+    );
+  }
+
+  Widget _buildBottomSheet(
+    BuildContext context,
+    ScrollController scrollController,
+    double bottomSheetOffset,
+  ) {
+    return SingleChildScrollView(
+      controller: scrollController,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
+        ),
+        padding:
+            const EdgeInsets.only(top: 40, right: 10, left: 10, bottom: 50),
+        child: Material(
+          color: Colors.white,
+          child: Column(
+            children: [
+              const Center(
+                child: Text(
+                  "تصفية",
+                  style: TextStyle(
+                      fontFamily: 'almarai Bold',
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ExpansionTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: const Text(
+                  "الأصناف",
+                  textAlign: TextAlign.end,
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  for (int i = 0; i < _filterStringType.length; i++)
+                    GestureDetector(
+                      onTap: (){
+                        _charityDataConnection.addingFilter(_filterStringType[i]);
+                        setState(() {});
+                        Navigator.of(context).pop();
+                      },
+                      child: ListTile(
+                        title: Text(
+                          _filterStringType[i],
+                          textAlign: TextAlign.end,
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    )
+                ],
+              ),
+              ExpansionTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: const Text(
+                  "المناطق",
+                  textAlign: TextAlign.end,
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  for (int i = 0; i < _filterStringCity.length; i++)
+                    GestureDetector(
+                      onTap: (){
+                        _charityDataConnection.addingFilter(_filterStringCity[i]);
+                        setState(() {});
+                        Navigator.of(context).pop();
+                      },
+                      child: ListTile(
+                        title: Text(
+                          _filterStringCity[i],
+                          textAlign: TextAlign.end,
+                          style: TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black87,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      child: const Text(
+                        "الغاء",
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      _charityDataConnection.addingFilter('الكل');
+                      setState(() {});
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black87,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      child: const Text(
+                        "الغاء جميع التصفية",
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     requestData();
@@ -113,177 +262,171 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         actions: [
-          PopupMenuButton(
-              icon: Icon(
-                Icons.filter_alt,
-                size: 22,
-                color: Colors.grey[700],
-              ),
-              // onSelected: (int v) async {
-              //   _casesConnection.addingFilter(_filterString[v]);
-              //   setState(() {});
-              // },
-              itemBuilder: (context) => [
-                for (int i = 0; i < _filterString.length; i++)
-                  PopupMenuItem(
-                    child: Text(_filterString[i]),
-                    value: i,
-                  ),
-              ]),
-
-          Image.asset("assets/finalLogo.jpeg")],
+          IconButton(
+            onPressed: _showSheetWithoutList,
+            icon: Icon(Icons.filter_alt),
+            color: Colors.grey[700],
+          ),
+          Image.asset("assets/finalLogo.jpeg")
+        ],
       ),
       body: (_isLoadingData)
           ? Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: Colors.white,
-        child: Center(
-          child:
-          CircularProgressIndicator(color: const Color(0xffD6DACA)),
-        ),
-      )
-          : ListView.builder(
-          padding: const EdgeInsets.all(8),
-          scrollDirection: Axis.vertical,
-          itemCount: _charityDataConnection.allCharityList.length,
-          // #of charities
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.only(
-                top: 50,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              color: Colors.white,
+              child: Center(
+                child:
+                    CircularProgressIndicator(color: const Color(0xffD6DACA)),
               ),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.white70),
-                    borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(50)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 4,
-                        blurRadius: 20,
-                        offset: Offset(
-                            -10.0, 10.0), // changes position of shadow
-                      ),
-                    ]),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        _save(_charityDataConnection.allCharityList[index])
-                            .whenComplete(() => setState(() {
-                          print(index);
-                          colors_list[index] = Colors.red;
-                        }));
-                      },
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: Icon(
-                          Icons.favorite,
-                          color: colors_list[index],
-                          size: 24.0,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ViewPage(
-                                  charityModel: _charityDataConnection
-                                      .allCharityList[index],
-                                )));
-                      },
-                      child: Container(
-                        // height: 100,
-
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SizedBox(
-                              width: 5,
+            )
+          : ListView.builder(
+              padding: const EdgeInsets.all(8),
+              scrollDirection: Axis.vertical,
+              itemCount: _charityDataConnection.allCharityList.length,
+              // #of charities
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    top: 50,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.white70),
+                        borderRadius:
+                            BorderRadius.only(bottomLeft: Radius.circular(50)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 4,
+                            blurRadius: 20,
+                            offset: Offset(
+                                -10.0, 10.0), // changes position of shadow
+                          ),
+                        ]),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _save(_charityDataConnection.allCharityList[index])
+                                .whenComplete(() => setState(() {
+                                      print(index);
+                                      colors_list[index] = Colors.red;
+                                    }));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Icon(
+                              Icons.favorite,
+                              color: colors_list[index],
+                              size: 24.0,
                             ),
-                            Container(
-                              width: 240,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    constraints: BoxConstraints(
-                                      maxWidth: MediaQuery.of(context)
-                                          .size
-                                          .width -
-                                          145,
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text(
-                                        _charityDataConnection
-                                            .allCharityList[index].name,
-                                        style: TextStyle(
-                                            fontFamily: 'almarai Bold',
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    constraints: BoxConstraints(
-                                      maxWidth: MediaQuery.of(context)
-                                          .size
-                                          .width -
-                                          145,
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text(
-                                        _charityDataConnection
-                                            .allCharityList[index]
-                                            .description,
-                                        textAlign: TextAlign.right,
-                                        textDirection: TextDirection.rtl,
-                                        style: TextStyle(
-                                          fontFamily: 'almarai Regular',
-                                          fontSize: 13,
-                                          color: Colors.blueGrey,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ViewPage(
+                                          charityModel: _charityDataConnection
+                                              .allCharityList[index],
+                                        )));
+                          },
+                          child: Container(
+                            // height: 100,
+
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                // SizedBox(
+                                //   width: 5,
+                                // ),
+                                Container(
+                                  width: 240,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              145,
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            _charityDataConnection
+                                                .allCharityList[index].name,
+                                            style: TextStyle(
+                                                fontFamily: 'almarai Bold',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                      Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              145,
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            _charityDataConnection
+                                                .allCharityList[index]
+                                                .description,
+                                            textAlign: TextAlign.right,
+                                            textDirection: TextDirection.rtl,
+                                            style: TextStyle(
+                                              fontFamily: 'almarai Regular',
+                                              fontSize: 13,
+                                              color: Colors.blueGrey,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 4),
+                                  child: Container(
+                                    height: 49,
+                                    width: 49,
+                                    child: (_charityDataConnection
+                                                .allCharityList[index]
+                                                .imageString ==
+                                            "")
+                                        ? Icon(Icons.image, size: 49)
+                                        : _charityDataConnection
+                                            .allCharityList[index].image,
+                                  ),
+                                )
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 40),
-                              child: Container(
-                                height: 49,
-                                width: 49,
-                                child: (_charityDataConnection
-                                    .allCharityList[index]
-                                    .imageString =="")
-                                    ? Icon(Icons.image, size: 49)
-                                    : _charityDataConnection
-                                    .allCharityList[index].image,
-                              ),
-                            )
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            );
-          }),
+                  ),
+                );
+              }),
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
+          TabItem(
+              icon: Icon(
+                Icons.favorite,
+                color: Colors.black,
+              ),
+              title: 'المفضلة '),
           TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
           TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
         ],
@@ -352,11 +495,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     int id = int.parse(_CharityModel.charityId);
     if (!myList.contains(id)) {
-
       myList.add(int.parse(_CharityModel.charityId));
       SharedPreferences prefs = await SharedPreferences.getInstance();
       List<String> myList1 =
-      (prefs.getStringList('mylist12') ?? List<String>.empty());
+          (prefs.getStringList('mylist12') ?? List<String>.empty());
       List<int> myOriginaList = myList1.map((i) => int.parse(i)).toList();
 
       myListOfStrings = myList1.toList();
@@ -369,7 +511,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future _get_list() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> myList =
-    (prefs.getStringList('mylist12') ?? List<String>.empty());
+        (prefs.getStringList('mylist12') ?? List<String>.empty());
     List<int> myOriginaList = myList.map((i) => int.parse(i)).toList();
     print('Your list  $myOriginaList');
     return myOriginaList;

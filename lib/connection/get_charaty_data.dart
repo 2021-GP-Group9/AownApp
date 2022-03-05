@@ -57,4 +57,13 @@ class CharityDataConnection {
     }
   }
 
+  void addingFilter(String filter){
+    finalCharityList.clear();
+    filter.trim();
+    if (filter == "الكل") finalCharityList = charityList.map((v) => v).toList();
+    for (var thisCharity in charityList) {
+      if (thisCharity.donationType == filter || thisCharity.city == filter) finalCharityList.add(thisCharity);
+    }
+  }
+
 }

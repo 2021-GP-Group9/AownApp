@@ -2,6 +2,7 @@ import 'package:aownapp/cases/cases_connection.dart';
 import 'package:aownapp/cases/view_specific_case.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
+import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:aownapp/favoriteList/favoirte_screen.dart';
@@ -25,13 +26,14 @@ class _CasesPageState extends State<CasesPage> {
     });
   }
 
-  final List<String> _filterString = [
+  final List<String> _filterStringType = [
     'كتب_وورق',
     'أثاث',
     'الكترونيات',
     'ملابس',
-    '--------------------',
+  ];
 
+  final List<String> _filterStringCity = [
     'منطقة الرياض',
     'منطقة مكة المكرمة',
     'منطقة المدينة المنورة',
@@ -39,9 +41,150 @@ class _CasesPageState extends State<CasesPage> {
     'المنطقة الشرقية',
     'منطقة عسير',
     'منطقة تبوك',
-    'الكل',
   ];
 
+  void _showSheetWithoutList() {
+    showFlexibleBottomSheet(
+      minHeight: 0,
+      initHeight: 0.4,
+      maxHeight: 1,
+      context: context,
+      builder: _buildBottomSheet,
+      anchors: [0, 0.4, 0.4],
+    );
+  }
+
+  Widget _buildBottomSheet(
+      BuildContext context,
+      ScrollController scrollController,
+      double bottomSheetOffset,
+      ) {
+    return SingleChildScrollView(
+      controller: scrollController,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
+        ),
+        padding:
+        const EdgeInsets.only(top: 40, right: 10, left: 10, bottom: 50),
+        child: Material(
+          color: Colors.white,
+          child: Column(
+            children: [
+              const Center(
+                child: Text(
+                  "تصفية",
+                  style: TextStyle(
+                      fontFamily: 'almarai Bold',
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ExpansionTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: const Text(
+                  "الأصناف",
+                  textAlign: TextAlign.end,
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  for (int i = 0; i < _filterStringType.length; i++)
+                    GestureDetector(
+                      onTap: (){
+                        _casesConnection.addingFilter(_filterStringType[i]);
+                        setState(() {});
+                        Navigator.of(context).pop();
+                      },
+                      child: ListTile(
+                        title: Text(
+                          _filterStringType[i],
+                          textAlign: TextAlign.end,
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    )
+                ],
+              ),
+              ExpansionTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: const Text(
+                  "المناطق",
+                  textAlign: TextAlign.end,
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  for (int i = 0; i < _filterStringCity.length; i++)
+                    GestureDetector(
+                      onTap: (){
+                        _casesConnection.addingFilter(_filterStringCity[i]);
+                        setState(() {});
+                        Navigator.of(context).pop();
+                      },
+                      child: ListTile(
+                        title: Text(
+                          _filterStringCity[i],
+                          textAlign: TextAlign.end,
+                          style: TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black87,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      child: const Text(
+                        "الغاء",
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      _casesConnection.addingFilter('الكل');
+                      setState(() {});
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black87,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      child: const Text(
+                        "الغاء جميع التصفية",
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
 
   @override
@@ -73,7 +216,6 @@ class _CasesPageState extends State<CasesPage> {
 
           },
 
-
           onChanged: (String value) {
             setState(() {
               _casesConnection.searchingTheCasesList(value);
@@ -87,24 +229,11 @@ class _CasesPageState extends State<CasesPage> {
           ),
         ),
         actions: [
-          PopupMenuButton(
-              icon: Icon(
-                Icons.filter_alt,
-                size: 22,
-                color: Colors.grey[700],
-              ),
-              onSelected: (int v) async {
-                _casesConnection.addingFilter(_filterString[v]);
-                setState(() {});
-              },
-              itemBuilder: (context) => [
-                for (int i = 0; i < _filterString.length; i++)
-                  PopupMenuItem(
-                    child: Text(_filterString[i]),
-                    value: i,
-                  ),
-              ]),
-
+          IconButton(
+            onPressed: _showSheetWithoutList,
+            icon: Icon(Icons.filter_alt),
+            color: Colors.grey[700],
+          ),
           Image.asset("assets/finalLogo.jpeg")
         ],
       ),
