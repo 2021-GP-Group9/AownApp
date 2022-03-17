@@ -68,7 +68,7 @@ class CasesConnection {
     filter.trim();
     if (filter == "الكل") casesToPresent = allCasesList.map((v) => v).toList();
     for (var thisCase in allCasesList) {
-      if (thisCase.itemType == filter || thisCase.city == filter) casesToPresent.add(thisCase);
+      if (thisCase.itemType.contains(filter) || thisCase.city == filter) casesToPresent.add(thisCase);
     }
   }
 

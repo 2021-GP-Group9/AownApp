@@ -62,7 +62,7 @@ class CharityDataConnection {
     filter.trim();
     if (filter == "الكل") finalCharityList = charityList.map((v) => v).toList();
     for (var thisCharity in charityList) {
-      if (thisCharity.donationType == filter || thisCharity.city == filter) finalCharityList.add(thisCharity);
+      if (thisCharity.donationType.contains(filter) || thisCharity.city == filter) finalCharityList.add(thisCharity);
     }
   }
 
