@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import 'controller/constant_controller.dart';
 import 'login/login_screen.dart';
-
 void main()
 {
   Get.put(ConstantController());

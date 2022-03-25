@@ -44,6 +44,42 @@ class CharityDataConnection {
     });
   }
 
+  CharityModel getThisCharity(String id){
+    late CharityModel _thisCharity;
+    for(CharityModel charity in charityList){
+      if(charity.charityId == id){
+        _thisCharity = charity;
+        break;
+      }
+    }
+    return _thisCharity;
+  }
+
+  Future<List<CharityModel>> getRecommendation(String type, String city, String service) async {
+    List<CharityModel> _recommendedCharityList = [];
+
+    await http.post(
+      Uri.parse(
+          "https://awoon.000webhostapp.com/getRecommendation.php"
+      ),
+      body: {
+        'type': type,
+        'city': city,
+        'service': service,
+      },
+    ).then((value) async {
+      var response = await jsonDecode(value.body);
+      for (var charity in response) {
+        _recommendedCharityList.add(charityModelFromJson(jsonEncode(charity)));
+      }
+      for(int i=0;i<_recommendedCharityList.length;i++){
+        await requestImage(_recommendedCharityList[i]);
+      }
+    });
+
+    return _recommendedCharityList;
+  }
+
   void searchingTheCharityList(String query){
     finalCharityList.clear();
     if(query.isEmpty){
@@ -54,6 +90,15 @@ class CharityDataConnection {
       for(var charity in charityList){
         if(charity.name.contains(query)) finalCharityList.add(charity);
       }
+    }
+  }
+
+  void addingFilter(String filter){
+    finalCharityList.clear();
+    filter.trim();
+    if (filter == "الكل") finalCharityList = charityList.map((v) => v).toList();
+    for (var thisCharity in charityList) {
+      if (thisCharity.donationType == filter || thisCharity.city == filter) finalCharityList.add(thisCharity);
     }
   }
 

@@ -182,9 +182,10 @@ class _Favorite_screenState extends State<Favorite_screen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ViewPage(
-                                  charityModel:
-                                  _charityDataConnection
-                                      .allCharityList[index],
+                                    index: index, id:
+                                _charityDataConnection
+                                    .allCharityList[index].charityId,
+                                    charityDataConnection : _charityDataConnection
                                 )));
                       },
                       child: Container(

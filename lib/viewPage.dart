@@ -1,4 +1,6 @@
+// ignore_for_file: file_names
 import 'package:aownapp/cases/cases_page.dart';
+import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -9,17 +11,55 @@ import 'favoriteList/favoirte_screen.dart';
 import 'home_screen/home_screen.dart';
 
 class ViewPage extends StatefulWidget {
-  final CharityModel charityModel;
+  final String id;
+  final int index;
+  final CharityDataConnection charityDataConnection;
 
-  const ViewPage({Key? key, required this.charityModel}) : super(key: key);
+  const ViewPage(
+      {Key? key,
+        required this.id,
+        required this.index,
+        required this.charityDataConnection})
+      : super(key: key);
 
   @override
   State<ViewPage> createState() => _ViewPageState();
 }
 
 class _ViewPageState extends State<ViewPage> {
+  bool _recommendationLoading = true;
   int selectedPage = 3;
   final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen()];
+  List<CharityModel> _recommendedList = [];
+
+  late CharityModel charityModel;
+
+  void getCharity() {
+    setState(() {
+      charityModel = widget.charityDataConnection.getThisCharity(widget.id);
+    });
+  }
+
+  void getRecommendations() async {
+    await widget.charityDataConnection
+        .getRecommendation(
+        charityModel.donationType, charityModel.city, charityModel.service)
+        .then((value) {
+      _recommendedList.clear();
+      _recommendedList.addAll(value);
+      setState(() {
+        _recommendationLoading = false;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getCharity();
+    getRecommendations();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,10 +72,7 @@ class _ViewPageState extends State<ViewPage> {
         ),
         leading: GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomeScreen()),
-              );
+              Navigator.of(context).pop();
             },
             child: Icon(
               Icons.arrow_back,
@@ -57,7 +94,7 @@ class _ViewPageState extends State<ViewPage> {
       body: SingleChildScrollView(
         child: Container(
           // container 1 that contain every thing
-            padding: const EdgeInsets.all(50),
+            padding: const EdgeInsets.all(40),
             height: MediaQuery.of(context).size.height,
             width: double.infinity,
             decoration: BoxDecoration(
@@ -75,7 +112,7 @@ class _ViewPageState extends State<ViewPage> {
               children: [
                 Container(
                   child: Text(
-                    widget.charityModel.name,
+                    charityModel.name,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Almarai Bold',
@@ -90,12 +127,12 @@ class _ViewPageState extends State<ViewPage> {
                 Container(
                   height: 100,
                   width: 100,
-                  child: (widget.charityModel.imageString == "")
+                  child: (charityModel.imageString == "")
                       ? Icon(Icons.image, size: 100)
-                      : widget.charityModel.image,
+                      : charityModel.image,
                 ),
                 Container(
-                    child: Text(widget.charityModel.description,
+                    child: Text(charityModel.description,
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontFamily: 'Almarai Bold',
@@ -126,7 +163,7 @@ class _ViewPageState extends State<ViewPage> {
                 ]),
                 Row(children: <Widget>[
                   Expanded(
-                    child: Text(widget.charityModel.licenseNumber,
+                    child: Text(charityModel.licenseNumber,
                         textAlign: TextAlign.right,
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
@@ -146,7 +183,7 @@ class _ViewPageState extends State<ViewPage> {
                 ]),
                 Row(children: <Widget>[
                   Expanded(
-                    child: Text(widget.charityModel.city,
+                    child: Text(charityModel.city,
                         textAlign: TextAlign.right,
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
@@ -166,7 +203,7 @@ class _ViewPageState extends State<ViewPage> {
                 ]),
                 Row(children: <Widget>[
                   Expanded(
-                    child: Text(widget.charityModel.location,
+                    child: Text(charityModel.location,
                         textAlign: TextAlign.right,
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
@@ -186,7 +223,7 @@ class _ViewPageState extends State<ViewPage> {
                 ]),
                 Row(children: <Widget>[
                   Expanded(
-                    child: Text(widget.charityModel.donationType,
+                    child: Text(charityModel.donationType,
                         textAlign: TextAlign.right,
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
@@ -206,7 +243,7 @@ class _ViewPageState extends State<ViewPage> {
                 ]),
                 Row(children: <Widget>[
                   Expanded(
-                    child: Text(widget.charityModel.service,
+                    child: Text(charityModel.service,
                         textAlign: TextAlign.right,
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
@@ -249,7 +286,7 @@ class _ViewPageState extends State<ViewPage> {
                 ]),
                 Row(children: <Widget>[
                   Expanded(
-                    child: Text(widget.charityModel.phone,
+                    child: Text(charityModel.phone,
                         textAlign: TextAlign.right,
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
@@ -269,7 +306,7 @@ class _ViewPageState extends State<ViewPage> {
                 ]),
                 Row(children: <Widget>[
                   Expanded(
-                    child: Text(widget.charityModel.email,
+                    child: Text(charityModel.email,
                         textAlign: TextAlign.right,
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
@@ -291,7 +328,7 @@ class _ViewPageState extends State<ViewPage> {
                   color: Colors.grey,
                 ),
                 Row(children: <Widget>[
-                  if (widget.charityModel.service == 'نعم')
+                  if (charityModel.service == 'نعم')
                     Expanded(
                         child: Container(
                           child: GestureDetector(
@@ -300,8 +337,7 @@ class _ViewPageState extends State<ViewPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => Book_appointment(
-                                        charityId:
-                                        widget.charityModel.charityId,
+                                        charityId: charityModel.charityId,
                                       )),
                                 );
                               },
@@ -310,7 +346,7 @@ class _ViewPageState extends State<ViewPage> {
                                 size: 30,
                               )),
                         )),
-                  if (widget.charityModel.service == 'نعم')
+                  if (charityModel.service == 'نعم')
                     Expanded(
                         child: Text("لحجز مواعيد الاستلام >>>",
                             textAlign: TextAlign.right,
@@ -320,13 +356,139 @@ class _ViewPageState extends State<ViewPage> {
                               fontSize: 14,
                             )))
                 ]),
+                const SizedBox(
+                  height: 1,
+                ),
+                (_recommendationLoading)
+                    ? const Center(
+                  child: CircularProgressIndicator(
+                    color: Color(0xffD6DACB),
+                  ),
+                )
+                    : Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Text(
+                      "جمعيات مشابهة:",
+                      textAlign: TextAlign.right,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: 'Almarai Bold',
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 1,
+
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 120,
+                      child: ListView.builder(
+                          padding: const EdgeInsets.all(8),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _recommendedList.length,
+                          // #of charities
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
+                              margin: const EdgeInsets.only(left: 10),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border:
+                                  Border.all(color: Colors.white70),
+                                  borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(50),
+                                      bottomRight: Radius.circular(50)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.3),
+                                      spreadRadius: 4,
+                                      blurRadius: 20,
+                                      offset: Offset(-10.0,
+                                          10.0), // changes position of shadow
+                                    ),
+                                  ]),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ViewPage(
+                                              id: _recommendedList[index]
+                                                  .charityId,
+                                              index: index,
+                                              charityDataConnection: widget
+                                                  .charityDataConnection)));
+                                },
+                                child: Container(
+                                  // height: 100,
+
+                                  child: Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 49,
+                                              width: 49,
+                                              child: (_recommendedList[
+                                              index]
+                                                  .imageString ==
+                                                  "")
+                                                  ? Icon(Icons.image,
+                                                  size: 49)
+                                                  : _recommendedList[
+                                              index]
+                                                  .image,
+                                            ),
+                                            Padding(
+                                              padding:
+                                              EdgeInsets.all(8.0),
+                                              child: Text(
+                                                _recommendedList[index]
+                                                    .name,
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                    'almarai Light',
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                    FontWeight.bold),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ],
+                ),
               ],
             )),
       ),
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
+          TabItem(
+              icon: Icon(
+                Icons.favorite,
+                color: Colors.black,
+              ),
+              title: 'المفضلة '),
           TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
           TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
         ],
