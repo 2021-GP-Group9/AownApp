@@ -41,7 +41,7 @@ dependencies:
   get: ^4.5.1
   intl: ^0.17.0
   geocoding:
-
+  bottom_sheet:
   #dio: ^4.0.0
   #flutter_polyline_point: ^0.2.4
   google_maps_flutter: ^2.1.1
