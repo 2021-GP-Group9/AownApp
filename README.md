@@ -1,7 +1,7 @@
 # aownapp
 
 Project Title:Awon Application
-Introduction: TThe mobile application is used by the donor to search for the right charity to donate clothes, electronic devices, furniture, and books. The mobile application is used by the donor who can register into the system, manage his/her profile, find the charities, view specific charities, view the donation requests,respond to donation requests and favor charities.
+Introduction: TThe mobile application is used by the donor to search for the right charity to donate clothes, electronic devices, furniture, and books.The mobile application is used by the donor who can register into the system, manage his/her profile, find the charities, view specific charities, view the donation requests,respond to donation requests and favor charities, View the recommended charities and filter the search.
 Technologies:
 languages: dart, php.
 libraries: we use google_maps_flutter library as API for google map.
