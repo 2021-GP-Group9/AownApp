@@ -372,7 +372,17 @@ class _ViewPageState extends State<ViewPage> {
                 // ),
 
 
-                ElevatedButton(onPressed: () {
+                ElevatedButton(
+
+
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey,
+                    // padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    //  textStyle: TextStyle(
+                    //      fontSize: 15,
+                    //fontWeight: FontWeight.bold)
+                  ),
+                  onPressed: () {
                   print("hello"); // just try
 
                   Navigator.push(
