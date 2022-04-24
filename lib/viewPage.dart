@@ -2,13 +2,19 @@
 import 'package:aownapp/cases/cases_page.dart';
 import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/profile/profile_screen.dart';
+import 'package:aownapp/rating_star.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'Comment_Conn.dart';
 import 'bookAppointment/book_appointment_screen.dart';
+import 'comment.dart';
 import 'connection/charity_model.dart';
 import 'favoriteList/favoirte_screen.dart';
+import 'global.dart';
 import 'home_screen/home_screen.dart';
+import 'package:comment_box/comment/comment.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewPage extends StatefulWidget {
   final String id;
@@ -27,12 +33,18 @@ class ViewPage extends StatefulWidget {
 }
 
 class _ViewPageState extends State<ViewPage> {
+  String user_id=AppColors.user;
   bool _recommendationLoading = true;
   int selectedPage = 3;
   final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen()];
   List<CharityModel> _recommendedList = [];
 
+  dynamic comments;
   late CharityModel charityModel;
+  bool display_comment=false;
+  int display=0;
+  bool disp=true;
+  final TextEditingController commentController = TextEditingController();
 
   void getCharity() {
     setState(() {
@@ -52,11 +64,12 @@ class _ViewPageState extends State<ViewPage> {
       });
     });
   }
-
+  double rating_value=0.0;
   @override
   void initState() {
     getCharity();
     getRecommendations();
+
     super.initState();
   }
 
@@ -77,7 +90,8 @@ class _ViewPageState extends State<ViewPage> {
             child: Icon(
               Icons.arrow_back,
               color: Colors.black54,
-            )),
+            )
+        ),
         actions: [
           Align(
             alignment: Alignment.center,
@@ -108,7 +122,7 @@ class _ViewPageState extends State<ViewPage> {
                     offset: Offset(-10.0, 10.0), // changes position of shadow
                   ),
                 ]),
-            child: Column(
+            child: disp?Column(
               children: [
                 Container(
                   child: Text(
@@ -477,8 +491,47 @@ class _ViewPageState extends State<ViewPage> {
                     ),
                   ],
                 ),
+
+
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black87,
+                      //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      // textStyle: TextStyle(
+                      //     fontSize: 30,
+                      //     fontWeight: FontWeight.bold)
+                  ),
+
+                  onPressed: () {
+                  print("hello");
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>
+                    // hello()),
+                    comment( user_id,charityModel.charityId)),
+                  );
+
+                }, child:Row(
+
+                  mainAxisAlignment: MainAxisAlignment.end,
+                children:[
+                  Icon(
+                    Icons.arrow_back,
+                    color: Colors.grey,
+                    color:const Color(0xffD6DACA),
+                  ),
+                  SizedBox(width: 188,),
+                  Text("التعليقات والتقييم"),
+
+
+                ]
+
+                ),),
+
               ],
-            )),
+            ):Center(child: SingleChildScrollView())
+        ),
       ),
       bottomNavigationBar: ConvexAppBar(
         items: [
@@ -506,6 +559,45 @@ class _ViewPageState extends State<ViewPage> {
         backgroundColor: const Color(0xffD6DACA),
       ),
     );
+  }
+  Widget commentChild(data) {
+    return
+      ListView(
+        shrinkWrap: true,
+        children: [
+          for (var i = 0; i < data.length; i++)
+            Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 1,
+                          color: Colors.black
+                      )
+                  ),
+                  child: Text(
+                    data[i]['comment_text'],
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                StarRating(
+                  rating:double.parse(data[i]['rating']),
+                  onRatingChanged: (rating) => setState((){
+
+                    // setState(() {
+                    //   rating_value=rating;
+                    // });
+
+                  })
+                  , color: Colors.yellow,
+                ),
+              ],
+            ),
+
+
+
+        ],
+      );
   }
 
   _pn(int selectedPage) {
@@ -546,4 +638,6 @@ class _ViewPageState extends State<ViewPage> {
       );
     }
   }
+
+
 }
