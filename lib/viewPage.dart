@@ -15,6 +15,9 @@ import 'global.dart';
 import 'home_screen/home_screen.dart';
 import 'package:comment_box/comment/comment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'donate_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class ViewPage extends StatefulWidget {
   final String id;
@@ -46,6 +49,7 @@ class _ViewPageState extends State<ViewPage> {
   bool disp=true;
   final TextEditingController commentController = TextEditingController();
 
+  String user_id="";
   void getCharity() {
     setState(() {
       charityModel = widget.charityDataConnection.getThisCharity(widget.id);
@@ -69,6 +73,11 @@ class _ViewPageState extends State<ViewPage> {
   void initState() {
     getCharity();
     getRecommendations();
+    getuser_id().then((value) {
+      setState(() {
+
+      });
+    });
 
     super.initState();
   }
@@ -370,9 +379,54 @@ class _ViewPageState extends State<ViewPage> {
                               fontSize: 14,
                             )))
                 ]),
-                const SizedBox(
-                  height: 1,
+
+                // const SizedBox(
+                //   height: 1,
+                //
+                // ),
+
+
+                ElevatedButton(
+
+
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey,
+                    // padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    //  textStyle: TextStyle(
+                    //      fontSize: 15,
+                    //fontWeight: FontWeight.bold)
+                  ),
+                  onPressed: () {
+                  print("hello"); // just try
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>
+                    // hello()),
+                    Donate_Screen( user_id: user_id, charity_id: charityModel.charityId,charity_name:charityModel.name)),
+
+                  );
+
+
+                },
+
+                  child: Container(
+                    width: 100,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color : Colors.grey,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Center(
+                      child: Text("     تبرع للجمعية   ",
+                          style: TextStyle(fontFamily: 'almarai Regular'))
+                      ,
+                    ),
+                  ),
                 ),
+
+
+
                 (_recommendationLoading)
                     ? const Center(
                   child: CircularProgressIndicator(
@@ -382,13 +436,18 @@ class _ViewPageState extends State<ViewPage> {
                     : Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+
+
+
                     const Text(
+
                       "جمعيات مشابهة:",
                       textAlign: TextAlign.right,
                       textDirection: TextDirection.rtl,
                       style: TextStyle(
                         fontFamily: 'Almarai Bold',
                         fontSize: 14,
+                        height: 4,
                       ),
                     ),
                     const SizedBox(
@@ -639,5 +698,23 @@ class _ViewPageState extends State<ViewPage> {
     }
   }
 
+
+
+  Future<void> getuser_id()async{
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+
+    if (prefs.containsKey("idKey")) {
+
+      user_id=prefs.get('idKey').toString();
+      print("user_id1");
+      print(user_id);
+      // method load befor load the page to get information of charities
+
+    }else{
+
+    }
+
+  }
 
 }
