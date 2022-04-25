@@ -128,7 +128,7 @@ class _commentState extends State<comment> {
       appBar: AppBar(
         backgroundColor: Color(0xffD6DACB),
         title: Text(
-          'تعليقات',
+          'التقييم و التعليقات',
           style:
           TextStyle(color: Colors.black87, fontFamily: 'Almarai Regular'),
         ),
@@ -158,17 +158,21 @@ class _commentState extends State<comment> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text("Arabic ",
-              style: TextStyle(fontSize: 30,color: Colors.black),),
-            Text("Average Rating:",
+            Text("ملاحظة:لا يسمح لك التقييم إلا بعد حجز موعد ",
+              textAlign: TextAlign.left,
+
+              style:TextStyle(fontSize: 18,color: Colors.black),),
+            Text("تقييم الجمعية",
               style: TextStyle(fontSize: 30,color: Colors.black),),
             Row(
 
 mainAxisAlignment: MainAxisAlignment.end,
 
               children: [
-                Text(average_rating.toString(),style: TextStyle(fontSize: 30),),
-                SizedBox(width: 40,),
+                Text(average_rating.toString(),
+                  textAlign: TextAlign.start,
+                  style: TextStyle(fontSize: 30),),
+                SizedBox(width: 50,),
               StarRating(
                 rating:average_rating,
                 onRatingChanged: (rating) => setState((){
@@ -180,18 +184,24 @@ mainAxisAlignment: MainAxisAlignment.end,
 
             ]
               ,),
+
+            Divider(
+              color: Colors.grey,
+            ),
+
+
             display==1?Row(mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text("Comments:",style: TextStyle(fontSize: 20,color: Colors.black),),
+                Text("التعليقات:",style: TextStyle(fontSize: 20,color: Colors.black),),
               ],
-            ):Text("No Comments !"),
+            ):Text("لا يوجد تتعليقات !"),
             display==1?
             Row(mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Center(
                   child: Container(
-                    width: 380,
-                    height: 450,
+                    width: 392,
+                    height: 400,
                     decoration: BoxDecoration(
                       border: Border.all(
                           width: 1,
@@ -207,7 +217,7 @@ mainAxisAlignment: MainAxisAlignment.end,
             display_comment?Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Your Comment !"), SizedBox(width: 40,),
+                Text("قيَم الجمعية"), SizedBox(width: 40,),
                 StarRating(
                   rating:rating_value,
                   onRatingChanged: (rating) => setState((){
