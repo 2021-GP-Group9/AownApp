@@ -36,7 +36,7 @@ class ViewPage extends StatefulWidget {
 }
 
 class _ViewPageState extends State<ViewPage> {
-  String user_id=AppColors.user;
+  late String user_id=AppColors.user;
   bool _recommendationLoading = true;
   int selectedPage = 3;
   final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen()];
@@ -49,7 +49,7 @@ class _ViewPageState extends State<ViewPage> {
   bool disp=true;
   final TextEditingController commentController = TextEditingController();
 
-  String user_id2="";
+  late String user_id2="";
   void getCharity() {
     setState(() {
       charityModel = widget.charityDataConnection.getThisCharity(widget.id);
