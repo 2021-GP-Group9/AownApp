@@ -81,9 +81,13 @@ class _ViewPageState extends State<ViewPage> {
 
     super.initState();
   }
-
+var height;
+  var width;
   @override
   Widget build(BuildContext context) {
+    height=MediaQuery.of(context).size.height;
+    width=double.infinity;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffD6DACB),
@@ -118,8 +122,7 @@ class _ViewPageState extends State<ViewPage> {
         child: Container(
           // container 1 that contain every thing
             padding: const EdgeInsets.all(40),
-            height:MediaQuery.of(context).size.height,
-            width: double.infinity,
+
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -456,7 +459,7 @@ class _ViewPageState extends State<ViewPage> {
                     ),
                     Container(
                       width: double.infinity,
-                      height: 100,
+                      height: 150,
                       child: ListView.builder(
                           padding: const EdgeInsets.all(8),
                           scrollDirection: Axis.horizontal,
