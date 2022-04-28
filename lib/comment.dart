@@ -166,23 +166,25 @@ class _commentState extends State<comment> {
               style: TextStyle(fontSize: 30,color: Colors.black),),
             Row(
 
-mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
 
               children: [
-                Text(average_rating.toString(),
+                Text((average_rating.toStringAsFixed(2)),
                   textAlign: TextAlign.start,
                   style: TextStyle(fontSize: 30),),
+
+
                 SizedBox(width: 50,),
-              StarRating(
-                rating:average_rating,
-                onRatingChanged: (rating) => setState((){
-                })
-                , color: Colors.yellow,
-              ),
+                StarRating(
+                  rating:average_rating,
+                  onRatingChanged: (rating) => setState((){
+                  })
+                  , color: Colors.yellow,
+                ),
 
 
 
-            ]
+              ]
               ,),
 
             Divider(
@@ -201,7 +203,7 @@ mainAxisAlignment: MainAxisAlignment.end,
                 Center(
                   child: Container(
                     width: 392,
-                    height: 400,
+                    height: 200,
                     decoration: BoxDecoration(
                       border: Border.all(
                           width: 1,
@@ -344,21 +346,10 @@ mainAxisAlignment: MainAxisAlignment.end,
                 display_comment=false;
               });
             }else{
-              for(int i=0;i<value.length;i++){
-                print(user_id);
-                if(user_id==value[i]['donar_id']){
-                  setState(() {
-                    display_comment=false;
-                  });
+              setState(() {
+                display_comment=true;
+              });
 
-                }
-                else{
-                  setState(() {
-                    display_comment=true;
-                  });
-
-                }
-              }
 
             }
           });

@@ -49,7 +49,7 @@ class _ViewPageState extends State<ViewPage> {
   bool disp=true;
   final TextEditingController commentController = TextEditingController();
 
-  late String user_id2="";
+
   void getCharity() {
     setState(() {
       charityModel = widget.charityDataConnection.getThisCharity(widget.id);
