@@ -155,140 +155,142 @@ class _commentState extends State<comment> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text("ملاحظة:لا يسمح لك التقييم إلا بعد حجز موعد ",
-              textAlign: TextAlign.left,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text("ملاحظة:لا يسمح لك التقييم إلا بعد حجز موعد ",
+                textAlign: TextAlign.left,
 
-              style:TextStyle(fontSize: 18,color: Colors.black),),
-            Text("تقييم الجمعية",
-              style: TextStyle(fontSize: 30,color: Colors.black),),
-            Row(
+                style:TextStyle(fontSize: 18,color: Colors.black),),
+              Text("تقييم الجمعية",
+                style: TextStyle(fontSize: 30,color: Colors.black),),
+              Row(
 
-              mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
 
-              children: [
-                Text((average_rating.toStringAsFixed(2)),
-                  textAlign: TextAlign.start,
-                  style: TextStyle(fontSize: 30),),
-
-
-                SizedBox(width: 50,),
-                StarRating(
-                  rating:average_rating,
-                  onRatingChanged: (rating) => setState((){
-                  })
-                  , color: Colors.yellow,
-                ),
+                children: [
+                  Text((average_rating.toStringAsFixed(2)),
+                    textAlign: TextAlign.start,
+                    style: TextStyle(fontSize: 30),),
 
 
+                  SizedBox(width: 50,),
+                  StarRating(
+                    rating:average_rating,
+                    onRatingChanged: (rating) => setState((){
+                    })
+                    , color: Colors.yellow,
+                  ),
 
-              ]
-              ,),
-
-            Divider(
-              color: Colors.grey,
-            ),
 
 
-            display==1?Row(mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text("التعليقات:",style: TextStyle(fontSize: 20,color: Colors.black),),
-              ],
-            ):Text("لا يوجد تتعليقات !"),
-            display==1?
-            Row(mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Center(
-                  child: Container(
-                    width: 392,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 1,
-                          color: Colors.black
-                      ),),
-                    //   //color: Colors.yellow,
+                ]
+                ,),
+
+              Divider(
+                color: Colors.grey,
+              ),
+
+
+              display==1?Row(mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text("التعليقات:",style: TextStyle(fontSize: 20,color: Colors.black),),
+                ],
+              ):Text("لا يوجد تتعليقات !"),
+              display==1?
+              Row(mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 392,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 1,
+                            color: Colors.black
+                        ),),
+                      //   //color: Colors.yellow,
+                      // ),
+                      child: commentChild(comments),
+                    ),
+                  ),
+                ],
+              ) :display==2?Container():Center(child: CircularProgressIndicator()),
+              display_comment?Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("قيَم الجمعية"), SizedBox(width: 40,),
+                  StarRating(
+                    rating:rating_value,
+                    onRatingChanged: (rating) => setState((){
+
+                      setState(() {
+                        rating_value=rating;
+                      });
+
+                    }), color: Colors.yellow,
+                  ),
+                ],
+              ):Container(),
+              display_comment?ListTile(
+                tileColor: Colors.white,
+                // leading: Container(
+                //   height: 40.0,
+                //   width: 40.0,
+                //   decoration: new BoxDecoration(
+                //       color: Colors.blue,
+                //       borderRadius: new BorderRadius.all(Radius.circular(50))),
+                //   child:
+                //   CircleAvatar(
+                //       radius: 50, backgroundImage: NetworkImage("https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400"
+                //   )),
+                // ),
+                title: Form(
+                  child: TextFormField(
+                    maxLines: 10,
+                    minLines: 1,
+                    //  focusNode: focusNode,
+                    //  cursorColor: textColor,
+                    style: TextStyle(color: Colors.black),
+                    controller: commentController,
+                    // decoration: InputDecoration(
+                    //   enabledBorder: !withBorder
+                    //       ? InputBorder.none
+                    //       : UnderlineInputBorder(
+                    //     borderSide: BorderSide(color: textColor!),
+                    //   ),
+                    //   focusedBorder: !withBorder
+                    //       ? InputBorder.none
+                    //       : UnderlineInputBorder(
+                    //     borderSide: BorderSide(color: textColor!),
+                    //   ),
+                    //   border: !withBorder
+                    //       ? InputBorder.none
+                    //       : UnderlineInputBorder(
+                    //     borderSide: BorderSide(color: textColor!),
+                    //   ),
+                    //   labelText: labelText,
+                    //   focusColor: textColor,
+                    //   fillColor: textColor,
+                    //   labelStyle: TextStyle(color: textColor),
                     // ),
-                    child: commentChild(comments),
+                    // validator: (value) => value!.isEmpty ? errorText : null,
                   ),
                 ),
-              ],
-            ) :display==2?Container():Center(child: CircularProgressIndicator()),
-            display_comment?Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text("قيَم الجمعية"), SizedBox(width: 40,),
-                StarRating(
-                  rating:rating_value,
-                  onRatingChanged: (rating) => setState((){
-
+                trailing: GestureDetector(
+                  onTap: (){
+                    disp=false;
                     setState(() {
-                      rating_value=rating;
+
                     });
-
-                  }), color: Colors.yellow,
+                    sendButtonMethod(commentController.text,rating_value);
+                  },
+                  child:Icon(Icons.send_sharp, size: 30, color: Colors.black),
                 ),
-              ],
-            ):Container(),
-            display_comment?ListTile(
-              tileColor: Colors.white,
-              // leading: Container(
-              //   height: 40.0,
-              //   width: 40.0,
-              //   decoration: new BoxDecoration(
-              //       color: Colors.blue,
-              //       borderRadius: new BorderRadius.all(Radius.circular(50))),
-              //   child:
-              //   CircleAvatar(
-              //       radius: 50, backgroundImage: NetworkImage("https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400"
-              //   )),
-              // ),
-              title: Form(
-                child: TextFormField(
-                  maxLines: 10,
-                  minLines: 1,
-                  //  focusNode: focusNode,
-                  //  cursorColor: textColor,
-                  style: TextStyle(color: Colors.black),
-                  controller: commentController,
-                  // decoration: InputDecoration(
-                  //   enabledBorder: !withBorder
-                  //       ? InputBorder.none
-                  //       : UnderlineInputBorder(
-                  //     borderSide: BorderSide(color: textColor!),
-                  //   ),
-                  //   focusedBorder: !withBorder
-                  //       ? InputBorder.none
-                  //       : UnderlineInputBorder(
-                  //     borderSide: BorderSide(color: textColor!),
-                  //   ),
-                  //   border: !withBorder
-                  //       ? InputBorder.none
-                  //       : UnderlineInputBorder(
-                  //     borderSide: BorderSide(color: textColor!),
-                  //   ),
-                  //   labelText: labelText,
-                  //   focusColor: textColor,
-                  //   fillColor: textColor,
-                  //   labelStyle: TextStyle(color: textColor),
-                  // ),
-                  // validator: (value) => value!.isEmpty ? errorText : null,
-                ),
-              ),
-              trailing: GestureDetector(
-                onTap: (){
-                  disp=false;
-                  setState(() {
-
-                  });
-                  sendButtonMethod(commentController.text,rating_value);
-                },
-                child:Icon(Icons.send_sharp, size: 30, color: Colors.black),
-              ),
-            ):Container(),
-          ],
+              ):Container(),
+            ],
+          ),
         ),
       ),
     );
