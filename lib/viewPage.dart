@@ -13,7 +13,7 @@ import 'connection/charity_model.dart';
 import 'favoriteList/favoirte_screen.dart';
 import 'global.dart';
 import 'home_screen/home_screen.dart';
-import 'package:comment_box/comment/comment.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'donate_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
 import 'package:aownapp/cases/cases_page.dart';
+import 'package:aownapp/chat/chat_screen.dart';
 import 'package:aownapp/connection/charity_model.dart';
 import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/favoriteList/favoirte_screen.dart';
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
   int selectedPage = 3;
-  final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen()];
+  final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen(), ChatsScreen()];
 
   void requestData() {
     _charityDataConnection.requestCharityData().then((value) {
@@ -431,6 +432,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: 'المفضلة '),
           TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
           TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
+          TabItem(icon: Icon(Icons.chat), title: 'المحادثات'),
         ],
         color: Colors.black,
         height: 60,
@@ -483,6 +485,13 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Favorite_screen()),
+      );
+    }
+    else if (selectedPage == 4) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChatsScreen()),
       );
     }
   }

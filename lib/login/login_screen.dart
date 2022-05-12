@@ -4,6 +4,7 @@ import 'package:aownapp/donation/donation_conn.dart';
 import 'package:aownapp/signup/signup_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:get/get.dart';
+import '../global.dart';
 import 'login_conn.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -209,6 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                                 DonationConnection.donorId = value;
                                 constantController.donorId = value;
+                                AppColors.user=value;
                                 putInt(int.parse(value));
                                 Navigator.push(
                                   context,
