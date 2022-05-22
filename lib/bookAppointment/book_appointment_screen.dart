@@ -221,7 +221,7 @@ class _CalendarState extends State<Calendar> {
                                 setState(() {});
                               } else {
                                 Get.snackbar(
-                                    'ALERT', 'يجب تسجبل الدخول لحجز موعد');
+                                    'تنبيه', 'يجب تسجبل الدخول لحجز موعد');
                               }
                               setState(() {});
                             },

@@ -2,6 +2,8 @@ import 'package:aownapp/rating_star.dart';
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
 import 'Comment_Conn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -159,10 +161,10 @@ class _commentState extends State<comment> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text("ملاحظة:لا يسمح لك التقييم إلا بعد حجز موعد ",
-                textAlign: TextAlign.left,
+              //Text("ملاحظة:لا يسمح لك التقييم إلا بعد حجز موعد ",
+                //textAlign: TextAlign.left,
 
-                style:TextStyle(fontSize: 18,color: Colors.black),),
+                //style:TextStyle(fontSize: 18,color: Colors.black),),
               Text("تقييم الجمعية",
                 style: TextStyle(fontSize: 30,color: Colors.black),),
               Row(
@@ -350,6 +352,10 @@ class _commentState extends State<comment> {
             }else{
               setState(() {
                 display_comment=true;
+                Get.snackbar(
+
+                    'تنبيه', ' ملاحظة:لا يسمح لك التقييم والتعليق إلا بعد حجز موعد لدى هذه الجمعية');
+
               });
 
 
