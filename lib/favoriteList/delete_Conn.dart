@@ -7,7 +7,7 @@ class Conn_delete_favorite {
   final int charaity_id;
   final int user_id;
 
-
+  //final String password;
 
   Conn_delete_favorite(@required this.charaity_id,@required this.user_id);
   Future<void> delete_function() async
@@ -21,6 +21,7 @@ class Conn_delete_favorite {
 
       },
     ).then((value)  {
+      //var response = await jsonDecode(value.body);
       print(value.body.toString());
 
     });

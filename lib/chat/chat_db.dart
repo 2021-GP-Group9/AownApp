@@ -1,10 +1,9 @@
 import 'dart:convert';
-import 'dart:ffi';
-
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../constant.dart';
 import '../global.dart';
+
+
 class Conn_chat {
 
   Future<dynamic> store_message(String message,String toUser,String fromUser) async
@@ -16,6 +15,7 @@ class Conn_chat {
       'fromUser': fromUser,
       'message': message,
       'toUser': toUser,
+      'time':DateTime.now().toString(),
     });
 
 

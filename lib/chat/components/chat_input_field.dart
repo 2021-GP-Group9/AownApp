@@ -31,13 +31,10 @@ class _ChatInputFieldState extends State<ChatInputField> {
       print("user_id1");
       print(user_id);
       // requestData(); // method load befor load the page to get information of charities
-
     }else{
       //requestData();
     }
-
   }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -80,14 +77,14 @@ class _ChatInputFieldState extends State<ChatInputField> {
                     SizedBox(width: kDefaultPadding / 4),
                     Expanded(
                       child: TextField(
+                        textDirection: TextDirection.rtl,
                         controller: message,
                         decoration: InputDecoration(
-                          hintText: "Type message",
+                          hintText: "اكتب رسالة",
                           border: InputBorder.none,
                         ),
                       ),
                     ),
-                    //send button
                     GestureDetector(
                       onTap: (){
                         print('hello');
@@ -99,9 +96,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
                           setState(() {
                             message.text="";
                           });
-
                         }
-
                       },
                       child:Icon(Icons.send_sharp, size: 30, color: Colors.black),
                     ),
@@ -114,13 +109,12 @@ class _ChatInputFieldState extends State<ChatInputField> {
       ),
     );
   }
-//send message to db
+
   void send_message(String message) {
     setState(() {
       display=false;
     });
     getuser_id().then((value) {
-
       db.store_message(message,widget.charityId, user_id).then((value) {
         setState(() {
           display=true;

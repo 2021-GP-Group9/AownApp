@@ -21,6 +21,8 @@ class constant {
   static String favouriteurl = "https://awoon.000webhostapp.com/favourite.php";
   static String send_message="https://awoon.000webhostapp.com/insert_message_from_app.php";
   static String received_message="https://awoon.000webhostapp.com/app_select_message.php";
+  static String get_unread_messages="https://awoon.000webhostapp.com/get_unread_message.php";
+  static String update_status="https://awoon.000webhostapp.com/update_message_status.php";
 }
 
 const kPrimaryColor = Color(0xFF00BF6D);

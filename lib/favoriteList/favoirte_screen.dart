@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
 import 'package:aownapp/cases/cases_page.dart';
+import 'package:aownapp/chat/chat_screen.dart';
 import 'package:aownapp/connection/charity_model.dart';
 import 'package:aownapp/connection/get_charaty_data.dart';
 import 'package:aownapp/favoriteList/favoirte_screen.dart';
@@ -33,12 +34,13 @@ class _Favorite_screenState extends State<Favorite_screen> {
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
   final get_favorite_DataConnection _get_favorite_DataConnection=get_favorite_DataConnection();
-  int selectedPage = 1;
+  int selectedPage = 3;
   final _pageOption = [
     Profile(),
-    Favorite_screen(),
+    HomeScreen(),
     CasesPage(),
-    Favorite_screen()
+    Favorite_screen(),
+    ChatsScreen(),
   ];
   void requestData() {
     _charityDataConnection.requestCharityData().then((value) =>
@@ -182,9 +184,8 @@ class _Favorite_screenState extends State<Favorite_screen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ViewPage(
-                                    index: index, id:
-                                _charityDataConnection
-                                    .allCharityList[index].charityId,
+                                  id: _charityDataConnection.allCharityList[index].charityId,
+                                   index: index,
                                     charityDataConnection : _charityDataConnection
                                 )));
                       },
@@ -198,7 +199,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
                               width: 5,
                             ),
                             Container(
-                              width: 245,
+                              width: 210,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment:
@@ -286,8 +287,9 @@ class _Favorite_screenState extends State<Favorite_screen> {
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
+          TabItem(icon: Icon(Icons.chat), title: 'المحادثات'),
           TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
+          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
           TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
         ],
         color: Colors.black,
@@ -305,7 +307,6 @@ class _Favorite_screenState extends State<Favorite_screen> {
       ),
     );
   }
-
   _pn(int selectedPage) {
     if (selectedPage == 0) {
       Navigator.of(context).pop();
@@ -318,13 +319,8 @@ class _Favorite_screenState extends State<Favorite_screen> {
       //     context,
       //     MaterialPageRoute(builder: (context) => Book_appointment()),
       //   );
-    } else if (selectedPage == 0) {
-      Navigator.of(context).pop();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Profile()),
-      );
-    } else if (selectedPage == 3) {
+
+    } else if (selectedPage == 4) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -336,11 +332,17 @@ class _Favorite_screenState extends State<Favorite_screen> {
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
       );
-    } else if (selectedPage == 1) {
+    } else if (selectedPage == 3) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Favorite_screen()),
+      );
+    } else if (selectedPage == 1) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChatsScreen()),
       );
     }
   }
@@ -370,7 +372,20 @@ class _Favorite_screenState extends State<Favorite_screen> {
       });
 
 
+      //myList.add(1);
 
+      //replytile.removeWhere((item) => item.id == '001')
+      //myList.add(int.parse(_CharityModel.charityId));
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // List<String> myList1 =
+      //     (prefs.getStringList('mylist12') ?? List<String>.empty());
+      // //List<int> myOriginaList = myList1.map((i) => int.parse(i)).toList();
+      // //print('Your list  $myOriginaList');
+      // print('before remove Your list  $myList1');
+      // myList1.removeWhere((item) => item == id.toString());
+      // // myList1.indexOf(id.);
+      // print('After remove Your list  $myList1');
+      // await prefs.setStringList('mylist12', myList1);
     }
   }
 
@@ -394,7 +409,7 @@ class _Favorite_screenState extends State<Favorite_screen> {
       setState(() {
         _isLoadingData = false;
 
-
+        // print(_charityDataConnection.allCharityList.length);
 
       });
     });

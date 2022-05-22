@@ -1,5 +1,6 @@
 import 'package:aownapp/cases/cases_connection.dart';
 import 'package:aownapp/cases/view_specific_case.dart';
+import 'package:aownapp/chat/chat_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
 import 'package:bottom_sheet/bottom_sheet.dart';
@@ -200,7 +201,8 @@ class _CasesPageState extends State<CasesPage> {
       Profile(),
       HomeScreen(),
       CasesPage(),
-      Favorite_screen()
+      Favorite_screen(),
+      ChatsScreen(),
     ];
 
     return Scaffold(
@@ -373,13 +375,9 @@ class _CasesPageState extends State<CasesPage> {
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          TabItem(
-              icon: Icon(
-                Icons.favorite,
-                color: Colors.black,
-              ),
-              title: 'المفضلة '),
+          TabItem(icon: Icon(Icons.chat), title: 'المحادثات'),
           TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
+          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
           TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
         ],
         color: Colors.black,
@@ -410,13 +408,8 @@ class _CasesPageState extends State<CasesPage> {
       //     context,
       //     MaterialPageRoute(builder: (context) => Book_appointment()),
       //   );
-    } else if (selectedPage == 0) {
-      Navigator.of(context).pop();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Profile()),
-      );
-    } else if (selectedPage == 3) {
+
+    } else if (selectedPage == 4) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -428,11 +421,17 @@ class _CasesPageState extends State<CasesPage> {
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
       );
-    } else if (selectedPage == 1) {
+    } else if (selectedPage == 3) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Favorite_screen()),
+      );
+    } else if (selectedPage == 1) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChatsScreen()),
       );
     }
   }

@@ -5,220 +5,77 @@ import 'package:aownapp/cases/cases_page.dart';
 import 'package:aownapp/chat/chat_screen.dart';
 import 'package:aownapp/connection/charity_model.dart';
 import 'package:aownapp/connection/get_charaty_data.dart';
+import 'package:aownapp/favoriteList/add_Conn.dart';
 import 'package:aownapp/favoriteList/favoirte_screen.dart';
+import 'package:aownapp/favoriteList/get_favorite_list.dart';
 import 'package:aownapp/profile/profile_screen.dart';
-import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../global.dart';
 import '../viewPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:aownapp/cases/cases_connection.dart';
 
 class HomeScreen extends StatefulWidget {
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  String user_id=AppColors.user;
   List<String> myListOfStrings = [];
   List<int> myList = [];
   Color _favIconColor = Colors.grey;
   List<Color> colors_list = [];
 
   TextEditingController passwordController = TextEditingController();
-
 //method to show the download icone befor get data
   bool _isLoadingData = true;
   final CharityDataConnection _charityDataConnection = CharityDataConnection();
-  int selectedPage = 3;
-  final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen(), ChatsScreen()];
+  final get_favorite_DataConnection _get_favorite_DataConnection=get_favorite_DataConnection();
+
+
+
+  int selectedPage = 4;
+  final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen(), ChatsScreen(),];
+
 
   void requestData() {
-    _charityDataConnection.requestCharityData().then((value) {
-      setState(() {
-        _isLoadingData = false;
-        print(_charityDataConnection.allCharityList.length);
-        int length = _charityDataConnection.allCharityList.length;
-        for (int i = 0; i < length; i++) {
-          check_favo(_charityDataConnection.allCharityList[i].charityId)
-              ? colors_list.add(Colors.red)
-              : colors_list.add(Colors.grey);
-        }
-        print(colors_list[0].toString());
-      });
-    });
-  }
+    _charityDataConnection.requestCharityData().then((value) =>
 
-  final List<String> _filterStringType = [
-    'كتب_وورق',
-    'أثاث',
-    'الكترونيات',
-    'ملابس',
-  ];
+        _get_list()
 
-  final List<String> _filterStringCity = [
-    'منطقة الرياض',
-    'منطقة مكة المكرمة',
-    'منطقة المدينة المنورة',
-    'منطقة القصيم',
-    'المنطقة الشرقية',
-    'منطقة عسير',
-    'منطقة تبوك',
-  ];
-
-  void _showSheetWithoutList() {
-    showFlexibleBottomSheet(
-      minHeight: 0,
-      initHeight: 0.4,
-      maxHeight: 1,
-      context: context,
-      builder: _buildBottomSheet,
-      anchors: [0, 0.4, 0.4],
     );
-  }
 
-  Widget _buildBottomSheet(
-      BuildContext context,
-      ScrollController scrollController,
-      double bottomSheetOffset,
-      ) {
-    return SingleChildScrollView(
-      controller: scrollController,
-      child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(40),
-            topRight: Radius.circular(40),
-          ),
-        ),
-        padding:
-        const EdgeInsets.only(top: 40, right: 10, left: 10, bottom: 50),
-        child: Material(
-          color: Colors.white,
-          child: Column(
-            children: [
-              const Center(
-                child: Text(
-                  "تصفية",
-                  style: TextStyle(
-                      fontFamily: 'almarai Bold',
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              ExpansionTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                title: const Text(
-                  "الأصناف",
-                  textAlign: TextAlign.end,
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  for (int i = 0; i < _filterStringType.length; i++)
-                    GestureDetector(
-                      onTap: (){
-                        _charityDataConnection.addingFilter(_filterStringType[i]);
-                        setState(() {});
-                        Navigator.of(context).pop();
-                      },
-                      child: ListTile(
-                        title: Text(
-                          _filterStringType[i],
-                          textAlign: TextAlign.end,
-                          style: const TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    )
-                ],
-              ),
-              ExpansionTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                title: const Text(
-                  "المناطق",
-                  textAlign: TextAlign.end,
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  for (int i = 0; i < _filterStringCity.length; i++)
-                    GestureDetector(
-                      onTap: (){
-                        _charityDataConnection.addingFilter(_filterStringCity[i]);
-                        setState(() {});
-                        Navigator.of(context).pop();
-                      },
-                      child: ListTile(
-                        title: Text(
-                          _filterStringCity[i],
-                          textAlign: TextAlign.end,
-                          style: TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    )
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black87,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      child: const Text(
-                        "الغاء",
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      _charityDataConnection.addingFilter('الكل');
-                      setState(() {});
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black87,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      child: const Text(
-                        "الغاء جميع التصفية",
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   @override
   void initState() {
-    requestData();
-    _get_list().then((value) {
-      myList = value;
-      print(myList.toString());
-    });
+    // method load befor load the page to get information of charities
+    // _get_list().then((value) {
+    //   myList = value;
+    //   print(myList.toString());
+    // });
+    getuser_id();
     fill_color();
     super.initState();
+  }
+  Future<void> getuser_id()async{
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+
+    if (prefs.containsKey("idKey")) {
+
+      user_id=prefs.get('idKey').toString();
+      print("user_id1");
+      print(user_id);
+      requestData();
+
+    }else{
+      requestData();
+    }
+
   }
 
   void fill_color() {
@@ -262,14 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: _showSheetWithoutList,
-            icon: Icon(Icons.filter_alt),
-            color: Colors.grey[700],
-          ),
-          Image.asset("assets/finalLogo.jpeg")
-        ],
+        actions: [Image.asset("assets/finalLogo.jpeg")],
       ),
       body: (_isLoadingData)
           ? Container(
@@ -334,8 +184,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     id: _charityDataConnection
                                         .allCharityList[index].charityId,
                                     index: index,
-                                    charityDataConnection: _charityDataConnection
-                                )));
+                                    charityDataConnection:
+                                    _charityDataConnection)));
                       },
                       child: Container(
                         // height: 100,
@@ -343,11 +193,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            // SizedBox(
-                            //   width: 5,
-                            // ),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Container(
-                              width: 240,
+                              width: 210,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -399,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 4),
+                              padding: const EdgeInsets.only(right: 40),
                               child: Container(
                                 height: 49,
                                 width: 49,
@@ -424,15 +274,10 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          TabItem(
-              icon: Icon(
-                Icons.favorite,
-                color: Colors.black,
-              ),
-              title: 'المفضلة '),
-          TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
-          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
           TabItem(icon: Icon(Icons.chat), title: 'المحادثات'),
+          TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
+          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
+          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
         ],
         color: Colors.black,
         height: 60,
@@ -462,13 +307,8 @@ class _HomeScreenState extends State<HomeScreen> {
       //     context,
       //     MaterialPageRoute(builder: (context) => Book_appointment()),
       //   );
-    } else if (selectedPage == 0) {
-      Navigator.of(context).pop();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Profile()),
-      );
-    } else if (selectedPage == 3) {
+
+    } else if (selectedPage == 4) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -480,14 +320,13 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
       );
-    } else if (selectedPage == 1) {
+    } else if (selectedPage == 3) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Favorite_screen()),
       );
-    }
-    else if (selectedPage == 4) {
+    } else if (selectedPage == 1) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -502,35 +341,52 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future _save(CharityModel _CharityModel) async {
-    // print('hello');
+
 
     int id = int.parse(_CharityModel.charityId);
     if (!myList.contains(id)) {
-      myList.add(int.parse(_CharityModel.charityId));
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      List<String> myList1 =
-      (prefs.getStringList('mylist12') ?? List<String>.empty());
-      List<int> myOriginaList = myList1.map((i) => int.parse(i)).toList();
+      print('user_id11 $user_id');
 
-      myListOfStrings = myList1.toList();
-      myListOfStrings.add(_CharityModel.charityId);
-      print('Your list  $myListOfStrings');
-      await prefs.setStringList('mylist12', myListOfStrings);
+      add_favorite _add_favorite= add_favorite(1,id,int.parse(user_id));
+      _add_favorite.save_it_to_db();
+
     }
   }
 
-  Future _get_list() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> myList =
-    (prefs.getStringList('mylist12') ?? List<String>.empty());
-    List<int> myOriginaList = myList.map((i) => int.parse(i)).toList();
-    print('Your list  $myOriginaList');
-    return myOriginaList;
+  Future<void> _get_list() async {
+
+    print("user_id111");
+    print(user_id);
+    // if(user_id!="0"){
+    _get_favorite_DataConnection.requestFavouriteData(user_id).then((value) {
+      myList =_get_favorite_DataConnection.favoriteList;
+      print(myList.toString());
+      int length = _charityDataConnection.allCharityList.length;
+      print(length);
+      for (int i = 0; i < length; i++) {
+        check_favo(_charityDataConnection.allCharityList[i].charityId)
+            ? colors_list.add(Colors.red)
+            : colors_list.add(Colors.grey);
+      }
+      colors_list.toString();
+
+      setState(() {
+        _isLoadingData = false;
+
+        // print(_charityDataConnection.allCharityList.length);
+
+      });
+    });
+    // }else{
+    //   _get_list();
+    // }
+
   }
+
 
   check_favo(String charityId) {
     int id = int.parse(charityId);
-    print(myList.contains(id));
+    //print( myList.contains(id));
     return myList.contains(id);
   }
 }

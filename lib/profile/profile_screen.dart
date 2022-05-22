@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:aownapp/cases/cases_page.dart';
+import 'package:aownapp/chat/chat_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:aownapp/bookAppointment/book_appointment_screen.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _ProfileState extends State<Profile> {
   String? password_err_msg;
   String? name_err_msg;
   int selectedPage = 0;
-  final _pageOption=[Profile(),HomeScreen(), CasesPage(),Favorite_screen()];
+  final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen(),ChatsScreen(),];
   @override
   void initState() {
     super.initState();
@@ -297,8 +298,9 @@ class _ProfileState extends State<Profile> {
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
+          TabItem(icon: Icon(Icons.chat), title: 'المحادثات'),
           TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
+          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
           TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
         ],
         color: Colors.black,
@@ -329,13 +331,8 @@ class _ProfileState extends State<Profile> {
       //     context,
       //     MaterialPageRoute(builder: (context) => Book_appointment()),
       //   );
-    } else if (selectedPage == 0) {
-      Navigator.of(context).pop();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Profile()),
-      );
-    } else if (selectedPage == 3) {
+
+    } else if (selectedPage == 4) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -347,14 +344,21 @@ class _ProfileState extends State<Profile> {
         context,
         MaterialPageRoute(builder: (context) => CasesPage()),
       );
-    } else if (selectedPage == 1) {
+    } else if (selectedPage == 3) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Favorite_screen()),
       );
+    } else if (selectedPage == 1) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChatsScreen()),
+      );
     }
   }
+
   Future<void> _accountupdated() async {
     return showDialog<void>(
       context: context,

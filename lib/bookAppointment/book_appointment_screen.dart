@@ -1,10 +1,14 @@
 import 'dart:convert';
 import 'package:aownapp/appointment/appointment_model.dart';
 import 'package:aownapp/bookAppointment/book_appointment_controller.dart';
+import 'package:aownapp/cases/cases_page.dart';
+import 'package:aownapp/chat/chat_screen.dart';
 import 'package:aownapp/controller/constant_controller.dart';
+import 'package:aownapp/favoriteList/favoirte_screen.dart';
 import 'package:aownapp/home_screen/home_screen.dart';
 import 'package:aownapp/location/location_screen.dart';
 import 'package:aownapp/profile/profile_screen.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 //import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
@@ -40,8 +44,14 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  int selectedPage = 0;
-  final _pageOption = [Profile(), HomeScreen()];
+  int selectedPage = 4;
+  final _pageOption = [
+    Profile(),
+    HomeScreen(),
+    CasesPage(),
+    Favorite_screen(),
+    ChatsScreen(),
+  ];
 
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
@@ -63,7 +73,7 @@ class _CalendarState extends State<Calendar> {
   }
 
   List<Event> _getEventsfromDay(DateTime date) {
-    // takes the selected date and return all events available
+    // takes the selected date and return all  available appointment
     eventList = _bookAppointmentController
         .selectedEvents[DateFormat('yyyy-MM-dd').format(date)] ??
         [];
@@ -221,7 +231,7 @@ class _CalendarState extends State<Calendar> {
                                 setState(() {});
                               } else {
                                 Get.snackbar(
-                                    'ALERT', 'يجب تسجبل الدخول لحجز موعد');
+                                    'تنبيه', 'يجب تسجبل الدخول لحجز موعد');
                               }
                               setState(() {});
                             },
@@ -251,28 +261,68 @@ class _CalendarState extends State<Calendar> {
               child: CircularProgressIndicator(),
             );
           }),
+      bottomNavigationBar: ConvexAppBar(
+        items: [
+          TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
+          TabItem(icon: Icon(Icons.chat), title: 'المحادثات'),
+          TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
+          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
+          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
+        ],
+        color: Colors.black,
+        height: 60,
+        initialActiveIndex: selectedPage,
+        onTap: (int index) {
+          print(index);
+          setState(() {
+            selectedPage = index;
+            _pageOption[selectedPage];
+            _pn(selectedPage);
+          });
+        },
+        backgroundColor: const Color(0xffD6DACA),
+      ),
     );
   }
-
   _pn(int selectedPage) {
     if (selectedPage == 0) {
+      Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
-    } else if (selectedPage == 0) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Profile()),
-      );
-    } else if (selectedPage == 1) {
+      // } else if(selectedPage == 1){
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => Book_appointment()),
+      //   );
+
+    } else if (selectedPage == 4) {
+      Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),
       );
+    } else if (selectedPage == 2) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CasesPage()),
+      );
+    } else if (selectedPage == 3) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Favorite_screen()),
+      );
+    } else if (selectedPage == 1) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChatsScreen()),
+      );
     }
   }
-
   Future<void> appointmentConfirmation(
       BuildContext context, Event event) async {
     return showDialog<void>(

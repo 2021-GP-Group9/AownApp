@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 import 'cases/cases_page.dart';
+import 'chat/chat_screen.dart';
 import 'favoriteList/favoirte_screen.dart';
 import 'home_screen/home_screen.dart';
 
@@ -23,8 +24,8 @@ class Donate_Screen extends StatefulWidget {
 class _Donate_ScreenState extends State<Donate_Screen> {
    TextEditingController _donate_text_field=new TextEditingController();
    String? _err_msg="null";
-   int selectedPage = 3;
-   final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen()];
+   int selectedPage = 4;
+   final _pageOption = [Profile(), HomeScreen(), CasesPage(), Favorite_screen(), ChatsScreen(),];
 
      @override
   Widget build(BuildContext context) {
@@ -140,13 +141,9 @@ class _Donate_ScreenState extends State<Donate_Screen> {
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
-          TabItem(
-              icon: Icon(
-                Icons.favorite,
-                color: Colors.black,
-              ),
-              title: 'المفضلة '),
+          TabItem(icon: Icon(Icons.chat), title: 'المحادثات'),
           TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
+          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
           TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
         ],
         color: Colors.black,
@@ -178,13 +175,8 @@ class _Donate_ScreenState extends State<Donate_Screen> {
        //     context,
        //     MaterialPageRoute(builder: (context) => Book_appointment()),
        //   );
-     } else if (selectedPage == 0) {
-       Navigator.of(context).pop();
-       Navigator.push(
-         context,
-         MaterialPageRoute(builder: (context) => Profile()),
-       );
-     } else if (selectedPage == 3) {
+
+     } else if (selectedPage == 4) {
        Navigator.of(context).pop();
        Navigator.push(
          context,
@@ -196,11 +188,17 @@ class _Donate_ScreenState extends State<Donate_Screen> {
          context,
          MaterialPageRoute(builder: (context) => CasesPage()),
        );
-     } else if (selectedPage == 1) {
+     } else if (selectedPage == 3) {
        Navigator.of(context).pop();
        Navigator.push(
          context,
          MaterialPageRoute(builder: (context) => Favorite_screen()),
+       );
+     } else if (selectedPage == 1) {
+       Navigator.of(context).pop();
+       Navigator.push(
+         context,
+         MaterialPageRoute(builder: (context) => ChatsScreen()),
        );
      }
    }

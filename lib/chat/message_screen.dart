@@ -42,7 +42,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
             children: [
               Text(
                 widget.user.name,
-                style: TextStyle(fontSize: 16,color: Colors.grey),
+                style: TextStyle(fontSize: 16,color: Colors.black),
               ),
 
             ],

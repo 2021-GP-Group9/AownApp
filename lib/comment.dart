@@ -1,12 +1,20 @@
+import 'package:aownapp/profile/profile_screen.dart';
 import 'package:aownapp/rating_star.dart';
 import 'package:comment_box/comment/comment.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
 import 'Comment_Conn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'cases/cases_page.dart';
+import 'chat/chat_screen.dart';
+import 'favoriteList/favoirte_screen.dart';
 import 'global.dart';
+import 'home_screen/home_screen.dart';
 
 class comment extends StatefulWidget {
   late final String id;
@@ -30,6 +38,14 @@ class _commentState extends State<comment> {
   double rating_value=0.0;
   String user_id=AppColors.user;
   double average_rating=0.0;
+  int selectedPage = 4;
+  final _pageOption = [
+    Profile(),
+    HomeScreen(),
+    CasesPage(),
+    Favorite_screen(),
+    ChatsScreen(),
+  ];
   //final TextEditingController commentController = TextEditingController();
   @override
   void initState() {
@@ -74,9 +90,6 @@ class _commentState extends State<comment> {
                 ),
               ],
             ),
-
-
-
         ],
       );
   }
@@ -159,10 +172,10 @@ class _commentState extends State<comment> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text("ملاحظة:لا يسمح لك التقييم إلا بعد حجز موعد ",
-                textAlign: TextAlign.left,
-
-                style:TextStyle(fontSize: 18,color: Colors.black),),
+              // Text("ملاحظة:لا يسمح لك التقييم إلا بعد حجز موعد ",
+              //   textAlign: TextAlign.left,
+              //
+              //   style:TextStyle(fontSize: 18,color: Colors.black),),
               Text("تقييم الجمعية",
                 style: TextStyle(fontSize: 30,color: Colors.black),),
               Row(
@@ -185,8 +198,8 @@ class _commentState extends State<comment> {
 
 
 
-                ]
-                ,),
+                ],
+              ),
 
               Divider(
                 color: Colors.grey,
@@ -197,7 +210,18 @@ class _commentState extends State<comment> {
                 children: [
                   Text("التعليقات:",style: TextStyle(fontSize: 20,color: Colors.black),),
                 ],
-              ):Text("لا يوجد تتعليقات !"),
+              ):
+              Text(" لا يوجد تتعليقات حتى الان!",
+                textAlign: TextAlign.center,
+                style:TextStyle(fontSize: 30,fontFamily:'Almaria Bold', color: Colors.black),
+              ),
+              display==1?
+              Row(mainAxisAlignment: MainAxisAlignment.end,
+              ):
+              Text("ملاحظة: لا يسمح لك التقييم والتعليق إلا بعد حجز موعد لدى هذه الجمعية",
+                textAlign: TextAlign.center,
+                style:TextStyle(fontSize: 20,fontFamily:'Almaria Bold', color: Colors.black),
+              ),
               display==1?
               Row(mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -216,7 +240,8 @@ class _commentState extends State<comment> {
                     ),
                   ),
                 ],
-              ) :display==2?Container():Center(child: CircularProgressIndicator()),
+              ) :display==2?Container():
+              Center(child: CircularProgressIndicator()),
               display_comment?Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -293,9 +318,70 @@ class _commentState extends State<comment> {
           ),
         ),
       ),
+      bottomNavigationBar: ConvexAppBar(
+        items: [
+          TabItem(icon: Icon(Icons.person), title: 'ملف شخصي'),
+          TabItem(icon: Icon(Icons.chat), title: 'المحادثات'),
+          TabItem(icon: Icon(Icons.assignment_rounded), title: 'الحالات‎'),
+          TabItem(icon: Icon(Icons.favorite,color: Colors.black,),title: 'المفضلة '),
+          TabItem(icon: Icon(Icons.house), title: 'الرئيسية'),
+        ],
+        color: Colors.black,
+        height: 60,
+        initialActiveIndex: selectedPage,
+        onTap: (int index) {
+          print(index);
+          setState(() {
+            selectedPage = index;
+            _pageOption[selectedPage];
+            _pn(selectedPage);
+          });
+        },
+        backgroundColor: const Color(0xffD6DACA),
+      ),
     );
 
   }
+  _pn(int selectedPage) {
+    if (selectedPage == 0) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Profile()),
+      );
+      // } else if(selectedPage == 1){
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => Book_appointment()),
+      //   );
+
+    } else if (selectedPage == 4) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } else if (selectedPage == 2) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CasesPage()),
+      );
+    } else if (selectedPage == 3) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Favorite_screen()),
+      );
+    } else if (selectedPage == 1) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChatsScreen()),
+      );
+    }
+  }
+
   Future<void> getuser_id()async{
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences prefs = await _prefs;
@@ -346,10 +432,16 @@ class _commentState extends State<comment> {
             if(value3=="no"){
               setState(() {
                 display_comment=false;
+                Get.snackbar(
+
+                    'تنبيه', ' ملاحظة:لا يسمح لك التقييم والتعليق إلا بعد حجز موعد لدى هذه الجمعية');
               });
             }else{
               setState(() {
                 display_comment=true;
+                Get.snackbar(
+
+                    'تنبيه', ' ملاحظة:لا يسمح لك التقييم والتعليق إلا بعد حجز موعد لدى هذه الجمعية');
               });
 
 
