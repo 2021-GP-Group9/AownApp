@@ -195,14 +195,29 @@ class _commentState extends State<comment> {
               ),
 
 
-              display==1?Row(mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text("التعليقات:",style: TextStyle(fontSize: 20,color: Colors.black),),
-                ],
-              ):Text("لا يوجد تتعليقات !"),
               display==1?
               Row(mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  Text("التعليقات:",style: TextStyle(fontSize: 20, fontFamily:'Almaria Bold',color: Colors.black),),
+                ],
+              ):
+              Text(" لا يوجد تتعليقات حتى الان!",
+                textAlign: TextAlign.center,
+                  style:TextStyle(fontSize: 30,fontFamily:'Almaria Bold', color: Colors.black),
+              ),
+              display==1?
+              Row(mainAxisAlignment: MainAxisAlignment.end,
+              ):
+              Text("ملاحظة: لا يسمح لك التقييم والتعليق إلا بعد حجز موعد لدى هذه الجمعية",
+                  textAlign: TextAlign.center,
+                style:TextStyle(fontSize: 20,fontFamily:'Almaria Bold', color: Colors.black),
+              ),
+
+
+              display==1?
+              Row(mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+
                   Center(
                     child: Container(
                       width: 392,
@@ -222,7 +237,10 @@ class _commentState extends State<comment> {
               display_comment?Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("قيَم الجمعية"), SizedBox(width: 40,),
+                  Text("قيَم الجمعية",
+                    style:TextStyle(fontFamily:'Almaria'),
+                  ),
+                  SizedBox(width: 40,),
                   StarRating(
                     rating:rating_value,
                     onRatingChanged: (rating) => setState((){
@@ -348,6 +366,9 @@ class _commentState extends State<comment> {
             if(value3=="no"){
               setState(() {
                 display_comment=false;
+                Get.snackbar(
+
+                    'تنبيه', ' ملاحظة:لا يسمح لك التقييم والتعليق إلا بعد حجز موعد لدى هذه الجمعية');
               });
             }else{
               setState(() {
